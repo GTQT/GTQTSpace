@@ -20,7 +20,7 @@ public class GTQTScoreRecipeMaps {
         SPACE_ELEVATOR_DRILLING_MODULE = new RecipeMapSF<>("space_elevator_drilling_module", 4, 0,  2, 16, new SEComputationRecipeBuilder(), false)
                 .setSound(GTSoundEvents.ASSEMBLER);
 
-        STAR_SURVEY = new RecipeMap<>("star_suvery", 9, 1, 0, 0, new StarComputationRecipeBuilder(), false)
+        STAR_SURVEY = new RecipeMap<>("star_suvery", 1, 1, 0, 0, new StarComputationRecipeBuilder(), false)
                 .setSound(GTValues.FOOLS.get() ? GTSoundEvents.SCIENCE : GTSoundEvents.COMPUTATION);
     }
 }

@@ -49,6 +49,25 @@ metaitem.mining_drone.uiv.tooltip=§2便携苍穹共振仪II
 metaitem.mining_drone.uxv.tooltip=§e便携苍穹共振仪III
 metaitem.mining_drone.opv.tooltip=§9-*创造一个宇宙，然后摧毁它*-
 metaitem.mining_drone.max.tooltip=§c=《༺=☆你的就是我的，我的还是我的☆=༻》=
+
+#研究
+metaitem.sdisk.1.name=导航坐标存储模块
+metaitem.sdisk.1.tooltip=§aT1（月球）
+
+metaitem.sdisk.2.name=导航坐标存储模块
+metaitem.sdisk.2.tooltip=§aT2（火星）
+
+metaitem.sdisk.3.name=导航坐标存储模块
+metaitem.sdisk.3.tooltip=§aT3（小行星）
+
+metaitem.sdisk.4.name=导航坐标存储模块
+metaitem.sdisk.4.tooltip=§aT4（忘了）
+
+metaitem.sdisk.5.name=导航坐标存储模块
+metaitem.sdisk.5.tooltip=§aT5（忘了）
+
+metaitem.sdisk.6.name=导航坐标存储模块
+metaitem.sdisk.6.tooltip=§aT6（忘了）
 #方块
 
 tile.space_elevator_casing.basic_casing.name=线缆锚定基材

@@ -1,8 +1,18 @@
 package keqing.gtqtspace.common.items;
 
 import gregtech.api.GregTechAPI;
+import gregtech.api.items.metaitem.MetaItem;
 import gregtech.api.items.metaitem.StandardMetaItem;
 import keqing.gtqtspace.common.CommonProxy;
+import net.minecraft.client.renderer.block.model.ModelResourceLocation;
+import net.minecraftforge.client.event.ModelRegistryEvent;
+import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.relauncher.Side;
+import net.minecraftforge.fml.relauncher.SideOnly;
+
+import static keqing.gtqtcore.common.items.GTQTMetaItems.DISK_15;
+import static keqing.gtqtspace.common.items.GTQTSMetaItems.SATELLITE;
 
 public class GTQTSMetaItem1 extends StandardMetaItem {
     public GTQTSMetaItem1() {
@@ -29,6 +39,8 @@ public class GTQTSMetaItem1 extends StandardMetaItem {
         GTQTSMetaItems.HEAVY_ALLOY_PLATEC=this.addItem(23, "heavy_alloy_platec").setMaxStackSize(64).setCreativeTabs(CommonProxy.GTQTSpace_TAB);
         GTQTSMetaItems.HEAVY_ALLOY_PLATED=this.addItem(24, "heavy_alloy_plated").setMaxStackSize(64).setCreativeTabs(CommonProxy.GTQTSpace_TAB);
         GTQTSMetaItems.HEAVY_ALLOY_PLATEE=this.addItem(25, "heavy_alloy_platee").setMaxStackSize(64).setCreativeTabs(CommonProxy.GTQTSpace_TAB);
+        //卫星
+        SATELLITE=this.addItem(30, "satellite_basic").setMaxStackSize(1).setCreativeTabs(CommonProxy.GTQTSpace_TAB);
         //炸弹小飞机
         GTQTSMetaItems.MINING_DRONE_LV = this.addItem(50, "mining_drone.lv").setMaxStackSize(1).setCreativeTabs(CommonProxy.GTQTSpace_TAB);
         GTQTSMetaItems.MINING_DRONE_MV = this.addItem(51, "mining_drone.mv").setMaxStackSize(1).setCreativeTabs(CommonProxy.GTQTSpace_TAB);
@@ -45,5 +57,14 @@ public class GTQTSMetaItem1 extends StandardMetaItem {
         GTQTSMetaItems.MINING_DRONE_OpV = this.addItem(62, "mining_drone.opv").setMaxStackSize(1).setCreativeTabs(CommonProxy.GTQTSpace_TAB);
         GTQTSMetaItems.MINING_DRONE_MAX = this.addItem(63, "mining_drone.max").setMaxStackSize(1).setCreativeTabs(CommonProxy.GTQTSpace_TAB);
 
+
+        //导航
+        GTQTSMetaItems.SDISK_1 = this.addItem(100, "sdisk.1").setCreativeTabs(keqing.gtqtcore.common.CommonProxy.GTQTCore_DISK);
+        GTQTSMetaItems.SDISK_2 = this.addItem(101, "sdisk.2").setCreativeTabs(keqing.gtqtcore.common.CommonProxy.GTQTCore_DISK);
+        GTQTSMetaItems.SDISK_3 = this.addItem(102, "sdisk.3").setCreativeTabs(keqing.gtqtcore.common.CommonProxy.GTQTCore_DISK);
+        GTQTSMetaItems.SDISK_4 = this.addItem(103, "sdisk.4").setCreativeTabs(keqing.gtqtcore.common.CommonProxy.GTQTCore_DISK);
+        GTQTSMetaItems.SDISK_5 = this.addItem(104, "sdisk.5").setCreativeTabs(keqing.gtqtcore.common.CommonProxy.GTQTCore_DISK);
+        GTQTSMetaItems.SDISK_6 = this.addItem(105, "sdisk.6").setCreativeTabs(keqing.gtqtcore.common.CommonProxy.GTQTCore_DISK);
     }
+
 }

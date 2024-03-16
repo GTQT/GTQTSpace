@@ -3,6 +3,14 @@ package keqing.gtqtspace.common.items;
 import gregtech.api.items.metaitem.MetaItem;
 
 public class GTQTSMetaItems {
+    public static MetaItem<?>.MetaValueItem SATELLITE;
+
+    public static MetaItem<?>.MetaValueItem SDISK_1;
+    public static MetaItem<?>.MetaValueItem SDISK_2;
+    public static MetaItem<?>.MetaValueItem SDISK_3;
+    public static MetaItem<?>.MetaValueItem SDISK_4;
+    public static MetaItem<?>.MetaValueItem SDISK_5;
+    public static MetaItem<?>.MetaValueItem SDISK_6;
     public static MetaItem<?>.MetaValueItem COMPUTERMINER;
     public static MetaItem<?>.MetaValueItem COMPUTERCARGO;
     public static MetaItem<?>.MetaValueItem COMPUTERBUGGY;

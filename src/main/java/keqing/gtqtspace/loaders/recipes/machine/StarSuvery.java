@@ -5,13 +5,13 @@ import gregtech.api.unification.material.MarkerMaterials;
 import gregtech.api.unification.ore.OrePrefix;
 import gregtech.common.items.MetaItems;
 
-import static gregtech.api.GTValues.HV;
-import static gregtech.api.GTValues.VA;
+import static gregtech.api.GTValues.*;
 import static gregtech.api.recipes.RecipeMaps.ASSEMBLY_LINE_RECIPES;
 import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.ore.OrePrefix.*;
 import static gregtech.common.items.MetaItems.*;
 import static gregtech.common.metatileentities.MetaTileEntities.HULL;
+import static keqing.gtqtcore.common.items.GTQTMetaItems.DISK_0;
 import static keqing.gtqtcore.common.items.GTQTMetaItems.DISK_8;
 import static keqing.gtqtspace.api.recipes.GTQTScoreRecipeMaps.*;
 import static keqing.gtqtspace.common.items.GTQTSMetaItems.*;
@@ -36,14 +36,11 @@ public class StarSuvery {
                 .duration(800).EUt(VA[HV]).buildAndRegister();
 
 
-        //test
-
+        //T1
         STAR_SURVEY.recipeBuilder()
-                .input(circuit, MarkerMaterials.Tier.HV, 1)
-                .input(FIELD_GENERATOR_HV, 1)
-                .input(EMITTER_HV, 1)
-                .input(plateDouble, Platinum, 16)
-                .output(COMPUTERTIER1)
+                .input(DISK_0)
+                .output(SDISK_1)
+                .circuitMeta(1)
                 .NB(1)
                 .CWUt(24)
                 .totalCWU(240000)
@@ -51,70 +48,145 @@ public class StarSuvery {
                 .duration(20)
                 .buildAndRegister();
 
+        ASSEMBLY_LINE_RECIPES.recipeBuilder()
+                .input(circuit, MarkerMaterials.Tier.HV, 1)
+                .input(FIELD_GENERATOR_HV, 1)
+                .input(EMITTER_HV, 1)
+                .input(plateDouble, Platinum, 16)
+                .output(COMPUTERTIER1)
+                .scannerResearch(b -> b
+                        .researchStack(SDISK_1.getStackForm())
+                        .duration(1200)
+                        .EUt(VA[HV]))
+                .duration(800).EUt(VA[HV]).buildAndRegister();
+
+
+
+        //T2
         STAR_SURVEY.recipeBuilder()
-                .input(circuit, MarkerMaterials.Tier.EV, 2)
-                .input(FIELD_GENERATOR_EV, 2)
-                .input(EMITTER_EV, 2)
+                .input(DISK_0)
+                .output(SDISK_2)
+                .circuitMeta(2)
+                .NB(2)
+                .CWUt(48)
+                .totalCWU(480000)
+                .EUt(120)
+                .duration(20)
+                .buildAndRegister();
+
+        ASSEMBLY_LINE_RECIPES.recipeBuilder()
+                .input(circuit, MarkerMaterials.Tier.EV, 1)
+                .input(FIELD_GENERATOR_EV, 1)
+                .input(EMITTER_EV, 1)
                 .input(plateDouble, Platinum, 16)
                 .output(COMPUTERTIER2)
-                .NB(2)
+                .scannerResearch(b -> b
+                        .researchStack(SDISK_2.getStackForm())
+                        .duration(1200)
+                        .EUt(VA[EV]))
+                .duration(800).EUt(VA[EV]).buildAndRegister();
+
+
+        //T3
+        STAR_SURVEY.recipeBuilder()
+                .input(DISK_0)
+                .output(SDISK_3)
+                .circuitMeta(3)
+                .NB(1)
                 .CWUt(96)
                 .totalCWU(960000)
-                .EUt(30)
+                .EUt(1960)
                 .duration(20)
                 .buildAndRegister();
 
-        STAR_SURVEY.recipeBuilder()
-                .input(circuit, MarkerMaterials.Tier.IV, 4)
-                .input(FIELD_GENERATOR_IV, 4)
-                .input(EMITTER_IV, 4)
+        ASSEMBLY_LINE_RECIPES.recipeBuilder()
+                .input(circuit, MarkerMaterials.Tier.IV, 1)
+                .input(FIELD_GENERATOR_IV, 1)
+                .input(EMITTER_IV, 1)
                 .input(plateDouble, Platinum, 16)
                 .output(COMPUTERTIER3)
-                .NB(3)
-                .CWUt(384)
-                .totalCWU(3840000)
+                .scannerResearch(b -> b
+                        .researchStack(SDISK_3.getStackForm())
+                        .duration(1200)
+                        .EUt(VA[IV]))
+                .duration(800).EUt(VA[IV]).buildAndRegister();
+
+
+        //T4
+        STAR_SURVEY.recipeBuilder()
+                .input(DISK_0)
+                .output(SDISK_4)
+                .circuitMeta(4)
+                .NB(1)
+                .CWUt(128)
+                .totalCWU(1280000)
                 .EUt(30)
                 .duration(20)
                 .buildAndRegister();
 
-        STAR_SURVEY.recipeBuilder()
-                .input(circuit, MarkerMaterials.Tier.LuV, 8)
-                .input(FIELD_GENERATOR_LuV, 8)
-                .input(EMITTER_LuV, 8)
+        ASSEMBLY_LINE_RECIPES.recipeBuilder()
+                .input(circuit, MarkerMaterials.Tier.LuV, 1)
+                .input(FIELD_GENERATOR_LuV, 1)
+                .input(EMITTER_LuV, 1)
                 .input(plateDouble, Platinum, 16)
                 .output(COMPUTERTIER4)
-                .NB(4)
-                .CWUt(1536)
-                .totalCWU(15360000)
+                .scannerResearch(b -> b
+                        .researchStack(SDISK_4.getStackForm())
+                        .duration(1200)
+                        .EUt(VA[HV]))
+                .duration(800).EUt(VA[HV]).buildAndRegister();
+
+
+
+        //T5
+        STAR_SURVEY.recipeBuilder()
+                .input(DISK_0)
+                .output(SDISK_5)
+                .circuitMeta(5)
+                .NB(1)
+                .CWUt(256)
+                .totalCWU(2560000)
                 .EUt(30)
                 .duration(20)
                 .buildAndRegister();
 
-        STAR_SURVEY.recipeBuilder()
-                .input(circuit, MarkerMaterials.Tier.ZPM, 16)
-                .input(FIELD_GENERATOR_ZPM, 16)
-                .input(EMITTER_ZPM, 16)
+        ASSEMBLY_LINE_RECIPES.recipeBuilder()
+                .input(circuit, MarkerMaterials.Tier.ZPM, 1)
+                .input(FIELD_GENERATOR_ZPM, 1)
+                .input(EMITTER_ZPM, 1)
                 .input(plateDouble, Platinum, 16)
                 .output(COMPUTERTIER5)
-                .NB(5)
-                .CWUt(6144)
-                .totalCWU(514)
+                .stationResearch(b -> b
+                        .researchStack(SDISK_5.getStackForm())
+                        .CWUt(1024,10240000)
+                        .EUt(VA[ZPM]))
+                .duration(800).EUt(VA[ZPM]).buildAndRegister();
+
+
+
+        //T6
+        STAR_SURVEY.recipeBuilder()
+                .input(DISK_0)
+                .output(SDISK_6)
+                .circuitMeta(6)
+                .NB(1)
+                .CWUt(1024)
+                .totalCWU(10240000)
                 .EUt(30)
-                .duration(61440000)
+                .duration(20)
                 .buildAndRegister();
 
-        STAR_SURVEY.recipeBuilder()
-                .input(circuit, MarkerMaterials.Tier.UHV, 32)
-                .input(FIELD_GENERATOR_UHV, 32)
-                .input(EMITTER_UHV, 32)
+        ASSEMBLY_LINE_RECIPES.recipeBuilder()
+                .input(circuit, MarkerMaterials.Tier.UV, 1)
+                .input(FIELD_GENERATOR_UV, 1)
+                .input(EMITTER_UV, 1)
                 .input(plateDouble, Platinum, 16)
                 .output(COMPUTERTIER6)
-                .NB(6)
-                .CWUt(24576)
-                .totalCWU(514)
-                .EUt(30)
-                .duration(245760000)
-                .buildAndRegister();
+                .stationResearch(b -> b
+                        .researchStack(SDISK_6.getStackForm())
+                        .CWUt(2048,20480000)
+                        .EUt(VA[UV]))
+                .duration(800).EUt(VA[UV]).buildAndRegister();
 
     }
 }
