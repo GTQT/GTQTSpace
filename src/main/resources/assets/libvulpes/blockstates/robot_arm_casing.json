@@ -1,0 +1,97 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "libvulpes:robot_arm_casing",
+    "textures": {
+      "all": "libvulpes:blocks/rendering_error"
+    }
+  },
+  "variants": {
+    "variant": {
+      "lv": {
+        "model": "libvulpes:robot_arm_casing",
+        "textures": {
+          "all": "libvulpes:blocks/casings/tiered/lv"
+        }
+      },
+      "mv": {
+        "model": "libvulpes:robot_arm_casing",
+        "textures": {
+          "all": "libvulpes:blocks/casings/tiered/mv"
+        }
+      },
+      "hv": {
+        "model": "libvulpes:robot_arm_casing",
+        "textures": {
+          "all": "libvulpes:blocks/casings/tiered/hv"
+        }
+      },
+      "ev": {
+        "model": "libvulpes:robot_arm_casing",
+        "textures": {
+          "all": "libvulpes:blocks/casings/tiered/ev"
+        }
+      },
+      "iv": {
+        "model": "libvulpes:robot_arm_casing",
+        "textures": {
+          "all": "libvulpes:blocks/casings/tiered/iv"
+        }
+      },
+      "luv": {
+        "model": "libvulpes:robot_arm_casing",
+        "textures": {
+          "all": "libvulpes:blocks/casings/tiered/luv"
+        }
+      },
+      "zpm": {
+        "model": "libvulpes:robot_arm_casing",
+        "textures": {
+          "all": "libvulpes:blocks/casings/tiered/zpm"
+        }
+      },
+      "uv": {
+        "model": "libvulpes:robot_arm_casing",
+        "textures": {
+          "all": "libvulpes:blocks/casings/tiered/uv"
+        }
+      },
+      "uhv": {
+        "model": "libvulpes:robot_arm_casing",
+        "textures": {
+          "all": "libvulpes:blocks/casings/tiered/uhv"
+        }
+      },
+      "uev": {
+        "model": "libvulpes:robot_arm_casing",
+        "textures": {
+          "all": "libvulpes:blocks/casings/tiered/uev"
+        }
+      },
+      "uiv": {
+        "model": "libvulpes:robot_arm_casing",
+        "textures": {
+          "all": "libvulpes:blocks/casings/tiered/uiv"
+        }
+      },
+      "uxv": {
+        "model": "libvulpes:robot_arm_casing",
+        "textures": {
+          "all": "libvulpes:blocks/casings/tiered/uxv"
+        }
+      },
+      "opv": {
+        "model": "libvulpes:robot_arm_casing",
+        "textures": {
+          "all": "libvulpes:blocks/casings/tiered/opv"
+        }
+      },
+      "max": {
+        "model": "libvulpes:robot_arm_casing",
+        "textures": {
+          "all": "libvulpes:blocks/casings/tiered/max"
+        }
+      }
+    }
+  }
+}
