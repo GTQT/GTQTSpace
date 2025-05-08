@@ -118,19 +118,17 @@ public class LibVulpes {
         LibVulpesBlocks.blockPhantom = new BlockPhantom(Material.CIRCUITS).setRegistryName("blockPhantom");
         LibVulpesBlocks.blockHatch = new BlockHatch(Material.IRON).setRegistryName("hatch").setCreativeTab(tabMultiblock).setHardness(3f);
         LibVulpesBlocks.blockPlaceHolder = new BlockMultiblockPlaceHolder().setRegistryName("placeHolder").setHardness(1f);
-        LibVulpesBlocks.blockAdvStructureBlock = new BlockAlphaTexture(Material.IRON).setRegistryName("advStructureMachine").setCreativeTab(tabMultiblock).setHardness(3f);
-        LibVulpesBlocks.blockStructureBlock = new BlockAlphaTexture(Material.IRON).setRegistryName("structureMachine").setCreativeTab(tabMultiblock).setHardness(3f);
+        LibVulpesBlocks.blockAdvStructureBlock = new BlockAlphaTexture(Material.IRON).setRegistryName("advstructuremachine").setCreativeTab(tabMultiblock).setHardness(3f);
+        LibVulpesBlocks.blockStructureBlock = new BlockAlphaTexture(Material.IRON).setRegistryName("structuremachine").setCreativeTab(tabMultiblock).setHardness(3f);
         LibVulpesBlocks.blockCreativeInputPlug = new BlockMultiMachineBattery(Material.IRON, TileCreativePowerInput.class, GuiHandler.guiId.MODULAR.ordinal()).setRegistryName("creativePowerBattery").setCreativeTab(tabMultiblock).setHardness(3f);
         LibVulpesBlocks.blockForgeInputPlug = new BlockMultiMachineBattery(Material.IRON, TileForgePowerInput.class, GuiHandler.guiId.MODULAR.ordinal()).setRegistryName("forgePowerInput").setCreativeTab(tabMultiblock).setHardness(3f);
         LibVulpesBlocks.blockForgeOutputPlug = new BlockMultiMachineBattery(Material.IRON, TileForgePowerOutput.class, GuiHandler.guiId.MODULAR.ordinal()).setRegistryName("forgePowerOutput").setCreativeTab(tabMultiblock).setHardness(3f);
         LibVulpesBlocks.blockCoalGenerator = new BlockTileComparatorOverride(TileCoalGenerator.class, GuiHandler.guiId.MODULAR.ordinal()).setRegistryName("coalGenerator").setCreativeTab(tabMultiblock).setHardness(3f);
 
         //Initialize Items
-        LibVulpesItems.itemLinker = new ItemLinker().setRegistryName("Linker").setCreativeTab(tabMultiblock).setTranslationKey("linker");
+        LibVulpesItems.itemLinker = new ItemLinker().setRegistryName("libvulpes:linker").setCreativeTab(tabMultiblock).setTranslationKey("Linker");
         LibVulpesItems.itemBattery = new ItemIngredient(2).setRegistryName("libvulpes:battery").setCreativeTab(tabMultiblock).setTranslationKey("battery");
-        LibVulpesItems.itemHoloProjector = new ItemProjector().setRegistryName("holoProjector").setCreativeTab(tabMultiblock).setTranslationKey("holoProjector");
-        
-        
+        LibVulpesItems.itemHoloProjector = new ItemProjector().setRegistryName("libvulpes:holoprojector").setCreativeTab(tabMultiblock).setTranslationKey("holoProjector");
     }
 
     @SubscribeEvent(priority=EventPriority.HIGH)
@@ -201,10 +199,10 @@ public class LibVulpes {
         if(FMLCommonHandler.instance().getSide().isClient()) {
             //Register Block models
             Item blockItem = Item.getItemFromBlock(LibVulpesBlocks.blockHatch);
-            ModelLoader.setCustomModelResourceLocation(blockItem, 0, new ModelResourceLocation("libvulpes:inputHatch", "inventory"));
-            ModelLoader.setCustomModelResourceLocation(blockItem, 1, new ModelResourceLocation("libvulpes:outputHatch", "inventory"));
-            ModelLoader.setCustomModelResourceLocation(blockItem, 2, new ModelResourceLocation("libvulpes:fluidInputHatch", "inventory"));
-            ModelLoader.setCustomModelResourceLocation(blockItem, 3, new ModelResourceLocation("libvulpes:fluidOutputHatch", "inventory"));
+            ModelLoader.setCustomModelResourceLocation(blockItem, 0, new ModelResourceLocation("libvulpes:inputhatch", "inventory"));
+            ModelLoader.setCustomModelResourceLocation(blockItem, 1, new ModelResourceLocation("libvulpes:outputhatch", "inventory"));
+            ModelLoader.setCustomModelResourceLocation(blockItem, 2, new ModelResourceLocation("libvulpes:fluidinputhatch", "inventory"));
+            ModelLoader.setCustomModelResourceLocation(blockItem, 3, new ModelResourceLocation("libvulpes:fluidoutputhatch", "inventory"));
         }
         
         materialRegistry.registerOres(tabLibVulpesOres);

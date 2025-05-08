@@ -11,6 +11,7 @@ tile.forgePowerOutput.name=能量输出口
 tile.creativePowerBattery.name=创造模式能量输入口
 tile.rfBattery.name=RF能量输入口
 tile.IC2Plug.name=IC2能量输入口
+tile.GTPlug.name=GT能量输入口
 tile.structureMachine.name=机器结构方块
 tile.advStructureMachine.name=高级机器结构方块
 tile.blockGenericMachine.name=机器控制器方块
@@ -29,7 +30,10 @@ tile.advancedMotor.name=高级马达
 tile.enhancedMotor.name=强化马达
 tile.eliteMotor.name=精英马达
 
-item.holoProjector.name=全息投影器
+item.holoProjector.name=全息投影仪
+msg.linker.error.firstMachine=这必须是第一个要链接的机器！
+msg.linker.program=坐标已编程到链接器中
+msg.linker.success=链接成功
 
 type.gem.name=晶体
 type.dust.name=粉
@@ -55,3 +59,10 @@ material.Titanium.name=钛
 material.Rutile.name=金红石
 material.Aluminum.name=铝
 material.Iridium.name=铱
+material.Dilithium.name=Dilithium
+
+item.battery.0.name=Battery
+item.battery.1.name=Battery Pack
+
+machine.tooltip.multiblock=(Multiblock Machine)
+
