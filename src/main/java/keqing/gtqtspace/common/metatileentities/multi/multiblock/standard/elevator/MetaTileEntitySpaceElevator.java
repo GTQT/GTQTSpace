@@ -1,8 +1,5 @@
 package keqing.gtqtspace.common.metatileentities.multi.multiblock.standard.elevator;
 
-import codechicken.lib.render.CCRenderState;
-import codechicken.lib.render.pipeline.IVertexOperation;
-import codechicken.lib.vec.Matrix4;
 import gregtech.api.capability.IEnergyContainer;
 import gregtech.api.capability.IOpticalComputationHatch;
 import gregtech.api.capability.IOpticalComputationProvider;
@@ -13,7 +10,6 @@ import gregtech.api.gui.widgets.AdvancedTextWidget;
 import gregtech.api.gui.widgets.ClickButtonWidget;
 import gregtech.api.gui.widgets.ImageCycleButtonWidget;
 import gregtech.api.gui.widgets.ImageWidget;
-import gregtech.api.metatileentity.IFastRenderMetaTileEntity;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
@@ -32,14 +28,12 @@ import keqing.gtqtspace.api.multiblock.ISpaceElevatorProvider;
 import keqing.gtqtspace.api.multiblock.ISpaceElevatorReceiver;
 import keqing.gtqtspace.api.predicate.TiredTraceabilityPredicate;
 import keqing.gtqtspace.api.utils.GTQTSUtil;
-import keqing.gtqtspace.client.objmodels.ObjModels;
 import keqing.gtqtspace.client.textures.GTQTSTextures;
 import keqing.gtqtspace.common.block.GTQTSMetaBlocks;
 import keqing.gtqtspace.common.block.blocks.GTQTSpaceElevatorCasing;
 import keqing.gtqtspace.world.Teleporter.WorldTeleporter;
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
@@ -48,11 +42,9 @@ import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.tileentity.TileEntity;
 import net.minecraft.util.ResourceLocation;
-import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.client.FMLClientHandler;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -67,7 +59,7 @@ import java.util.concurrent.ConcurrentHashMap;
 import static gregtech.api.unification.material.Materials.Naquadah;
 import static gregtech.api.util.RelativeDirection.*;
 
-public class MetaTileEntitySpaceElevator extends MultiblockWithDisplayBase implements ISpaceElevatorProvider, IFastRenderMetaTileEntity {
+public class MetaTileEntitySpaceElevator extends MultiblockWithDisplayBase implements ISpaceElevatorProvider {
     private final Collection<ISpaceElevatorReceiver> spaceElevatorReceivers = ConcurrentHashMap.newKeySet();
     protected IOpticalComputationProvider computationProvider;
     protected IEnergyContainer energyContainer;
@@ -484,60 +476,5 @@ public class MetaTileEntitySpaceElevator extends MultiblockWithDisplayBase imple
         tooltip.add(I18n.format("拓展模式：请在UI内打开拓展模式，shift右键控制器即可预览"));
         tooltip.add(I18n.format("跃迁模式：可传送至空间站"));
         tooltip.add(I18n.format("请使用IV及其以上的的能源仓！"));
-    }
-
-    @Override
-    @SideOnly(Side.CLIENT)
-    public void renderMetaTileEntity(double x, double y, double z, float partialTicks) {
-        IFastRenderMetaTileEntity.super.renderMetaTileEntity(x, y, z, partialTicks);
-        //if (isStructureFormed() && GTQTCoreConfig.OBJRenderSwitch.EnableObj && GTQTCoreConfig.OBJRenderSwitch.EnableObjPrimitiveTreeFarmer) {
-        if (true) {
-            final int xDir = this.getFrontFacing().getOpposite().getXOffset();
-            final int zDir = this.getFrontFacing().getOpposite().getZOffset();
-            //机器开启才会进行渲染
-            //这是一些opengl的操作,GlStateManager是mc自身封装的一部分方法  前四条详情请看 https://turou.fun/minecraft/legacy-render-tutor/
-            //opengl方法一般需要成对出现，实际上他是一个状态机，改装状态后要还原  一般情况按照我这些去写就OK
-            GlStateManager.pushAttrib(); //保存变换前的位置和角度
-            GlStateManager.pushMatrix();
-            GlStateManager.disableLighting();
-            GlStateManager.disableCull();
-            FMLClientHandler.instance().getClient().getTextureManager().bindTexture(ObjModels.climber_pic); //自带的材质绑定 需要传递一个ResourceLocation
-            GlStateManager.translate(x, y, z);//translate是移动方法 这个移动到xyz是默认的 不要动
-            GlStateManager.translate(xDir * 3 + 0.5, 150, zDir * 3 + 0.5);//translate是移动方法 这个移动到xyz是默认的 不要动
-
-
-            float angle = (System.currentTimeMillis() % 36000) / 100.0f; //我写的随时间变化旋转的角度
-            //GlStateManager.rotate(90, 0F, 1F, 0F);//rotate是旋转模型的方法  DNA的初始位置不太对 我旋转了一下   四个参数为：旋转角度，xyz轴，可以控制模型围绕哪个轴旋转
-            GlStateManager.rotate(angle, 0F, 1F, 0F);//我让dna围绕z轴旋转，角度是实时变化的
-
-
-            GlStateManager.scale(6, 6, 6);
-            // ObjModels.Tree_Model.renderAllWithMtl(); //这个是模型加载器的渲染方法  这是带MTL的加载方式
-            ObjModels.climber.renderAll(); //这个是模型加载器的渲染方法  这是不带MTL的加载方式
-            GlStateManager.popMatrix();//读取变换前的位置和角度(恢复原状) 下面都是还原状态机的语句
-            GlStateManager.enableLighting();
-            GlStateManager.popAttrib();
-            GlStateManager.enableCull();
-        }
-
-    }
-
-    //渲染模型的位置
-
-    @Override
-    public AxisAlignedBB getRenderBoundingBox() {
-        //这个影响模型的可视范围，正常方块都是 1 1 1，长宽高各为1，当这个方块离线玩家视线后，obj模型渲染会停止，所以可以适当放大这个大小能让模型有更多角度的可视
-        return new AxisAlignedBB(getPos().add(-10, -10, -10), getPos().add(10, 10, 10));
-    }
-
-    @Override
-    public void renderMetaTileEntity(CCRenderState renderState, Matrix4 translation, IVertexOperation[] pipeline) {
-        super.renderMetaTileEntity(renderState, translation, pipeline);
-        this.getFrontOverlay().renderOrientedState(renderState, translation, pipeline, getFrontFacing(), true, true);
-    }
-    @Override
-    public boolean isGlobalRenderer()
-    {
-        return true;
     }
 }

@@ -6,10 +6,9 @@ import it.unimi.dsi.fastutil.objects.Object2ObjectOpenHashMap;
 import keqing.gtqtspace.GTQTSConfig;
 import net.minecraftforge.fluids.FluidStack;
 
-import static gregtech.api.GTValues.L;
 import static gregtech.api.unification.material.Materials.*;
-import static keqing.gtqtcore.api.unification.GCYSMaterials.*;
 import static keqing.gtqtcore.api.unification.GTQTMaterials.*;
+
 public class SpacePumpRecipes {
 
     public static Object2ObjectMap<String, FluidStack> GAS_SIPHON_RECIPES = new Object2ObjectOpenHashMap<>();
@@ -23,46 +22,46 @@ public class SpacePumpRecipes {
 
 
     private static void gasSiphon() {
-        addSpacePumpRecipe(1,1, Helium3.getFluid(2000));
-        addSpacePumpRecipe(1,2, Argon.getFluid(100));
-        addSpacePumpRecipe(1,3, Neon.getFluid(100));
-        addSpacePumpRecipe(1,4, Hydrogen.getFluid(50));
+        addSpacePumpRecipe(1, 1, Helium3.getFluid(2000));
+        addSpacePumpRecipe(1, 2, Argon.getFluid(100));
+        addSpacePumpRecipe(1, 3, Neon.getFluid(100));
+        addSpacePumpRecipe(1, 4, Hydrogen.getFluid(50));
 
-        addSpacePumpRecipe(2,1, MarsAir.getFluid(2000));
-        addSpacePumpRecipe(2,2, Oxygen.getFluid(500));
-        addSpacePumpRecipe(2,3, CarbonDioxide.getFluid(500));
-        addSpacePumpRecipe(2,4, Argon.getFluid(100));
+        addSpacePumpRecipe(2, 1, MarsAir.getFluid(2000));
+        addSpacePumpRecipe(2, 2, Oxygen.getFluid(500));
+        addSpacePumpRecipe(2, 3, CarbonDioxide.getFluid(500));
+        addSpacePumpRecipe(2, 4, Argon.getFluid(100));
 
-        addSpacePumpRecipe(3,1, SulfuricAcid.getFluid(2000));
-        addSpacePumpRecipe(3,2, HydrogenSulfide.getFluid(2000));
-        addSpacePumpRecipe(3,3, SaltWater.getFluid(2000));
-        addSpacePumpRecipe(3,4, OilGas.getFluid(500));
+        addSpacePumpRecipe(3, 1, SulfuricAcid.getFluid(2000));
+        addSpacePumpRecipe(3, 2, HydrogenSulfide.getFluid(2000));
+        addSpacePumpRecipe(3, 3, SaltWater.getFluid(2000));
+        addSpacePumpRecipe(3, 4, OilGas.getFluid(500));
 
-        addSpacePumpRecipe(4,1, Hydrogen.getFluid(2000));
-        addSpacePumpRecipe(4,2, Neon.getFluid(500));
-        addSpacePumpRecipe(4,3, Benzene.getFluid(2000));
-        addSpacePumpRecipe(4,4, DistilledWater.getFluid(2000));
+        addSpacePumpRecipe(4, 1, Hydrogen.getFluid(2000));
+        addSpacePumpRecipe(4, 2, Neon.getFluid(500));
+        addSpacePumpRecipe(4, 3, Benzene.getFluid(2000));
+        addSpacePumpRecipe(4, 4, DistilledWater.getFluid(2000));
 
-        addSpacePumpRecipe(5,1, Methane.getFluid(500));
-        addSpacePumpRecipe(5,2, Ammonia.getFluid(500));
-        addSpacePumpRecipe(5,3, Ethane.getFluid(500));
-        addSpacePumpRecipe(5,4, Acetylene.getFluid(500));
+        addSpacePumpRecipe(5, 1, Methane.getFluid(500));
+        addSpacePumpRecipe(5, 2, Ammonia.getFluid(500));
+        addSpacePumpRecipe(5, 3, Ethane.getFluid(500));
+        addSpacePumpRecipe(5, 4, Acetylene.getFluid(500));
 
 
-        addSpacePumpRecipe(6,1, Radon.getFluid(500));
-        addSpacePumpRecipe(6,2, Deuterium.getFluid(500));
-        addSpacePumpRecipe(6,3, Tritium.getFluid(500));
-        addSpacePumpRecipe(6,4, Oil.getFluid(500));
+        addSpacePumpRecipe(6, 1, Radon.getFluid(500));
+        addSpacePumpRecipe(6, 2, Deuterium.getFluid(500));
+        addSpacePumpRecipe(6, 3, Tritium.getFluid(500));
+        addSpacePumpRecipe(6, 4, Oil.getFluid(500));
 
-        addSpacePumpRecipe(7,1, Helium.getFluid(FluidStorageKeys.LIQUID, 2000));
-        addSpacePumpRecipe(7,2, Hydrogen.getFluid(FluidStorageKeys.LIQUID, 2000));
-        addSpacePumpRecipe(7,3, Nitrogen.getFluid(FluidStorageKeys.LIQUID, 2000));
-        addSpacePumpRecipe(7,4, Radon.getFluid(FluidStorageKeys.LIQUID, 2000));
+        addSpacePumpRecipe(7, 1, Helium.getFluid(FluidStorageKeys.LIQUID, 2000));
+        addSpacePumpRecipe(7, 2, Hydrogen.getFluid(FluidStorageKeys.LIQUID, 2000));
+        addSpacePumpRecipe(7, 3, Nitrogen.getFluid(FluidStorageKeys.LIQUID, 2000));
+        addSpacePumpRecipe(7, 4, Radon.getFluid(FluidStorageKeys.LIQUID, 2000));
     }
 
     private static void initSpacePumpPlanets() {
-        for(int i = 0; i < GTQTSConfig.space.planetNames.length; i++) {
-            PLANET_ID_TO_PLANET_NAME_MAP.put(i+1, GTQTSConfig.space.planetNames[i]);
+        for (int i = 0; i < GTQTSConfig.space.planetNames.length; i++) {
+            PLANET_ID_TO_PLANET_NAME_MAP.put(i + 1, GTQTSConfig.space.planetNames[i]);
         }
     }
 

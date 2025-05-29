@@ -23,7 +23,7 @@ import static keqing.gtqtcore.common.items.GTQTMetaItems.WIND_ROTOR_STEEL;
 public class GTQTSMetaItem1 extends StandardMetaItem {
 	public GTQTSMetaItem1() {
 		this.setRegistryName("gtqt_space_meta_item_1");
-		setCreativeTab(GregTechAPI.TAB_GREGTECH);
+		setCreativeTab(CommonProxy.GTQTSpace_TAB);
 	}
 
 	public void registerSubItems() {
@@ -61,8 +61,6 @@ public class GTQTSMetaItem1 extends StandardMetaItem {
 		GTQTSMetaItems.MINING_DRONE_UXV = this.addItem(61, "mining_drone.uxv").setMaxStackSize(1).setCreativeTabs(CommonProxy.GTQTSpace_TAB);
 		GTQTSMetaItems.MINING_DRONE_OpV = this.addItem(62, "mining_drone.opv").setMaxStackSize(1).setCreativeTabs(CommonProxy.GTQTSpace_TAB);
 		GTQTSMetaItems.MINING_DRONE_MAX = this.addItem(63, "mining_drone.max").setMaxStackSize(1).setCreativeTabs(CommonProxy.GTQTSpace_TAB);
-
-		GTQTSMetaItems.POS_BINDING_CARD = this.addItem(97, "pos_binding_card").setMaxStackSize(1).addComponents(new PosBindingCardBehaviors()).setCreativeTabs(CommonProxy.GTQTSpace_TAB);
 
 		//卫星 包括卫星升级构建
 		GTQTSMetaItems.TELESCOPE = this.addItem(98, "telescope").setMaxStackSize(1).setCreativeTabs(CommonProxy.GTQTSpace_TAB);

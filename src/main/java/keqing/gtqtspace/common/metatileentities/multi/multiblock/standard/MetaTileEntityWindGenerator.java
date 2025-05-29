@@ -19,17 +19,12 @@ import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.common.blocks.BlockMetalCasing;
 import gregtech.common.blocks.MetaBlocks;
-import keqing.gtqtspace.client.objmodels.ObjModels;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentTranslation;
-import net.minecraftforge.fml.client.FMLClientHandler;
-import net.minecraftforge.fml.relauncher.Side;
-import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
@@ -43,6 +38,7 @@ public class MetaTileEntityWindGenerator extends MultiblockWithDisplayBase imple
     public MetaTileEntityWindGenerator(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId);
     }
+
     public NBTTagCompound writeToNBT(NBTTagCompound data) {
         data.setInteger("speed", speed);
         return super.writeToNBT(data);
@@ -52,6 +48,7 @@ public class MetaTileEntityWindGenerator extends MultiblockWithDisplayBase imple
         super.readFromNBT(data);
         speed = data.getInteger("speed");
     }
+
     @Override
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity tileEntity) {
         return new MetaTileEntityWindGenerator(metaTileEntityId);
@@ -67,7 +64,7 @@ public class MetaTileEntityWindGenerator extends MultiblockWithDisplayBase imple
     @Override
     protected void addWarningText(List<ITextComponent> textList) {
         super.addWarningText(textList);
-        if (speed==0) {
+        if (speed == 0) {
             textList.add(new TextComponentTranslation("当前维度不能使用风力发电机！"));
         }
 
@@ -79,6 +76,7 @@ public class MetaTileEntityWindGenerator extends MultiblockWithDisplayBase imple
         textList.add(new TextComponentTranslation(">>天气增幅：" + getWeatherFactor()));
         textList.add(new TextComponentTranslation(">>维度增幅：" + speed));
     }
+
     private int getWeatherFactor() {
         // 考虑更多天气情况
         if (getWorld().isRaining()) {
@@ -149,44 +147,10 @@ public class MetaTileEntityWindGenerator extends MultiblockWithDisplayBase imple
     }
 
     @Override
-    @SideOnly(Side.CLIENT)
-    public void renderMetaTileEntity(double x, double y, double z, float partialTicks) {
-        IFastRenderMetaTileEntity.super.renderMetaTileEntity(x, y, z, partialTicks);
-
-        if (isStructureFormed()) {
-            final int xDir = this.getFrontFacing().getOpposite().getXOffset();
-            final int zDir = this.getFrontFacing().getOpposite().getZOffset();
-            //机器开启才会进行渲染
-            //这是一些opengl的操作,GlStateManager是mc自身封装的一部分方法  前四条详情请看 https://turou.fun/minecraft/legacy-render-tutor/
-            //opengl方法一般需要成对出现，实际上他是一个状态机，改装状态后要还原  一般情况按照我这些去写就OK
-            GlStateManager.pushAttrib(); //保存变换前的位置和角度
-            GlStateManager.pushMatrix();
-            GlStateManager.disableLighting();
-            GlStateManager.disableCull();
-            FMLClientHandler.instance().getClient().getTextureManager().bindTexture(ObjModels.wind_generator_pic); //自带的材质绑定 需要传递一个ResourceLocation
-            GlStateManager.translate(x, y, z);//translate是移动方法 这个移动到xyz是默认的 不要动
-            GlStateManager.translate(xDir * 2 + 0.5, 3.2, zDir * 2 + 0.5);//translate是移动方法 这个移动到xyz是默认的 不要动
-            ObjModels.darius_wind_generator.renderAllExcept("torus","torus.001");
-            float angle = (System.currentTimeMillis() % 36000) / 10.0f; //我写的随时间变化旋转的角度
-            GlStateManager.rotate(angle, 0F, 1F, 0F);//我让dna围绕z轴旋转，角度是实时变化的
-
-
-            GlStateManager.scale(1.5, 1.5, 1.5);
-            // ObjModels.Tree_Model.renderAllWithMtl(); //这个是模型加载器的渲染方法  这是带MTL的加载方式
-            ObjModels.darius_wind_generator.renderPart("torus");
-            ObjModels.darius_wind_generator.renderPart("torus.001");
-            GlStateManager.popMatrix();//读取变换前的位置和角度(恢复原状) 下面都是还原状态机的语句
-            GlStateManager.enableLighting();
-            GlStateManager.popAttrib();
-            GlStateManager.enableCull();
-
-        }
-
-    }
-    @Override
     public boolean isGlobalRenderer() {
         return true;
     }
+
     //渲染模型的位置
     @Override
     public AxisAlignedBB getRenderBoundingBox() {
