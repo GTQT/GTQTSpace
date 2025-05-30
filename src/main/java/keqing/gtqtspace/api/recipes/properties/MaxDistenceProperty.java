@@ -6,26 +6,26 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagInt;
 
-public class TierProperty extends RecipeProperty<Integer> {
+public class MaxDistenceProperty extends RecipeProperty<Integer> {
 
-    public static final String KEY = "tier";
+    public static final String KEY = "distence";
 
-    private static TierProperty INSTANCE;
+    private static MaxDistenceProperty INSTANCE;
 
-    private TierProperty() {
+    private MaxDistenceProperty() {
         super(KEY, Integer.class);
     }
 
-    public static TierProperty getInstance() {
+    public static MaxDistenceProperty getInstance() {
         if (INSTANCE == null) {
-            INSTANCE = new TierProperty();
+            INSTANCE = new MaxDistenceProperty();
         }
         return INSTANCE;
     }
 
     @Override
     public void drawInfo(Minecraft minecraft, int x, int y, int color, Object value) {
-        minecraft.fontRenderer.drawString(I18n.format("磁轨加速器等级：%s",
+        minecraft.fontRenderer.drawString(I18n.format("最大距离：%s",
                 castValue(value)), x, y, color);
     }
 

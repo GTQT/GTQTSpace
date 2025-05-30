@@ -18,7 +18,8 @@ import gregtech.api.pattern.FactoryBlockPattern;
 import gregtech.api.recipes.Recipe;
 import gregtech.api.util.TextComponentUtil;
 import keqing.gtqtspace.api.multiblock.SpaceModulesType;
-import keqing.gtqtspace.api.recipes.properties.DistenceProperty;
+import keqing.gtqtspace.api.recipes.properties.MaxDistenceProperty;
+import keqing.gtqtspace.api.recipes.properties.MinDistenceProperty;
 import keqing.gtqtspace.client.textures.GTQTSTextures;
 import keqing.gtqtspace.common.block.GTQTSMetaBlocks;
 import keqing.gtqtspace.common.block.blocks.GTQTSpaceElevatorCasing;
@@ -70,7 +71,7 @@ public class MetaTileEntityMiningModule extends MetaTileEntitySpaceElevatorModul
     @Override
     public boolean checkRecipe(@Nonnull Recipe recipe, boolean consumeIfSuccess) {
         if (!super.checkRecipe(recipe, consumeIfSuccess)) return false;
-        return this.distance == recipe.getProperty(DistenceProperty.getInstance(), 0);
+        return this.distance >= recipe.getProperty(MinDistenceProperty.getInstance(), 0) && this.distance <= recipe.getProperty(MaxDistenceProperty.getInstance(), 0);
     }
 
     @Override

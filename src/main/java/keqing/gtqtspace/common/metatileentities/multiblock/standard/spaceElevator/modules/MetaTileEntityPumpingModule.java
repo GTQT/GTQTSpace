@@ -16,7 +16,6 @@ import gregtech.api.metatileentity.multiblock.MultiblockDisplayText;
 import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
 import gregtech.api.recipes.Recipe;
-import gregtech.api.util.GTUtility;
 import gregtech.api.util.TextComponentUtil;
 import gregtech.common.items.MetaItems;
 import keqing.gtqtspace.api.multiblock.SpaceModulesType;
@@ -45,16 +44,16 @@ import java.util.function.BooleanSupplier;
 
 public class MetaTileEntityPumpingModule extends MetaTileEntitySpaceElevatorModules {
 
+    //Dim轮询表
+    private final int[] planet = {0, 0, 0, 0};
+    //电路板轮询表
+    private final int[] fluidNumber = {0, 0, 0, 0};
     //距离轮询系统 只在没有配方工作时开始循环
     boolean cycleMode;
     //这个是直接设定的维度
     int dim;
     int circuit;
     int i = 1;
-    //Dim轮询表
-    private final int[] planet = {0, 0, 0, 0};
-    //电路板轮询表
-    private final int[] fluidNumber = {0, 0, 0, 0};
 
     public MetaTileEntityPumpingModule(ResourceLocation metaTileEntityId, int tier, SpaceModulesType type) {
         super(metaTileEntityId, tier, type);
@@ -189,6 +188,7 @@ public class MetaTileEntityPumpingModule extends MetaTileEntitySpaceElevatorModu
         builder.bindPlayerInventory(entityPlayer.inventory, 155);
         return builder;
     }
+
     protected void addDisplayText(List<ITextComponent> textList) {
         MultiblockDisplayText.builder(textList, this.isStructureFormed())
                 .setWorkingStatus(this.recipeMapWorkable.isWorkingEnabled(), this.recipeMapWorkable.isActive())
@@ -199,6 +199,7 @@ public class MetaTileEntityPumpingModule extends MetaTileEntitySpaceElevatorModu
                 .addWorkingStatusLine().addProgressLine(this.recipeMapWorkable.getProgressPercent())
                 .addComputationUsageExactLine(getRecipeMapWorkable().getCurrentDrawnCWUt());
     }
+
     private String getPlanetValue(int index) {
         return String.valueOf(this.planet[index]);
     }
@@ -238,7 +239,7 @@ public class MetaTileEntityPumpingModule extends MetaTileEntitySpaceElevatorModu
         data.setBoolean("cycleMode", this.cycleMode);
         NBTTagList nbtTagPlanetList = new NBTTagList();
         NBTTagList nbtTagFluidList = new NBTTagList();
-        for(int i = 0; i < 4; i++) {
+        for (int i = 0; i < 4; i++) {
             NBTTagCompound planetTag = new NBTTagCompound();
             NBTTagCompound fluidTag = new NBTTagCompound();
 
@@ -259,7 +260,7 @@ public class MetaTileEntityPumpingModule extends MetaTileEntitySpaceElevatorModu
         this.cycleMode = data.getBoolean("cycleMode");
         NBTTagList nbtTagPlanetList = data.getTagList("planets", Constants.NBT.TAG_COMPOUND);
         NBTTagList nbtTagFluidList = data.getTagList("fluids", Constants.NBT.TAG_COMPOUND);
-        for(int i = 0; i < 4; i++) {
+        for (int i = 0; i < 4; i++) {
             NBTTagCompound planetTag = nbtTagPlanetList.getCompoundTagAt(i);
             NBTTagCompound fluidTag = nbtTagFluidList.getCompoundTagAt(i);
 
@@ -267,6 +268,7 @@ public class MetaTileEntityPumpingModule extends MetaTileEntitySpaceElevatorModu
             this.fluidNumber[i] = fluidTag.getInteger("fluid");
         }
     }
+
     @Override
     public void writeInitialSyncData(PacketBuffer buf) {
         super.writeInitialSyncData(buf);

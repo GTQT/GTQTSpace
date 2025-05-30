@@ -28,13 +28,14 @@ public class DimProperty extends RecipeProperty<Integer> {
         minecraft.fontRenderer.drawString(I18n.format("目标维度：%s",
                 castValue(value)), x, y, color);
     }
+
     @Override
     public NBTBase serialize(Object value) {
         return new NBTTagInt(castValue(value));
     }
 
     @Override
-    public Object deserialize( NBTBase nbt) {
+    public Object deserialize(NBTBase nbt) {
         return ((NBTTagInt) nbt).getInt();
     }
 }

@@ -6,35 +6,36 @@ import net.minecraft.client.resources.I18n;
 import net.minecraft.nbt.NBTBase;
 import net.minecraft.nbt.NBTTagInt;
 
-public class DistenceProperty extends RecipeProperty<Integer> {
+public class MinDistenceProperty extends RecipeProperty<Integer> {
 
     public static final String KEY = "distence";
 
-    private static DistenceProperty INSTANCE;
+    private static MinDistenceProperty INSTANCE;
 
-    private DistenceProperty() {
+    private MinDistenceProperty() {
         super(KEY, Integer.class);
     }
 
-    public static DistenceProperty getInstance() {
+    public static MinDistenceProperty getInstance() {
         if (INSTANCE == null) {
-            INSTANCE = new DistenceProperty();
+            INSTANCE = new MinDistenceProperty();
         }
         return INSTANCE;
     }
 
     @Override
     public void drawInfo(Minecraft minecraft, int x, int y, int color, Object value) {
-        minecraft.fontRenderer.drawString(I18n.format("距离：%s",
+        minecraft.fontRenderer.drawString(I18n.format("最小距离：%s",
                 castValue(value)), x, y, color);
     }
+
     @Override
     public NBTBase serialize(Object value) {
         return new NBTTagInt(castValue(value));
     }
 
     @Override
-    public Object deserialize( NBTBase nbt) {
+    public Object deserialize(NBTBase nbt) {
         return ((NBTTagInt) nbt).getInt();
     }
 }

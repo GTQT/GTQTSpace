@@ -18,7 +18,7 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
-public class MetaTileEntityAssemblerModule extends MetaTileEntitySpaceElevatorModules{
+public class MetaTileEntityAssemblerModule extends MetaTileEntitySpaceElevatorModules {
 
     public MetaTileEntityAssemblerModule(ResourceLocation metaTileEntityId, int tier, SpaceModulesType type) {
         super(metaTileEntityId, tier, type);
@@ -43,6 +43,7 @@ public class MetaTileEntityAssemblerModule extends MetaTileEntitySpaceElevatorMo
                 .where('H', metaTileEntities(GTQTSMetaTileEntities.ELEVATOR_RECEIVER_HATCH))
                 .build();
     }
+
     @Override
     @SideOnly(Side.CLIENT)
     public void renderMetaTileEntity(CCRenderState renderState, Matrix4 translation, IVertexOperation[] pipeline) {

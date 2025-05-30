@@ -2,13 +2,13 @@ package keqing.gtqtspace.api.recipes;
 
 import gregtech.api.recipes.RecipeMap;
 import gregtech.api.recipes.RecipeMapBuilder;
-import gregtech.api.recipes.builders.SimpleRecipeBuilder;
 import gregtech.core.sound.GTSoundEvents;
 import keqing.gtqtspace.api.recipes.builder.AssemblerModulersBuilder;
 import keqing.gtqtspace.api.recipes.builder.MiningModulersBuilder;
 import keqing.gtqtspace.api.recipes.builder.PumpingModulersBuilder;
-import keqing.gtqtspace.api.recipes.ui.SpaceMiningUI;
 import keqing.gtqtspace.api.recipes.ui.SpaceAssemblerUI;
+import keqing.gtqtspace.api.recipes.ui.SpaceMiningUI;
+
 public class GTQTScoreRecipeMaps {
 
 
@@ -30,7 +30,7 @@ public class GTQTScoreRecipeMaps {
                 .build();
 
         //泵无需UI
-        PUMPING_MODULE_RECIPES=new RecipeMapBuilder<>("pumping_module",
+        PUMPING_MODULE_RECIPES = new RecipeMapBuilder<>("pumping_module",
                 new PumpingModulersBuilder())
                 .itemInputs(1)
                 .fluidOutputs(1)
@@ -38,7 +38,7 @@ public class GTQTScoreRecipeMaps {
                 .build();
 
         //组装模式 使用装配线UI
-        ASSEMBLER_MODULE_RECIPES=new RecipeMapBuilder<>("assembler_module",
+        ASSEMBLER_MODULE_RECIPES = new RecipeMapBuilder<>("assembler_module",
                 new AssemblerModulersBuilder())
                 .itemInputs(16)
                 .itemOutputs(1)

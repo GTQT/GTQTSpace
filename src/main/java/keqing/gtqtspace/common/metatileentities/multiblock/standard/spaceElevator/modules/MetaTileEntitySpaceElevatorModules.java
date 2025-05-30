@@ -29,11 +29,6 @@ public abstract class MetaTileEntitySpaceElevatorModules extends RecipeMapMultib
     SpaceModulesType type;
 
 
-    @Override
-    public ComputationRecipeLogic getRecipeMapWorkable() {
-        return (ComputationRecipeLogic) recipeMapWorkable;
-    }
-
     public MetaTileEntitySpaceElevatorModules(ResourceLocation metaTileEntityId, int tier, SpaceModulesType type) {
         super(metaTileEntityId, type.recipeMap());
         this.tier = tier;
@@ -45,26 +40,15 @@ public abstract class MetaTileEntitySpaceElevatorModules extends RecipeMapMultib
         this.recipeMapWorkable = new SpaceElevatorRecipeLogic(this);
     }
 
-    protected class SpaceElevatorRecipeLogic extends ComputationRecipeLogic {
-        public SpaceElevatorRecipeLogic(RecipeMapMultiblockController tileEntity) {
-            super(tileEntity, ComputationType.SPORADIC);
-        }
-        @Override
-        public boolean checkRecipe(Recipe recipe) {
-            if (!super.checkRecipe(recipe)) {
-                return false;
-            } else if (!recipe.hasProperty(TierProperty.getInstance())) {
-                return true;
-            } else {
-                return spaceElevatorProvider.getMotorTier()>=  recipe.getProperty(TierProperty.getInstance(), 0);
-            }
-        }
+    @Override
+    public ComputationRecipeLogic getRecipeMapWorkable() {
+        return (ComputationRecipeLogic) recipeMapWorkable;
     }
+
     @Override
     public IOpticalComputationProvider getComputationProvider() {
         return computationProvider;
     }
-
 
     @Override
     public void updateFormedValid() {
@@ -101,7 +85,6 @@ public abstract class MetaTileEntitySpaceElevatorModules extends RecipeMapMultib
         return GTQTSTextures.ELEVATOR_CASING;
     }
 
-
     @Override
     public ISpaceElevatorProvider getSpaceElevator() {
         return spaceElevatorProvider;
@@ -125,5 +108,22 @@ public abstract class MetaTileEntitySpaceElevatorModules extends RecipeMapMultib
     @Override
     public SpaceModulesType getModuleType() {
         return type;
+    }
+
+    protected class SpaceElevatorRecipeLogic extends ComputationRecipeLogic {
+        public SpaceElevatorRecipeLogic(RecipeMapMultiblockController tileEntity) {
+            super(tileEntity, ComputationType.SPORADIC);
+        }
+
+        @Override
+        public boolean checkRecipe(Recipe recipe) {
+            if (!super.checkRecipe(recipe)) {
+                return false;
+            } else if (!recipe.hasProperty(TierProperty.getInstance())) {
+                return true;
+            } else {
+                return spaceElevatorProvider.getMotorTier() >= recipe.getProperty(TierProperty.getInstance(), 0);
+            }
+        }
     }
 }

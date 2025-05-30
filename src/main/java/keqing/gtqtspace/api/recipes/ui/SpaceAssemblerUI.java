@@ -4,17 +4,16 @@ import gregtech.api.capability.impl.FluidTankList;
 import gregtech.api.gui.GuiTextures;
 import gregtech.api.gui.ModularUI;
 import gregtech.api.gui.widgets.ProgressWidget;
-import gregtech.api.gui.widgets.SlotWidget;
 import gregtech.api.recipes.RecipeMap;
 import gregtech.api.recipes.ui.RecipeMapUI;
 import net.minecraftforge.items.IItemHandlerModifiable;
 
-public class SpaceAssemblerUI <R extends RecipeMap<?>> extends RecipeMapUI<R> {
+public class SpaceAssemblerUI<R extends RecipeMap<?>> extends RecipeMapUI<R> {
 
     /**
      * @param recipeMap the recipemap corresponding to this ui
      */
-    public SpaceAssemblerUI( R recipeMap) {
+    public SpaceAssemblerUI(R recipeMap) {
         super(recipeMap, false, false, false, false, false);
         setProgressBar(GuiTextures.PROGRESS_BAR_ARROW, ProgressWidget.MoveType.HORIZONTAL);
     }
@@ -31,9 +30,9 @@ public class SpaceAssemblerUI <R extends RecipeMap<?>> extends RecipeMapUI<R> {
     }
 
     @Override
-    protected void addInventorySlotGroup( ModularUI.Builder builder,
-                                          IItemHandlerModifiable itemHandler,
-                                          FluidTankList fluidHandler, boolean isOutputs, int yOffset) {
+    protected void addInventorySlotGroup(ModularUI.Builder builder,
+                                         IItemHandlerModifiable itemHandler,
+                                         FluidTankList fluidHandler, boolean isOutputs, int yOffset) {
         int startInputsX = 80 - 4 * 18;
         int startInputsY = 37 - 2 * 18;
 

@@ -39,7 +39,7 @@ public class MetaTileEntityElevatorProviderHatch extends MetaTileEntityMultibloc
     @Override
     public void update() {
         super.update();
-        if(this.getController()==null)return;
+        if (this.getController() == null) return;
         if (this.getController().isStructureFormed()) {
             MetaTileEntity mte = GTUtility.getMetaTileEntity(this.getWorld(), this.getPos().offset(getFrontFacing()));
             if (mte instanceof MetaTileEntityElevatorReceiverHatch hatch) {
@@ -55,15 +55,13 @@ public class MetaTileEntityElevatorProviderHatch extends MetaTileEntityMultibloc
     }
 
     public void sentWorkingDisabled() {
-        if(elevatorReceiver!=null)
-        {
+        if (elevatorReceiver != null) {
             elevatorReceiver.sentWorkingEnabled();
         }
     }
 
     public void sentWorkingEnabled() {
-        if(elevatorReceiver!=null)
-        {
+        if (elevatorReceiver != null) {
             elevatorReceiver.sentWorkingEnabled();
         }
     }

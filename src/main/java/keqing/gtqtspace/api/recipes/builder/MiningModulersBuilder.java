@@ -7,7 +7,8 @@ import gregtech.api.recipes.properties.impl.ComputationProperty;
 import gregtech.api.util.EnumValidationResult;
 import gregtech.api.util.GTLog;
 import keqing.gtqtcore.api.utils.GTQTLog;
-import keqing.gtqtspace.api.recipes.properties.DistenceProperty;
+import keqing.gtqtspace.api.recipes.properties.MaxDistenceProperty;
+import keqing.gtqtspace.api.recipes.properties.MinDistenceProperty;
 import keqing.gtqtspace.api.recipes.properties.TierProperty;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
@@ -30,8 +31,12 @@ public class MiningModulersBuilder extends RecipeBuilder<MiningModulersBuilder> 
             this.tier(((Number) value).intValue());
             return true;
         }
-        if (key.equals(DistenceProperty.KEY)) {
-            this.distence(((Number) value).intValue());
+        if (key.equals(MinDistenceProperty.KEY)) {
+            this.minDistence(((Number) value).intValue());
+            return true;
+        }
+        if (key.equals(MaxDistenceProperty.KEY)) {
+            this.maxDistence(((Number) value).intValue());
             return true;
         }
         if (key.equals(ComputationProperty.KEY)) {
@@ -47,18 +52,19 @@ public class MiningModulersBuilder extends RecipeBuilder<MiningModulersBuilder> 
     }
 
     public int getTire() {
-        return (this.recipePropertyStorage == null) ? 0 :
-                this.recipePropertyStorage.get(TierProperty.getInstance(), 0);
+        return (this.recipePropertyStorage == null) ? 0 : this.recipePropertyStorage.get(TierProperty.getInstance(), 0);
     }
 
-    public int getDistence() {
-        return (this.recipePropertyStorage == null) ? 0 :
-                this.recipePropertyStorage.get(DistenceProperty.getInstance(), 0);
+    public int getMinDistence() {
+        return (this.recipePropertyStorage == null) ? 0 : this.recipePropertyStorage.get(MinDistenceProperty.getInstance(), 0);
+    }
+
+    public int getMaxDistence() {
+        return (this.recipePropertyStorage == null) ? 0 : this.recipePropertyStorage.get(MaxDistenceProperty.getInstance(), 0);
     }
 
     public int getCWUt() {
-        return this.recipePropertyStorage == null ? 0 : this.recipePropertyStorage
-                .get(ComputationProperty.getInstance(), 0);
+        return this.recipePropertyStorage == null ? 0 : this.recipePropertyStorage.get(ComputationProperty.getInstance(), 0);
     }
 
     public MiningModulersBuilder tier(int Tire) {
@@ -70,12 +76,21 @@ public class MiningModulersBuilder extends RecipeBuilder<MiningModulersBuilder> 
         return this;
     }
 
-    public MiningModulersBuilder distence(int Distence) {
+    public MiningModulersBuilder minDistence(int Distence) {
         if (Distence <= 0) {
             GTQTLog.logger.error("Distence cannot be less than or equal to 0", new IllegalArgumentException());
             recipeStatus = EnumValidationResult.INVALID;
         }
-        this.applyProperty(DistenceProperty.getInstance(), Distence);
+        this.applyProperty(MinDistenceProperty.getInstance(), Distence);
+        return this;
+    }
+
+    public MiningModulersBuilder maxDistence(int Distence) {
+        if (Distence <= 0) {
+            GTQTLog.logger.error("Distence cannot be less than or equal to 0", new IllegalArgumentException());
+            recipeStatus = EnumValidationResult.INVALID;
+        }
+        this.applyProperty(MinDistenceProperty.getInstance(), Distence);
         return this;
     }
 
@@ -90,11 +105,6 @@ public class MiningModulersBuilder extends RecipeBuilder<MiningModulersBuilder> 
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this)
-                .appendSuper(super.toString())
-                .append(TierProperty.getInstance().getKey(), getTire())
-                .append(DistenceProperty.getInstance().getKey(), getDistence())
-                .append(ComputationProperty.getInstance().getKey(), getCWUt())
-                .toString();
+        return new ToStringBuilder(this).appendSuper(super.toString()).append(TierProperty.getInstance().getKey(), getTire()).append(MinDistenceProperty.getInstance().getKey(), getMinDistence()).append(MaxDistenceProperty.getInstance().getKey(), getMaxDistence()).append(ComputationProperty.getInstance().getKey(), getCWUt()).toString();
     }
 }

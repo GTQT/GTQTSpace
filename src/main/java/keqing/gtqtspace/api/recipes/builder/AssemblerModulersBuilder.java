@@ -7,7 +7,6 @@ import gregtech.api.recipes.properties.impl.ComputationProperty;
 import gregtech.api.util.EnumValidationResult;
 import gregtech.api.util.GTLog;
 import keqing.gtqtcore.api.utils.GTQTLog;
-import keqing.gtqtspace.api.recipes.properties.DistenceProperty;
 import keqing.gtqtspace.api.recipes.properties.TierProperty;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 

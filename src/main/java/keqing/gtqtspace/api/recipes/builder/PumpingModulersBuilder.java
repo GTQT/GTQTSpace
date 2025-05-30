@@ -8,7 +8,6 @@ import gregtech.api.util.EnumValidationResult;
 import gregtech.api.util.GTLog;
 import keqing.gtqtcore.api.utils.GTQTLog;
 import keqing.gtqtspace.api.recipes.properties.DimProperty;
-import keqing.gtqtspace.api.recipes.properties.DistenceProperty;
 import keqing.gtqtspace.api.recipes.properties.TierProperty;
 import org.apache.commons.lang3.builder.ToStringBuilder;
 
@@ -90,7 +89,7 @@ public class PumpingModulersBuilder extends RecipeBuilder<PumpingModulersBuilder
         return new ToStringBuilder(this)
                 .appendSuper(super.toString())
                 .append(TierProperty.getInstance().getKey(), getTire())
-                .append(DistenceProperty.getInstance().getKey(), getDim())
+                .append(DimProperty.getInstance().getKey(), getDim())
                 .append(ComputationProperty.getInstance().getKey(), getCWUt())
                 .toString();
     }

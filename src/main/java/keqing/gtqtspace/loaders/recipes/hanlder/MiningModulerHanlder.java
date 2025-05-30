@@ -3,7 +3,6 @@ package keqing.gtqtspace.loaders.recipes.hanlder;
 import gregtech.api.unification.ore.OrePrefix;
 
 import static gregtech.api.GTValues.*;
-import static gregtech.api.recipes.RecipeMaps.ASSEMBLY_LINE_RECIPES;
 import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.ore.OrePrefix.*;
 import static gregtech.common.items.MetaItems.*;
@@ -22,7 +21,8 @@ public class MiningModulerHanlder {
                 .duration(100)
                 .tier(1)
                 .CWUt(100)
-                .distence(100)
+                .minDistence(100)
+                .maxDistence(200)
                 .buildAndRegister();
 
         PUMPING_MODULE_RECIPES.recipeBuilder()
