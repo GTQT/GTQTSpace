@@ -1,20 +1,22 @@
 package keqing.gtqtspace.common.metatileentities;
 
-import keqing.gtqtspace.common.metatileentities.multi.multiblock.standard.MetaTileEntityWindGenerator;
-import keqing.gtqtspace.common.metatileentities.multi.multiblock.standard.SpaceStation.AsteroidSystem.AsteroidController;
-import keqing.gtqtspace.common.metatileentities.multi.multiblock.standard.SpaceStation.AsteroidSystem.AsteroidDrill;
-import keqing.gtqtspace.common.metatileentities.multi.multiblock.standard.SpaceStation.AsteroidSystem.AsteroidSearch;
-import keqing.gtqtspace.common.metatileentities.multi.multiblock.standard.SpaceStation.AsteroidSystem.AsteroidSolve;
-import keqing.gtqtspace.common.metatileentities.multi.multiblock.standard.SpaceStation.MetaTileEntityCoreTower;
-import keqing.gtqtspace.common.metatileentities.multi.multiblock.standard.SpaceStation.SolarPlate.MetaTileEntitySolarPlate;
-import keqing.gtqtspace.common.metatileentities.multi.multiblock.standard.SpaceStation.SolarPlate.MetaTileEntitySolarPlateController;
-import keqing.gtqtspace.common.metatileentities.multi.multiblock.standard.SpaceStation.SpaceDockSystem.Dock;
-import keqing.gtqtspace.common.metatileentities.multi.multiblock.standard.SpaceStation.SpaceDockSystem.DockBuilder;
-import keqing.gtqtspace.common.metatileentities.multi.multiblock.standard.SpaceStation.SpaceDockSystem.DockManager;
-import keqing.gtqtspace.common.metatileentities.multi.multiblock.standard.elevator.MetaTileEntitySpaceElevator;
-import keqing.gtqtspace.common.metatileentities.multi.multiblock.standard.elevator.elevatormodules.MetaTileEntityAssemblerModule;
-import keqing.gtqtspace.common.metatileentities.multi.multiblock.standard.elevator.elevatormodules.MetaTileEntityMiningModule;
-import keqing.gtqtspace.common.metatileentities.multi.multiblock.standard.elevator.elevatormodules.MetaTileEntityPumpingModule;
+import keqing.gtqtspace.api.multiblock.SpaceModulesType;
+import keqing.gtqtspace.common.metatileentities.multiblock.standard.MetaTileEntityWindGenerator;
+import keqing.gtqtspace.common.metatileentities.multiblock.standard.SpaceStation.AsteroidSystem.AsteroidController;
+import keqing.gtqtspace.common.metatileentities.multiblock.standard.SpaceStation.AsteroidSystem.AsteroidDrill;
+import keqing.gtqtspace.common.metatileentities.multiblock.standard.SpaceStation.AsteroidSystem.AsteroidSearch;
+import keqing.gtqtspace.common.metatileentities.multiblock.standard.SpaceStation.AsteroidSystem.AsteroidSolve;
+import keqing.gtqtspace.common.metatileentities.multiblock.standard.SpaceStation.MetaTileEntityCoreTower;
+import keqing.gtqtspace.common.metatileentities.multiblock.standard.SpaceStation.SolarPlate.MetaTileEntitySolarPlate;
+import keqing.gtqtspace.common.metatileentities.multiblock.standard.SpaceStation.SolarPlate.MetaTileEntitySolarPlateController;
+import keqing.gtqtspace.common.metatileentities.multiblock.standard.SpaceStation.SpaceDockSystem.Dock;
+import keqing.gtqtspace.common.metatileentities.multiblock.standard.SpaceStation.SpaceDockSystem.DockBuilder;
+import keqing.gtqtspace.common.metatileentities.multiblock.standard.SpaceStation.SpaceDockSystem.DockManager;
+import keqing.gtqtspace.common.metatileentities.multiblock.standard.spaceElevator.hatch.MetaTileEntityElevatorProviderHatch;
+import keqing.gtqtspace.common.metatileentities.multiblock.standard.spaceElevator.hatch.MetaTileEntityElevatorReceiverHatch;
+import keqing.gtqtspace.common.metatileentities.multiblock.standard.spaceElevator.modules.MetaTileEntityAssemblerModule;
+import keqing.gtqtspace.common.metatileentities.multiblock.standard.spaceElevator.modules.MetaTileEntityMiningModule;
+import keqing.gtqtspace.common.metatileentities.multiblock.standard.spaceElevator.modules.MetaTileEntityPumpingModule;
 
 import static gregtech.common.metatileentities.MetaTileEntities.registerMetaTileEntity;
 import static keqing.gtqtspace.api.GTQTSValue.gtqtspaceId;
@@ -35,10 +37,15 @@ public class GTQTSMetaTileEntities {
     public static DockBuilder DOCK_BUILDER;
     public static Dock DOCK;
     ///////////////////////////////////////////////////
+    /*
     public static MetaTileEntitySpaceElevator SPACE_ELEVATOR;
+    */
     public static MetaTileEntityPumpingModule[] PUMP_MODULE = new MetaTileEntityPumpingModule[3];
     public static MetaTileEntityMiningModule[] MINING_MODULE = new MetaTileEntityMiningModule[3];
     public static MetaTileEntityAssemblerModule[] ASSEMBLER_MODULE = new MetaTileEntityAssemblerModule[3];
+    public static MetaTileEntityElevatorProviderHatch ELEVATOR_PROVIDER_HATCH;
+    public static MetaTileEntityElevatorReceiverHatch ELEVATOR_RECEIVER_HATCH;
+
     public static MetaTileEntityWindGenerator WIND_GENERATOR;
 
     public static void initialization() {
@@ -57,13 +64,23 @@ public class GTQTSMetaTileEntities {
 
         WIND_GENERATOR = registerMetaTileEntity(11, new MetaTileEntityWindGenerator(gtqtspaceId("wind_generator")));
 
+        /*
         SPACE_ELEVATOR = registerMetaTileEntity(100, new MetaTileEntitySpaceElevator(gtqtspaceId("space_elevator")));
-        PUMP_MODULE[0] = registerMetaTileEntity(101, new MetaTileEntityPumpingModule(gtqtspaceId("pump_module_1"), 6, 1, 2));
-        PUMP_MODULE[1] = registerMetaTileEntity(102, new MetaTileEntityPumpingModule(gtqtspaceId("pump_module_2"), 8, 2, 3));
-        PUMP_MODULE[2] = registerMetaTileEntity(103, new MetaTileEntityPumpingModule(gtqtspaceId("pump_module_3"), 10, 3, 4));
-        MINING_MODULE[0] = registerMetaTileEntity(104, new MetaTileEntityMiningModule(gtqtspaceId("mining_module_1"), 6, 1, 1, 2));
-        MINING_MODULE[1] = registerMetaTileEntity(105, new MetaTileEntityMiningModule(gtqtspaceId("mining_module_2"), 8, 2, 2, 4));
-        MINING_MODULE[2] = registerMetaTileEntity(106, new MetaTileEntityMiningModule(gtqtspaceId("mining_module_3"), 10, 3, 3, 8));
+
+         */
+        ELEVATOR_PROVIDER_HATCH =  registerMetaTileEntity(12, new MetaTileEntityElevatorProviderHatch(gtqtspaceId("elevator_provider")));
+        ELEVATOR_RECEIVER_HATCH =  registerMetaTileEntity(13, new MetaTileEntityElevatorReceiverHatch(gtqtspaceId("elevator_receiver")));
+
+        PUMP_MODULE[0] = registerMetaTileEntity(101, new MetaTileEntityPumpingModule(gtqtspaceId("pump_module_1"), 1, SpaceModulesType.PUMP_MODULE));
+        PUMP_MODULE[1] = registerMetaTileEntity(102, new MetaTileEntityPumpingModule(gtqtspaceId("pump_module_2"), 2, SpaceModulesType.PUMP_MODULE));
+        PUMP_MODULE[2] = registerMetaTileEntity(103, new MetaTileEntityPumpingModule(gtqtspaceId("pump_module_3"), 3, SpaceModulesType.PUMP_MODULE));
+        MINING_MODULE[0] = registerMetaTileEntity(104, new MetaTileEntityMiningModule(gtqtspaceId("mining_module_1"), 1, SpaceModulesType.MINING_MODULE));
+        MINING_MODULE[1] = registerMetaTileEntity(105, new MetaTileEntityMiningModule(gtqtspaceId("mining_module_2"), 2, SpaceModulesType.MINING_MODULE));
+        MINING_MODULE[2] = registerMetaTileEntity(106, new MetaTileEntityMiningModule(gtqtspaceId("mining_module_3"), 3, SpaceModulesType.MINING_MODULE));
+        ASSEMBLER_MODULE[0] = registerMetaTileEntity(107, new MetaTileEntityAssemblerModule(gtqtspaceId("assembler_module_1"), 1, SpaceModulesType.ASSEMBLY_MODULE));
+        ASSEMBLER_MODULE[1] = registerMetaTileEntity(108, new MetaTileEntityAssemblerModule(gtqtspaceId("assembler_module_2"), 2, SpaceModulesType.ASSEMBLY_MODULE));
+        ASSEMBLER_MODULE[2] = registerMetaTileEntity(109, new MetaTileEntityAssemblerModule(gtqtspaceId("assembler_module_3"), 3, SpaceModulesType.ASSEMBLY_MODULE));
+
         /*
         ASSEMBLER_MODULE[0] = registerMetaTileEntity(107, new MetaTileEntityAssemblerModule(gtqtspaceId("assembler_module_1"), ASSEMBLER_MODULE_RECIPES, 9, 1, 1));
         ASSEMBLER_MODULE[1] = registerMetaTileEntity(108, new MetaTileEntityAssemblerModule(gtqtspaceId("assembler_module_2"), ASSEMBLER_MODULE_RECIPES, 11, 2, 3));

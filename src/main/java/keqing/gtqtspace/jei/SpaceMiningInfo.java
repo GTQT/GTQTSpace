@@ -18,9 +18,10 @@ import java.util.List;
 
 import static gregtech.api.unification.material.Materials.*;
 import static keqing.gtqtcore.api.unification.GTQTMaterials.*;
-
+/*
 //TODO add bucket stuff
 public class SpaceMiningInfo implements IRecipeWrapper {
+
 
     private final List<List<ItemStack>> groupedInputsAsItemStacks = new ArrayList<>();
     private final List<List<ItemStack>> groupedOutputsAsItemStacks = new ArrayList<>();
@@ -63,7 +64,7 @@ public class SpaceMiningInfo implements IRecipeWrapper {
             ingredients.setOutputLists(VanillaTypes.ITEM, bucketList);
         }
 
-         */
+
     }
 
     public int getTier() {
@@ -114,3 +115,4 @@ public class SpaceMiningInfo implements IRecipeWrapper {
         return this.recipe.getWeight();
     }
 }
+*/

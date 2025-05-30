@@ -195,6 +195,7 @@ gtqtspace.jei.space_miner.size=Size: %s-%s
 gtqtspace.jei.space_miner.cwut=Minimum CWU/t: %s
 gtqtspace.jei.space_miner.weight=Weight: %s
 
+gtqtspace.gui.mining_module.tier=Motor Tier：
 gtqtspace.gui.mining_module.distance=Distance:
 gtqtspace.gui.mining_module.range=Range:
 gtqtspace.gui.mining_module.step=Step:
@@ -214,6 +215,9 @@ gtqtspace.gui.mining_module.change_whitelist_mode=Toggle between whitelist and b
 
 gtqtspace.gui.mining_module.min_distance=Minimum Distance: %s
 gtqtspace.gui.mining_module.max_distance=Maximum Distance: %s
+
+gtqtspace.gui.pumping_module.target_dimension=Target Dimension：%s
+gtqtspace.gui.pumping_module.liquid_preference=Fluid Preference：%s
 
 gtqtspace.machine.mining_module_1.display_count=Space Mining Module MK-I x%s
 gtqtspace.machine.mining_module_2.display_count=Space Mining Module MK-II x%s

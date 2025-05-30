@@ -22,6 +22,7 @@ import static keqing.gtqtspace.common.items.GTQTSMetaItems.*;
 
 public class SpaceMiningRecipes {
 
+    /*
     public static final int STICK_INPUT_STACK_SIZE = 4;
     public static final int DRILL_HEAD_INPUT_STACK_SIZE = 4;
 
@@ -100,7 +101,7 @@ public class SpaceMiningRecipes {
                 Arrays.asList(
                         //makeSpaceMiningRecipePart(VA[IV+7], 1200, 3, 2, 2000, 400, 200, 1400, 400, Diamond,20)
                 ));
-        */
+
 
         //无人机升级 材料升级 多方块不变
         for(int j=2;j<9;j++)
@@ -323,4 +324,7 @@ public class SpaceMiningRecipes {
             return minModuleTier;
         }
     }
+
+     */
+
 }

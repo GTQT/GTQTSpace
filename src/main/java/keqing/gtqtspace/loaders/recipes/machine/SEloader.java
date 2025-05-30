@@ -20,14 +20,18 @@ import static keqing.gtqtspace.common.items.GTQTSMetaItems.*;
 import static keqing.gtqtspace.common.metatileentities.GTQTSMetaTileEntities.*;
 
 public class SEloader {
+
     public static void init() {
+        /*
         casing();
         mining();
         drilling();
         motor();
         DroneRecipes();
-    }
 
+         */
+    }
+/*
     private static void DroneRecipes() {
 
         //  LV
@@ -293,8 +297,9 @@ public class SEloader {
                 .cleanroom(CleanroomType.CLEANROOM)
                 .buildAndRegister();
 
-         */
+
     }
+
 
     private static void motor() {
         ASSEMBLY_LINE_RECIPES.recipeBuilder()
@@ -598,4 +603,7 @@ public class SEloader {
                         .CWUt(CWT[UHV]))
                 .buildAndRegister();
     }
+    */
+
 }
+

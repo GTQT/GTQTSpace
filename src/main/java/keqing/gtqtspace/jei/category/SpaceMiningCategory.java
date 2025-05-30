@@ -1,5 +1,5 @@
 package keqing.gtqtspace.jei.category;
-
+/*
 import gregtech.api.GTValues;
 import gregtech.api.gui.GuiTextures;
 import gregtech.api.util.GTUtility;
@@ -189,3 +189,5 @@ public class SpaceMiningCategory extends BasicRecipeCategory<SpaceMiningInfo, Sp
         return MODID;
     }
 }
+
+ */

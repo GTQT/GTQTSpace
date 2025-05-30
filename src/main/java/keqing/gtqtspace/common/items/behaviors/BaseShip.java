@@ -4,7 +4,7 @@ import gregtech.api.items.metaitem.stats.IItemBehaviour;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
-import keqing.gtqtspace.common.metatileentities.multi.multiblock.standard.SpaceStation.SpaceDockSystem.DockUtils;
+import keqing.gtqtspace.common.metatileentities.multiblock.standard.SpaceStation.SpaceDockSystem.DockUtils;
 import java.util.List;
 
 public class BaseShip implements IItemBehaviour {

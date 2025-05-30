@@ -11,6 +11,7 @@ import static keqing.gtqtcore.api.unification.GTQTMaterials.*;
 
 public class SpacePumpRecipes {
 
+    /*
     public static Object2ObjectMap<String, FluidStack> GAS_SIPHON_RECIPES = new Object2ObjectOpenHashMap<>();
 
     public static Object2ObjectMap<Integer, String> PLANET_ID_TO_PLANET_NAME_MAP = new Object2ObjectOpenHashMap<>();
@@ -80,4 +81,6 @@ public class SpacePumpRecipes {
     public static String getPlanetNameByID(int id) {
         return PLANET_ID_TO_PLANET_NAME_MAP.get(id);
     }
+
+     */
 }

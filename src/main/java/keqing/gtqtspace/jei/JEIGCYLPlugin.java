@@ -1,8 +1,6 @@
 package keqing.gtqtspace.jei;
 
 import keqing.gtqtspace.common.metatileentities.GTQTSMetaTileEntities;
-import keqing.gtqtspace.jei.category.SpaceMiningCategory;
-import keqing.gtqtspace.jei.category.SpacePumpCategory;
 import keqing.gtqtspace.loaders.recipes.categories.SpaceMiningRecipes;
 import mezz.jei.api.*;
 import mezz.jei.api.ingredients.IIngredientBlacklist;
@@ -15,16 +13,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-import static keqing.gtqtspace.GTQTSpace.MODID;
-import static keqing.gtqtspace.common.metatileentities.GTQTSMetaTileEntities.MINING_MODULE;
-import static keqing.gtqtspace.loaders.recipes.categories.SpaceMiningRecipes.HASH_TO_ITEMS;
-import static keqing.gtqtspace.loaders.recipes.categories.SpaceMiningRecipes.SPACE_MINING_RECIPES;
-import static keqing.gtqtspace.loaders.recipes.categories.SpacePumpRecipes.GAS_SIPHON_RECIPES;
-import static keqing.gtqtspace.loaders.recipes.categories.SpacePumpRecipes.getPlanetNameByID;
-
 
 @JEIPlugin
 public class JEIGCYLPlugin implements IModPlugin {
+    /*
     private IIngredientBlacklist itemBlacklist;
     private IIngredientRegistry iItemRegistry;
     public static IJeiRuntime jeiRuntime;
@@ -107,4 +99,6 @@ public class JEIGCYLPlugin implements IModPlugin {
         registry.addRecipeCatalyst(GTQTSMetaTileEntities.PUMP_MODULE[1].getStackForm(), spacePumpID);
         registry.addRecipeCatalyst(GTQTSMetaTileEntities.PUMP_MODULE[2].getStackForm(), spacePumpID);
     }
+
+     */
 }
