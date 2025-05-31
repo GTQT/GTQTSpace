@@ -17,4 +17,5 @@ public interface ISpaceElevatorReceiver {
     //改为 Type+Tier
     SpaceModulesType getModuleType();
 
+    String getNameForDisplayCount();
 }

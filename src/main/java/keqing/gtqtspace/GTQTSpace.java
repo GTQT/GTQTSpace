@@ -1,5 +1,7 @@
 package keqing.gtqtspace;
 
+import keqing.gtqtcore.common.worldgen.WorldGenAbandonedBase;
+import keqing.gtqtcore.integration.GTQTIntegration;
 import keqing.gtqtspace.api.GTQTSAPI;
 import keqing.gtqtspace.api.utils.Datas;
 import keqing.gtqtspace.api.utils.GTQTSLog;
@@ -8,6 +10,7 @@ import keqing.gtqtspace.common.CommonProxy;
 import keqing.gtqtspace.common.block.GTQTSMetaBlocks;
 import keqing.gtqtspace.common.items.GTQTSMetaItems;
 import keqing.gtqtspace.common.metatileentities.GTQTSMetaTileEntities;
+import keqing.gtqtspace.integration.GTQTSIntegration;
 import keqing.gtqtspace.world.worldgen.GTQTSDimensionManager;
 import keqing.gtqtspace.world.worldgen.GTQTSDimensionType;
 import net.minecraft.block.Block;
@@ -15,6 +18,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 import java.io.IOException;
 
@@ -49,7 +53,10 @@ public class GTQTSpace {
         proxy.init();
         Datas.init();
     }
-
+    @Mod.EventHandler
+    public void onInit(FMLInitializationEvent event) {
+        GTQTSIntegration.init();
+    }
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         proxy.preLoad();

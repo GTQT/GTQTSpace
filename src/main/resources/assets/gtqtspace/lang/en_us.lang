@@ -195,7 +195,7 @@ gtqtspace.jei.space_miner.size=Size: %s-%s
 gtqtspace.jei.space_miner.cwut=Minimum CWU/t: %s
 gtqtspace.jei.space_miner.weight=Weight: %s
 
-gtqtspace.gui.mining_module.tier=Motor Tier：
+gtqtspace.gui.mining_module.tier=Motor Tier：%s
 gtqtspace.gui.mining_module.distance=Distance:
 gtqtspace.gui.mining_module.range=Range:
 gtqtspace.gui.mining_module.step=Step:

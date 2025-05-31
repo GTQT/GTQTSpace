@@ -90,7 +90,7 @@ public class MiningModulersBuilder extends RecipeBuilder<MiningModulersBuilder> 
             GTQTLog.logger.error("Distence cannot be less than or equal to 0", new IllegalArgumentException());
             recipeStatus = EnumValidationResult.INVALID;
         }
-        this.applyProperty(MinDistenceProperty.getInstance(), Distence);
+        this.applyProperty(MaxDistenceProperty.getInstance(), Distence);
         return this;
     }
 

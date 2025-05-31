@@ -8,7 +8,7 @@ import net.minecraft.nbt.NBTTagInt;
 
 public class MaxDistenceProperty extends RecipeProperty<Integer> {
 
-    public static final String KEY = "distence";
+    public static final String KEY = "max_distence";
 
     private static MaxDistenceProperty INSTANCE;
 

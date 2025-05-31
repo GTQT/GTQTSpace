@@ -2,6 +2,8 @@ package keqing.gtqtspace.api.multiblock;
 
 import gregtech.api.capability.IEnergyContainer;
 import gregtech.api.capability.IOpticalComputationProvider;
+import keqing.gtqtspace.common.metatileentities.multiblock.standard.spaceElevator.modules.MetaTileEntitySpaceElevatorModules;
+
 //这里是电梯需要实现的接口
 public interface ISpaceElevatorProvider {
     //返回电梯 磁轨加速器 等级
@@ -11,6 +13,8 @@ public interface ISpaceElevatorProvider {
     //返回电梯 算力仓 等级
     IOpticalComputationProvider getComputationProvider();
 
-    //未知作用
-    boolean amIInTheList(ISpaceElevatorReceiver receiver);
+    void sentWorkingDisabled();
+    void sentWorkingEnabled();
+
+    MetaTileEntitySpaceElevatorModules getModule();
 }

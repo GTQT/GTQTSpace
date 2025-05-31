@@ -8,7 +8,7 @@ import net.minecraft.nbt.NBTTagInt;
 
 public class MinDistenceProperty extends RecipeProperty<Integer> {
 
-    public static final String KEY = "distence";
+    public static final String KEY = "min_distence";
 
     private static MinDistenceProperty INSTANCE;
 

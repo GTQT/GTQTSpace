@@ -193,7 +193,7 @@ gtqtspace.jei.space_miner.size=大小：%s-%s
 gtqtspace.jei.space_miner.cwut=最小计算量：%s CWU/t
 gtqtspace.jei.space_miner.weight=权重：%s
 
-gtqtspace.gui.mining_module.tier=磁轨加速器等级：
+gtqtspace.gui.mining_module.tier=磁轨加速器等级：%s
 gtqtspace.gui.mining_module.distance=距离：
 gtqtspace.gui.mining_module.range=范围：
 gtqtspace.gui.mining_module.step=步长：

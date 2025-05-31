@@ -32,8 +32,8 @@ public class MetaTileEntityAssemblerModule extends MetaTileEntitySpaceElevatorMo
     @Override
     protected BlockPattern createStructurePattern() {
         return FactoryBlockPattern.start()
-                .aisle("C", "C", "C", "C", "C")
-                .aisle("H", "C", "C", "S", "C")
+                .aisle("H", "C", "C", "C", "C")
+                .aisle("C", "C", "C", "S", "C")
                 .where('S', selfPredicate())
                 .where('C', states(GTQTSMetaBlocks.spaceElevatorCasing.getState(GTQTSpaceElevatorCasing.ElevatorCasingType.BASIC_CASING))
                         .or(abilities(MultiblockAbility.IMPORT_ITEMS).setMaxGlobalLimited(1))

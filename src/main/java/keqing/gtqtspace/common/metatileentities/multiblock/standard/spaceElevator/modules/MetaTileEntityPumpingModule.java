@@ -75,9 +75,19 @@ public class MetaTileEntityPumpingModule extends MetaTileEntitySpaceElevatorModu
     public void update() {
         super.update();
         if (cycleMode && !recipeMapWorkable.isActive()) {
-            if(i>3)i=0;
+            if (i > 3) i = 0;
             dim = planet[i];
             circuit = fluidNumber[i];
+
+            if (getInputInventory() != null) {
+                for (int slot = 0; slot < getInputInventory().getSlots(); slot++) {
+                    ItemStack stack = getInputInventory().getStackInSlot(slot);
+                    if (stack.isItemEqual(MetaItems.INTEGRATED_CIRCUIT.getStackForm())) {
+                        setCircuitConfiguration(stack, circuit);
+                    }
+                }
+            }
+
             i++;
         }
     }
@@ -96,8 +106,8 @@ public class MetaTileEntityPumpingModule extends MetaTileEntitySpaceElevatorModu
     @Override
     protected BlockPattern createStructurePattern() {
         return FactoryBlockPattern.start()
-                .aisle("C", "C", "C", "C", "C")
-                .aisle("H", "C", "C", "S", "C")
+                .aisle("H", "C", "C", "C", "C")
+                .aisle("C", "C", "C", "S", "C")
                 .where('S', selfPredicate())
                 .where('C', states(GTQTSMetaBlocks.spaceElevatorCasing.getState(GTQTSpaceElevatorCasing.ElevatorCasingType.BASIC_CASING))
                         .or(abilities(MultiblockAbility.IMPORT_ITEMS).setMaxGlobalLimited(1))
@@ -178,6 +188,9 @@ public class MetaTileEntityPumpingModule extends MetaTileEntitySpaceElevatorModu
         MultiblockDisplayText.builder(textList, this.isStructureFormed())
                 .setWorkingStatus(this.recipeMapWorkable.isWorkingEnabled(), this.recipeMapWorkable.isActive())
                 .addCustom(tl -> {
+                    if (spaceElevatorProvider != null) {
+                        tl.add(TextComponentUtil.translationWithColor(TextFormatting.YELLOW, "gtqtspace.gui.mining_module.tier", this.spaceElevatorProvider.getMotorTier()));
+                    }
                     tl.add(TextComponentUtil.translationWithColor(TextFormatting.YELLOW, "gtqtspace.gui.pumping_module.target_dimension", this.dim));
                     tl.add(TextComponentUtil.translationWithColor(TextFormatting.RED, "gtqtspace.gui.pumping_module.liquid_preference", this.circuit));
                 })

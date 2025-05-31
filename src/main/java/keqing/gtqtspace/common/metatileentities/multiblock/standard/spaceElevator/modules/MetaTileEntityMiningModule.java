@@ -62,11 +62,22 @@ public class MetaTileEntityMiningModule extends MetaTileEntitySpaceElevatorModul
     public void update() {
         super.update();
         if (cycleMode && !recipeMapWorkable.isActive()) {
-            if (distance < minDistance) distance = maxDistance;
-            if (distance > maxDistance) distance = minDistance;
+            if (distance < minDistance || distance > maxDistance) {
+                // 如果超出范围，重置为循环范围内最近的有效值
+                distance = Math.max(minDistance, Math.min(maxDistance, distance));
+            }
+            // 加上步长后限制在最大距离内
             distance += step;
+
+            // 检查是否越界并循环处理
+            if (distance > maxDistance) {
+                distance = minDistance + (distance - maxDistance - 1);
+            } else if (distance < minDistance) {
+                distance = maxDistance;
+            }
         }
     }
+
 
     @Override
     public boolean checkRecipe(@Nonnull Recipe recipe, boolean consumeIfSuccess) {
@@ -82,8 +93,8 @@ public class MetaTileEntityMiningModule extends MetaTileEntitySpaceElevatorModul
     @Override
     protected BlockPattern createStructurePattern() {
         return FactoryBlockPattern.start()
-                .aisle("C", "C", "C", "C", "C")
-                .aisle("H", "C", "C", "S", "C")
+                .aisle("H", "C", "C", "C", "C")
+                .aisle("C", "C", "C", "S", "C")
                 .where('S', selfPredicate())
                 .where('C', states(GTQTSMetaBlocks.spaceElevatorCasing.getState(GTQTSpaceElevatorCasing.ElevatorCasingType.BASIC_CASING))
                         .or(abilities(MultiblockAbility.IMPORT_FLUIDS).setMaxGlobalLimited(1))
@@ -169,8 +180,9 @@ public class MetaTileEntityMiningModule extends MetaTileEntitySpaceElevatorModul
                 .addWorkingStatusLine()
                 .addParallelsLine(this.parallel)
                 .addCustom(tl -> {
-                    if (spaceElevatorProvider != null)
+                    if (spaceElevatorProvider != null) {
                         tl.add(TextComponentUtil.translationWithColor(TextFormatting.YELLOW, "gtqtspace.gui.mining_module.tier", this.spaceElevatorProvider.getMotorTier()));
+                    }
                     tl.add(TextComponentUtil.translationWithColor(TextFormatting.YELLOW, "gtqtspace.gui.mining_module.min_distance", this.minDistance));
                     tl.add(TextComponentUtil.translationWithColor(TextFormatting.RED, "gtqtspace.gui.mining_module.max_distance", this.maxDistance));
                 })
