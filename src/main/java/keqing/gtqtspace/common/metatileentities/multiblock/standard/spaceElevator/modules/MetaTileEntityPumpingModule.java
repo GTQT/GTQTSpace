@@ -53,7 +53,7 @@ public class MetaTileEntityPumpingModule extends MetaTileEntitySpaceElevatorModu
     //这个是直接设定的维度
     int dim;
     int circuit;
-    int i = 1;
+    int i = 0;
 
     public MetaTileEntityPumpingModule(ResourceLocation metaTileEntityId, int tier, SpaceModulesType type) {
         super(metaTileEntityId, tier, type);
@@ -75,25 +75,10 @@ public class MetaTileEntityPumpingModule extends MetaTileEntitySpaceElevatorModu
     public void update() {
         super.update();
         if (cycleMode && !recipeMapWorkable.isActive()) {
-
-            // 使用 i 控制外层 planet 循环（0~3）
-            // 使用 j 控制内层 fluidNumber 循环（0~3）
-            int i = (this.i >> 2) & 3; // 右移两位，得到当前 planet 索引（0~3）
-            int j = this.i & 3;        // 取低两位，得到当前 fluidNumber 索引（0~3）
-
+            if(i>3)i=0;
             dim = planet[i];
-            circuit = fluidNumber[j];
-
-            if (getInputInventory() != null) {
-                for (int slot = 0; slot < getInputInventory().getSlots(); slot++) {
-                    ItemStack stack = getInputInventory().getStackInSlot(slot);
-                    if (stack.isItemEqual(MetaItems.INTEGRATED_CIRCUIT.getStackForm())) {
-                        setCircuitConfiguration(stack, circuit);
-                    }
-                }
-            }
-
-            this.i = (this.i + 1) % 16; // 4 * 4 = 16 种组合
+            circuit = fluidNumber[i];
+            i++;
         }
     }
 
