@@ -1,7 +1,8 @@
 package keqing.gtqtspace.loaders.recipes;
 
-import keqing.gtqtspace.loaders.recipes.hanlder.MiningModulerHanlder;
+import keqing.gtqtspace.loaders.recipes.hanlder.SpaceElevatorrHanlder;
 import keqing.gtqtspace.loaders.recipes.machine.GTQTSSatelliteAssembler;
+import keqing.gtqtspace.loaders.recipes.hanlder.SpaceElevatorLoader;
 import keqing.gtqtspace.loaders.recipes.machine.StarSuvery;
 
 public class GTQTSRecipesManager {
@@ -13,12 +14,9 @@ public class GTQTSRecipesManager {
 	}
 
 	public static void init() {
-		//SEloader.init();
+		SpaceElevatorLoader.init();
 		StarSuvery.init();
-		//SpacePumpRecipes.init();
-		//SpaceMiningRecipes.init();
 		GTQTSSatelliteAssembler.init();
-
-		MiningModulerHanlder.init();
+		SpaceElevatorrHanlder.init();
 	}
 }

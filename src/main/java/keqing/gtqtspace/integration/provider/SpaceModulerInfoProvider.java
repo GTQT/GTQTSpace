@@ -4,6 +4,7 @@ import gregtech.api.GTValues;
 import gregtech.api.capability.IEnergyContainer;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
+import keqing.gtqtspace.GTQTSpace;
 import keqing.gtqtspace.common.metatileentities.multiblock.standard.spaceElevator.modules.MetaTileEntitySpaceElevatorModules;
 import mcjty.theoneprobe.api.*;
 import mcjty.theoneprobe.apiimpl.elements.ElementProgress;
@@ -16,7 +17,7 @@ public class SpaceModulerInfoProvider implements IProbeInfoProvider{
 
     @Override
     public String getID() {
-        return GTValues.MODID + ":energy_container_provider";
+        return GTQTSpace.MODID + ":energy_container_provider";
     }
 
 

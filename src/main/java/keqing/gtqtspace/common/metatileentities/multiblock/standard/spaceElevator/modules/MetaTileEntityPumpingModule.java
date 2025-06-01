@@ -17,6 +17,7 @@ import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
 import gregtech.api.recipes.Recipe;
 import gregtech.api.util.TextComponentUtil;
+import gregtech.client.utils.TooltipHelper;
 import gregtech.common.items.MetaItems;
 import keqing.gtqtspace.api.multiblock.SpaceModulesType;
 import keqing.gtqtspace.api.recipes.properties.DimProperty;
@@ -24,6 +25,7 @@ import keqing.gtqtspace.client.textures.GTQTSTextures;
 import keqing.gtqtspace.common.block.GTQTSMetaBlocks;
 import keqing.gtqtspace.common.block.blocks.GTQTSpaceElevatorCasing;
 import keqing.gtqtspace.common.metatileentities.GTQTSMetaTileEntities;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
@@ -33,6 +35,7 @@ import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.world.World;
 import net.minecraftforge.common.util.Constants;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -57,6 +60,7 @@ public class MetaTileEntityPumpingModule extends MetaTileEntitySpaceElevatorModu
 
     public MetaTileEntityPumpingModule(ResourceLocation metaTileEntityId, int tier, SpaceModulesType type) {
         super(metaTileEntityId, tier, type);
+        this.recipeMapWorkable.setParallelLimit((int) Math.pow(4, this.tier));
     }
 
     public static void setCircuitConfiguration(ItemStack itemStack, int configuration) {
@@ -71,10 +75,10 @@ public class MetaTileEntityPumpingModule extends MetaTileEntitySpaceElevatorModu
         }
         tagCompound.setInteger("Configuration", configuration);
     }
-
-    public void update() {
-        super.update();
-        if (cycleMode && !recipeMapWorkable.isActive()) {
+    @Override
+    public void doCycle()
+    {
+        if (cycleMode) {
             if (i > 3) i = 0;
             dim = planet[i];
             circuit = fluidNumber[i];
@@ -134,7 +138,7 @@ public class MetaTileEntityPumpingModule extends MetaTileEntitySpaceElevatorModu
     protected ModularUI.Builder createUITemplate(EntityPlayer entityPlayer) {
         ModularUI.Builder builder = ModularUI.builder(GuiTextures.BACKGROUND, 198, 238);
         builder.image(4, 4, 190, 147, GuiTextures.DISPLAY);
-        builder.widget((new IndicatorImageWidget(174, 101, 17, 17, this.getLogo())).setWarningStatus(this.getWarningLogo(), this::addWarningText).setErrorStatus(this.getErrorLogo(), this::addErrorText));
+        builder.widget((new IndicatorImageWidget(174, 131, 17, 17, this.getLogo())).setWarningStatus(this.getWarningLogo(), this::addWarningText).setErrorStatus(this.getErrorLogo(), this::addErrorText));
 
         builder.label(9, 9, this.getMetaFullName(), 16777215);
 
@@ -277,5 +281,13 @@ public class MetaTileEntityPumpingModule extends MetaTileEntitySpaceElevatorModu
     public void receiveInitialSyncData(PacketBuffer buf) {
         super.receiveInitialSyncData(buf);
         this.cycleMode = buf.readBoolean();
+    }
+
+    @Override
+    public void addInformation(ItemStack stack, World world, @Nonnull List<String> tooltip, boolean advanced) {
+        tooltip.add(TooltipHelper.RAINBOW_SLOW + I18n.format("漂浮的流体钻机", new Object[0]));
+        tooltip.add(I18n.format("可指定四种流体，需要设置其维度（表示为流体星球）与虚拟电路值（表示为流体种类）。"));
+        tooltip.add(I18n.format("开启轮询模式后，将会在指定的四种流体内循环运行配方。"));
+        super.addInformation(stack, world, tooltip, advanced);
     }
 }

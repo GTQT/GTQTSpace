@@ -70,8 +70,10 @@ public class GTQTSMetaTileEntities {
         SPACE_ELEVATOR = registerMetaTileEntity(100, new MetaTileEntitySpaceElevator(gtqtspaceId("space_elevator")));
 
          */
-        ELEVATOR_PROVIDER_HATCH =  registerMetaTileEntity(12, new MetaTileEntityElevatorProviderHatch(gtqtspaceId("elevator_provider")));
-        ELEVATOR_RECEIVER_HATCH =  registerMetaTileEntity(13, new MetaTileEntityElevatorReceiverHatch(gtqtspaceId("elevator_receiver")));
+        ELEVATOR_PROVIDER_HATCH =  registerMetaTileEntity(95, new MetaTileEntityElevatorProviderHatch(gtqtspaceId("elevator_provider")));
+        ELEVATOR_RECEIVER_HATCH =  registerMetaTileEntity(96, new MetaTileEntityElevatorReceiverHatch(gtqtspaceId("elevator_receiver")));
+
+        SPACE_ELEVATOR= registerMetaTileEntity(100, new MetaTileEntitySpaceElevator(gtqtspaceId("space_elevator")));
 
         PUMP_MODULE[0] = registerMetaTileEntity(101, new MetaTileEntityPumpingModule(gtqtspaceId("pump_module_1"), 1, SpaceModulesType.PUMP_MODULE));
         PUMP_MODULE[1] = registerMetaTileEntity(102, new MetaTileEntityPumpingModule(gtqtspaceId("pump_module_2"), 2, SpaceModulesType.PUMP_MODULE));
@@ -82,13 +84,5 @@ public class GTQTSMetaTileEntities {
         ASSEMBLER_MODULE[0] = registerMetaTileEntity(107, new MetaTileEntityAssemblerModule(gtqtspaceId("assembler_module_1"), 1, SpaceModulesType.ASSEMBLY_MODULE));
         ASSEMBLER_MODULE[1] = registerMetaTileEntity(108, new MetaTileEntityAssemblerModule(gtqtspaceId("assembler_module_2"), 2, SpaceModulesType.ASSEMBLY_MODULE));
         ASSEMBLER_MODULE[2] = registerMetaTileEntity(109, new MetaTileEntityAssemblerModule(gtqtspaceId("assembler_module_3"), 3, SpaceModulesType.ASSEMBLY_MODULE));
-
-        SPACE_ELEVATOR= registerMetaTileEntity(110, new MetaTileEntitySpaceElevator(gtqtspaceId("space_elevator")));
-        /*
-        ASSEMBLER_MODULE[0] = registerMetaTileEntity(107, new MetaTileEntityAssemblerModule(gtqtspaceId("assembler_module_1"), ASSEMBLER_MODULE_RECIPES, 9, 1, 1));
-        ASSEMBLER_MODULE[1] = registerMetaTileEntity(108, new MetaTileEntityAssemblerModule(gtqtspaceId("assembler_module_2"), ASSEMBLER_MODULE_RECIPES, 11, 2, 3));
-        ASSEMBLER_MODULE[2] = registerMetaTileEntity(109, new MetaTileEntityAssemblerModule(gtqtspaceId("assembler_module_3"), ASSEMBLER_MODULE_RECIPES, 13, 3, 5));
-
-         */
     }
 }

@@ -23,6 +23,7 @@ import keqing.gtqtspace.common.metatileentities.multiblock.standard.spaceElevato
 import keqing.gtqtspace.common.metatileentities.multiblock.standard.spaceElevator.modules.MetaTileEntitySpaceElevatorModules;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextComponentString;
 
@@ -30,7 +31,8 @@ import java.util.List;
 
 //这里是电梯模块需要安装的模块
 public class MetaTileEntityElevatorReceiverHatch extends MetaTileEntityMultiblockPart implements IMultiblockAbilityPart<ISpaceElevatorReceiver>, ISpaceElevatorReceiver {
-    MetaTileEntitySpaceElevator elevatorProvider;
+    MetaTileEntitySpaceElevator elevator;
+    ISpaceElevatorProvider elevatorProvider;
 
     public MetaTileEntityElevatorReceiverHatch(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, 9);
@@ -55,18 +57,25 @@ public class MetaTileEntityElevatorReceiverHatch extends MetaTileEntityMultibloc
     public void update() {
         super.update();
         if (this.getController() == null) return;
-        if (elevatorProvider == null && this.getController().isStructureFormed()) {
-            MetaTileEntity mte = GTUtility.getMetaTileEntity(this.getWorld(), this.getPos().offset(getFrontFacing()));
+        if (elevator != null && elevatorProvider != null) return;
+        if (this.getController().isStructureFormed()) {
+            BlockPos offsetPos = this.getPos().offset(getFrontFacing());
+            MetaTileEntity mte = GTUtility.getMetaTileEntity(this.getWorld(), offsetPos);
             if (mte instanceof MetaTileEntityElevatorProviderHatch hatch) {
-                elevatorProvider = hatch.getSpaceElevator();
-            } else elevatorProvider = null;
+                if (elevator == null) {
+                    elevator = hatch.getSpaceElevator();
+                }
+                if (elevatorProvider == null) {
+                    elevatorProvider = hatch;
+                }
+            }
         }
     }
 
     @Override
     protected ModularUI createUI(EntityPlayer entityPlayer) {
         ModularUI.Builder builder = ModularUI.builder(GuiTextures.BACKGROUND, 180, 240)
-                .widget(new DynamicLabelWidget(7, 7, () -> "电梯链路接受仓"))
+                .widget(new DynamicLabelWidget(7, 7, () -> "电梯链路接收仓"))
                 .image(4, 20, 172, 136, GuiTextures.DISPLAY)
                 .widget((new AdvancedTextWidget(8, 24, this::addDisplayText, 16777215)).setMaxWidthLimit(180))
                 .bindPlayerInventory(entityPlayer.inventory, GuiTextures.SLOT, 8, 160);
@@ -77,8 +86,8 @@ public class MetaTileEntityElevatorReceiverHatch extends MetaTileEntityMultibloc
         textList.add(new TextComponentString("坐标: " + this.getPos()));
         textList.add(new TextComponentString("面向: " + this.getFrontFacing()));
         textList.add(new TextComponentString("正在获取: " + this.getPos().offset(getFrontFacing())));
-        if (elevatorProvider != null)
-            textList.add(new TextComponentString("链接电梯: " + elevatorProvider.getMotorTier()));
+        if (elevator != null)
+            textList.add(new TextComponentString("链接电梯: " + elevator.getMotorTier()));
     }
 
     public MetaTileEntitySpaceElevatorModules getModules() {
@@ -86,9 +95,8 @@ public class MetaTileEntityElevatorReceiverHatch extends MetaTileEntityMultibloc
     }
 
     @Override
-    public ISpaceElevatorProvider getSpaceElevator() {
-        if (getModules() == null) return null;
-        return getModules().getSpaceElevator();
+    public ISpaceElevatorProvider getSpaceProvider() {
+        return elevatorProvider;
     }
 
     @Override

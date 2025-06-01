@@ -17,6 +17,8 @@ import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
 import gregtech.api.recipes.Recipe;
 import gregtech.api.util.TextComponentUtil;
+import gregtech.client.utils.TooltipHelper;
+import gregtech.common.items.MetaItems;
 import keqing.gtqtspace.api.multiblock.SpaceModulesType;
 import keqing.gtqtspace.api.recipes.properties.MaxDistenceProperty;
 import keqing.gtqtspace.api.recipes.properties.MinDistenceProperty;
@@ -24,13 +26,16 @@ import keqing.gtqtspace.client.textures.GTQTSTextures;
 import keqing.gtqtspace.common.block.GTQTSMetaBlocks;
 import keqing.gtqtspace.common.block.blocks.GTQTSpaceElevatorCasing;
 import keqing.gtqtspace.common.metatileentities.GTQTSMetaTileEntities;
+import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -46,12 +51,15 @@ public class MetaTileEntityMiningModule extends MetaTileEntitySpaceElevatorModul
     private final int MAX_RANGE = 150;
     //距离轮询系统 只在没有配方工作时开始循环
     boolean cycleMode;
+    boolean cycleCircuit;
     int distance;
     int minDistance;
     int maxDistance;
     int range;//搜索范围 为maxDistance-minDistance的长度
+    int i = 1;
     private int step = 1;//搜索步长 为每次增加多少
     private int parallel;
+    private int updateCounter = 0; // 新增计数器，用于跟踪update调用次数
 
     public MetaTileEntityMiningModule(ResourceLocation metaTileEntityId, int tier, SpaceModulesType type) {
         super(metaTileEntityId, tier, type);
@@ -59,25 +67,53 @@ public class MetaTileEntityMiningModule extends MetaTileEntitySpaceElevatorModul
         this.parallel = MAX_PARALLEL;
     }
 
-    public void update() {
-        super.update();
-        if (cycleMode && !recipeMapWorkable.isActive()) {
-            if (distance < minDistance || distance > maxDistance) {
-                // 如果超出范围，重置为循环范围内最近的有效值
-                distance = Math.max(minDistance, Math.min(maxDistance, distance));
+    public static void setCircuitConfiguration(ItemStack itemStack, int configuration) {
+        if (!MetaItems.INTEGRATED_CIRCUIT.isItemEqual(itemStack))
+            throw new IllegalArgumentException("Given item stack is not an integrated circuit!");
+        if (configuration < 0 || configuration > 33)
+            throw new IllegalArgumentException("Given configuration number is out of range!");
+        NBTTagCompound tagCompound = itemStack.getTagCompound();
+        if (tagCompound == null) {
+            tagCompound = new NBTTagCompound();
+            itemStack.setTagCompound(tagCompound);
+        }
+        tagCompound.setInteger("Configuration", configuration);
+    }
+    @Override
+    public void doCycle()
+    {
+        // 先执行cycleCircuit逻辑（每次update都执行）
+        if (cycleCircuit) {
+            if (i > 10) i = 1;
+            if (getInputInventory() != null) {
+                for (int slot = 0; slot < getInputInventory().getSlots(); slot++) {
+                    ItemStack stack = getInputInventory().getStackInSlot(slot);
+                    if (stack.isItemEqual(MetaItems.INTEGRATED_CIRCUIT.getStackForm())) {
+                        setCircuitConfiguration(stack, i);
+                    }
+                }
             }
-            // 加上步长后限制在最大距离内
-            distance += step;
+            i++;
+        }
 
-            // 检查是否越界并循环处理
-            if (distance > maxDistance) {
-                distance = minDistance + (distance - maxDistance - 1);
-            } else if (distance < minDistance) {
-                distance = maxDistance;
+        // 每10次update执行一次cycleMode
+        if (cycleMode) {
+            if (!cycleCircuit || updateCounter % 10 == 9) {
+                if (distance < minDistance || distance > maxDistance) {
+                    distance = Math.max(minDistance, Math.min(maxDistance, distance));
+                }
+                distance += step;
+                if (distance > maxDistance) {
+                    distance = minDistance + (distance - maxDistance - 1);
+                } else if (distance < minDistance) {
+                    distance = maxDistance;
+                }
             }
         }
-    }
 
+        // 更新计数器（每次update都计数）
+        updateCounter = (updateCounter + 1) % 10;
+    }
 
     @Override
     public boolean checkRecipe(@Nonnull Recipe recipe, boolean consumeIfSuccess) {
@@ -166,6 +202,7 @@ public class MetaTileEntityMiningModule extends MetaTileEntitySpaceElevatorModul
 
          */
         //Cycle mode
+        builder.widget(new ImageCycleButtonWidget(173, 173, 18, 18, GTQTSTextures.BUTTON_CYCLE, this::getCycleCircuit, this::setCycleCircuit).setTooltipHoverString("gtqtspace.gui.mining_module.circuit"));
         builder.widget(new ImageCycleButtonWidget(173, 191, 18, 18, GTQTSTextures.BUTTON_CYCLE, this::getCycleMode, this::setCycleMode).setTooltipHoverString("gtqtspace.gui.mining_module.cycle"));
 
 
@@ -187,7 +224,7 @@ public class MetaTileEntityMiningModule extends MetaTileEntitySpaceElevatorModul
                     tl.add(TextComponentUtil.translationWithColor(TextFormatting.RED, "gtqtspace.gui.mining_module.max_distance", this.maxDistance));
                 })
                 .addEmptyLine()
-                .addProgressLine(recipeMapWorkable.getProgressPercent() / 100.0)
+                .addProgressLine(recipeMapWorkable.getProgressPercent())
                 .addEnergyUsageExactLine(recipeMapWorkable.getRecipeEUt())
                 .addComputationUsageExactLine(getRecipeMapWorkable().getCurrentDrawnCWUt());
 
@@ -199,6 +236,14 @@ public class MetaTileEntityMiningModule extends MetaTileEntitySpaceElevatorModul
 
     private void setCycleMode(boolean bool) {
         this.cycleMode = bool;
+    }
+
+    private boolean getCycleCircuit() {
+        return this.cycleCircuit;
+    }
+
+    private void setCycleCircuit(boolean bool) {
+        this.cycleCircuit = bool;
     }
 
     private String getDistance() {
@@ -284,6 +329,7 @@ public class MetaTileEntityMiningModule extends MetaTileEntitySpaceElevatorModul
         data.setInteger("step", this.step);
         data.setInteger("parallel", this.parallel);
         data.setBoolean("cycleMode", this.cycleMode);
+        data.setBoolean("cycleCircuit", this.cycleCircuit);
         return data;
     }
 
@@ -297,6 +343,7 @@ public class MetaTileEntityMiningModule extends MetaTileEntitySpaceElevatorModul
         this.step = data.getInteger("step");
         this.parallel = data.getInteger("parallel");
         this.cycleMode = data.getBoolean("cycleMode");
+        this.cycleCircuit = data.getBoolean("cycleCircuit");
     }
 
     @Override
@@ -309,6 +356,7 @@ public class MetaTileEntityMiningModule extends MetaTileEntitySpaceElevatorModul
         buf.writeInt(this.step);
         buf.writeInt(this.parallel);
         buf.writeBoolean(this.cycleMode);
+        buf.writeBoolean(this.cycleCircuit);
     }
 
     @Override
@@ -321,6 +369,17 @@ public class MetaTileEntityMiningModule extends MetaTileEntitySpaceElevatorModul
         this.step = buf.readInt();
         this.parallel = buf.readInt();
         this.cycleMode = buf.readBoolean();
+        this.cycleCircuit = buf.readBoolean();
+    }
+
+    @Override
+    public void addInformation(ItemStack stack, World world, @Nonnull List<String> tooltip, boolean advanced) {
+        tooltip.add(TooltipHelper.RAINBOW_SLOW + I18n.format("银河系资源开发", new Object[0]));
+        tooltip.add(I18n.format("挖掘指定距离区域的矿物，可通过轮询模式自动挖掘某一范围内的矿物"));
+        tooltip.add(I18n.format("并行：矿机所并行执行的配方量，总耗电、所需等离子体量和算力均为单个耗电或算力乘以并行数。"));
+        tooltip.add(I18n.format("范围：开启轮询模式后，指定该模块将会在 实际距离 ∈ [距离-范围，距离+范围] 处挖矿，每次增加一个步长。"));
+        tooltip.add(I18n.format("步长：开启轮询模式后，每次挖完一个配方，则实际距离将增加Step的设定值；如果实际距离超出了 距离+范围，则会将实际距离 减少到 距离-范围。"));
+        super.addInformation(stack, world, tooltip, advanced);
     }
 
 }

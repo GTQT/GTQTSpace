@@ -168,6 +168,9 @@ gtqtspace.multiblock.pump_module.planet=Planet:
 gtqtspace.multiblock.pump_module.fluid=Fluid:
 space_pump.name=Space Fluid Extractor
 
+gtqtspace.machine.elevator_provider.name=Elevator Data Transmission Hatch
+gtqtspace.machine.elevator_receiver.name=Elevator Data Teceiving Hatch
+
 gtqtspace.machine.pump_module_1.name=Space Fluid Extractor MK-I
 gtqtspace.machine.pump_module_2.name=Space Fluid Extractor MK-II
 gtqtspace.machine.pump_module_3.name=Space Fluid Extractor MK-III
@@ -200,6 +203,7 @@ gtqtspace.gui.mining_module.distance=Distance:
 gtqtspace.gui.mining_module.range=Range:
 gtqtspace.gui.mining_module.step=Step:
 gtqtspace.gui.mining_module.cycle=Calculate each operation based on set steps
+gtqtspace.gui.mining_module.circuit=Poll the board
 gtqtspace.gui.mining_module.parallel=Parallel:
 gtqtspace.gui.mining_module.blank_name=<Material to Add>
 gtqtspace.gui.mining_module.blank_name_remove=<Material to Remove>

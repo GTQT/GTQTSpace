@@ -165,6 +165,8 @@ gtqtspace.multiblock.pump_module.planet=星球：
 gtqtspace.multiblock.pump_module.fluid=流体：
 space_pump.name=空间流体钻机
 
+gtqtspace.machine.elevator_provider.name=电梯数据发送仓
+gtqtspace.machine.elevator_receiver.name=电梯数据接收仓
 
 gtqtspace.machine.pump_module_1.name=空间流体钻机MK-I
 gtqtspace.machine.pump_module_2.name=空间流体钻机MK-II
@@ -198,6 +200,7 @@ gtqtspace.gui.mining_module.distance=距离：
 gtqtspace.gui.mining_module.range=范围：
 gtqtspace.gui.mining_module.step=步长：
 gtqtspace.gui.mining_module.cycle=按设定步数计算每次操作的步数
+gtqtspace.gui.mining_module.circuit=轮询电路板
 gtqtspace.gui.mining_module.parallel=并行：
 gtqtspace.gui.mining_module.blank_name=<要添加的材料>
 gtqtspace.gui.mining_module.blank_name_remove=<要删除的材料>

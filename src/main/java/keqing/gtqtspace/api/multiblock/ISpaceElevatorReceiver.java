@@ -1,9 +1,12 @@
 package keqing.gtqtspace.api.multiblock;
+
+import keqing.gtqtspace.common.metatileentities.multiblock.standard.spaceElevator.MetaTileEntitySpaceElevator;
+
 //这里是模块需要实现的接口
 public interface ISpaceElevatorReceiver {
 
     //获取模块的 电梯主体
-    ISpaceElevatorProvider getSpaceElevator();
+    ISpaceElevatorProvider getSpaceProvider();
 
     //设置模块的 电梯主体
     void setSpaceElevator(ISpaceElevatorProvider provider);

@@ -8,20 +8,28 @@ import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.MultiblockAbility;
 import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
+import gregtech.client.utils.TooltipHelper;
 import keqing.gtqtspace.api.multiblock.SpaceModulesType;
 import keqing.gtqtspace.client.textures.GTQTSTextures;
 import keqing.gtqtspace.common.block.GTQTSMetaBlocks;
 import keqing.gtqtspace.common.block.blocks.GTQTSpaceElevatorCasing;
 import keqing.gtqtspace.common.metatileentities.GTQTSMetaTileEntities;
+import net.minecraft.client.resources.I18n;
+import net.minecraft.item.ItemStack;
 import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
+import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
+
+import javax.annotation.Nonnull;
+import java.util.List;
 
 public class MetaTileEntityAssemblerModule extends MetaTileEntitySpaceElevatorModules {
 
     public MetaTileEntityAssemblerModule(ResourceLocation metaTileEntityId, int tier, SpaceModulesType type) {
         super(metaTileEntityId, tier, type);
+        this.recipeMapWorkable.setParallelLimit((int) Math.pow(4, this.tier));
     }
 
     @Override
@@ -55,5 +63,11 @@ public class MetaTileEntityAssemblerModule extends MetaTileEntitySpaceElevatorMo
             } else
                 GTQTSTextures.ASSEMBLER_MODULE_OVERLAY.renderSided(renderSide, renderState, translation, pipeline);
         }
+    }
+
+    @Override
+    public void addInformation(ItemStack stack, World world, @Nonnull List<String> tooltip, boolean advanced) {
+        tooltip.add(TooltipHelper.RAINBOW_SLOW + I18n.format("谁把我的装配线发送到天上去了", new Object[0]));
+        super.addInformation(stack, world, tooltip, advanced);
     }
 }

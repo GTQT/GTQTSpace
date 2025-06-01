@@ -1,4 +1,4 @@
-package keqing.gtqtspace.loaders.recipes.machine;
+package keqing.gtqtspace.loaders.recipes.hanlder;
 
 import gregtech.api.metatileentity.multiblock.CleanroomType;
 import gregtech.api.unification.material.MarkerMaterials;
@@ -19,19 +19,16 @@ import static keqing.gtqtspace.common.block.blocks.GTQTSpaceElevatorCasing.Eleva
 import static keqing.gtqtspace.common.items.GTQTSMetaItems.*;
 import static keqing.gtqtspace.common.metatileentities.GTQTSMetaTileEntities.*;
 
-public class SEloader {
+public class SpaceElevatorLoader {
 
     public static void init() {
-        /*
         casing();
         mining();
         drilling();
         motor();
         DroneRecipes();
-
-         */
     }
-/*
+
     private static void DroneRecipes() {
 
         //  LV
@@ -296,10 +293,8 @@ public class SEloader {
                         .CWUt(CWT[UIV]))
                 .cleanroom(CleanroomType.CLEANROOM)
                 .buildAndRegister();
-
-
+        */
     }
-
 
     private static void motor() {
         ASSEMBLY_LINE_RECIPES.recipeBuilder()
@@ -603,7 +598,5 @@ public class SEloader {
                         .CWUt(CWT[UHV]))
                 .buildAndRegister();
     }
-    */
-
 }
 
