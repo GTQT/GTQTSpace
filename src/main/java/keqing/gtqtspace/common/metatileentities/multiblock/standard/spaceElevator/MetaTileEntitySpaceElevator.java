@@ -88,6 +88,11 @@ public class MetaTileEntitySpaceElevator extends MultiblockWithDisplayBase {
 
     @Override
     protected void updateFormedValid() {
+        if (!this.spaceElevatorReceivers.isEmpty()) {
+            if (!checkModules()) {
+                invalidateStructure();
+            }
+        }
         if (this.getOffsetTimer() % 20 == 0) {
             spaceElevatorReceivers.clear();
             for (ISpaceElevatorProvider receiver : getSpaceElevatorProviders()) {
@@ -366,11 +371,6 @@ public class MetaTileEntitySpaceElevator extends MultiblockWithDisplayBase {
 
 
     }
-
-    private int getMaxModules() {
-        return isExtended ? 24 : 12;
-    }
-
     private int getModuleCount() {
         return this.spaceElevatorReceivers.size();
     }
@@ -435,7 +435,8 @@ public class MetaTileEntitySpaceElevator extends MultiblockWithDisplayBase {
         tooltip.add(TooltipHelper.RAINBOW_SLOW + I18n.format("流浪地球计划", new Object[0]));
         tooltip.add(I18n.format("拓展模式：请在UI内打开拓展模式，shift右键控制器即可预览结构"));
         tooltip.add(I18n.format("跃迁模式：可将玩家传送至空间站"));
-        tooltip.add(I18n.format("最大能装备12个太空电梯模块，拓展模式下支持24个模块"));
+        tooltip.add(I18n.format("最多能装备12个太空电梯模块，拓展模式下最多支持24个模块"));
+        tooltip.add(I18n.format("最大能装备的电梯模块与磁轨加速器等级正相关，升级磁轨加速器解锁更多槽位"));
         tooltip.add(I18n.format("可将本体的能量，算力供所有模块共享"));
         tooltip.add(I18n.format("升级磁轨加速器为模块提供升级"));
     }
@@ -446,6 +447,24 @@ public class MetaTileEntitySpaceElevator extends MultiblockWithDisplayBase {
         super.renderMetaTileEntity(renderState, translation, pipeline);
         this.getFrontOverlay().renderOrientedState(renderState, translation, pipeline, getFrontFacing(), true,
                 isStructureFormed());
+    }
+    private boolean checkModules() {
+        return getModuleCount() <= getMaxModules();
+    }
+
+    private int getMaxModules() {
+        if (this.motorTier == 1)
+            return 6;
+        if (this.motorTier == 2)
+            return 12;
+        if (this.motorTier == 3 && this.isExtended)
+            return 15;
+        if (this.motorTier == 4 && this.isExtended)
+            return 18;
+        if (this.motorTier == 5 && this.isExtended)
+            return 24;
+
+        return 12;
     }
 }
 

@@ -15,6 +15,7 @@ import gregtech.api.metatileentity.multiblock.MultiblockAbility;
 import gregtech.api.metatileentity.multiblock.MultiblockDisplayText;
 import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
+import gregtech.api.pattern.PatternMatchContext;
 import gregtech.api.recipes.Recipe;
 import gregtech.api.util.TextComponentUtil;
 import gregtech.client.utils.TooltipHelper;
@@ -60,7 +61,6 @@ public class MetaTileEntityPumpingModule extends MetaTileEntitySpaceElevatorModu
 
     public MetaTileEntityPumpingModule(ResourceLocation metaTileEntityId, int tier, SpaceModulesType type) {
         super(metaTileEntityId, tier, type);
-        this.recipeMapWorkable.setParallelLimit((int) Math.pow(4, this.tier));
     }
 
     public static void setCircuitConfiguration(ItemStack itemStack, int configuration) {
@@ -94,6 +94,11 @@ public class MetaTileEntityPumpingModule extends MetaTileEntitySpaceElevatorModu
 
             i++;
         }
+    }
+    @Override
+    protected void formStructure(PatternMatchContext context) {
+        super.formStructure(context);
+        this.recipeMapWorkable.setParallelLimit((int) Math.pow(4, this.tier));
     }
 
     @Override

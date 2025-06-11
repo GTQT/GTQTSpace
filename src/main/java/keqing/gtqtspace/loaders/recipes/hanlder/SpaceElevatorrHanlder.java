@@ -9,9 +9,6 @@ import net.minecraftforge.fluids.FluidStack;
 
 import static gregtech.api.GTValues.*;
 import static gregtech.api.unification.material.Materials.*;
-import static gregtech.api.unification.ore.OrePrefix.*;
-import static gregtech.common.items.MetaItems.CONVEYOR_MODULE_UV;
-import static gregtech.common.items.MetaItems.ELECTRIC_MOTOR_UV;
 import static keqing.gtqtcore.api.unification.GTQTMaterials.Formaldehyde;
 import static keqing.gtqtcore.api.unification.GTQTMaterials.Infinity;
 import static keqing.gtqtspace.api.recipes.GTQTScoreRecipeMaps.*;
@@ -45,21 +42,7 @@ public class SpaceElevatorrHanlder {
     }
 
     private static void regAssrmbler() {
-        ASSEMBLER_MODULE_RECIPES.recipeBuilder()
-                .input(ELECTRIC_MOTOR_UV, 2)
-                .input(plate, Tritanium, 2)
-                .input(ring, Tritanium, 4)
-                .input(round, Tritanium, 16)
-                .input(screw, Tritanium, 4)
-                .input(cableGtSingle, YttriumBariumCuprate, 2)
-                .fluidInputs(SolderingAlloy.getFluid(L * 4))
-                .fluidInputs(Lubricant.getFluid(1000))
-                .fluidInputs(StyreneButadieneRubber.getFluid(L * 24))
-                .fluidInputs(Naquadria.getFluid(L * 4))
-                .output(CONVEYOR_MODULE_UV)
-                .tier(1)
-                .CWUt(100)
-                .duration(600).EUt(100000).buildAndRegister();
+
     }
 
     private static void regPumping() {
