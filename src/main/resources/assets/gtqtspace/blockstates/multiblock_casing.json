@@ -1,0 +1,61 @@
+{
+  "forge_marker": 1,
+  "variants": {
+    "variant": {
+      "basic_casing": {
+        "model": "minecraft:cube_all",
+        "textures": {
+          "all": "gregtech:blocks/multiblock/casings/basic_casing"
+        }
+      },
+      "taz_casing": {
+        "model": "minecraft:cube_all",
+        "textures": {
+          "all": "gregtech:blocks/multiblock/casings/taz_casing"
+        }
+      },
+      "taz_heat_vent": {
+        "model": "minecraft:cube_all",
+        "textures": {
+          "all": "gregtech:blocks/multiblock/casings/taz_heat_vent"
+        }
+      },
+      "saz_casing": {
+        "model": "minecraft:cube_all",
+        "textures": {
+          "all": "gregtech:blocks/multiblock/casings/saz_casing"
+        }
+      },
+      "saz_heat_vent": {
+        "model": "minecraft:cube_all",
+        "textures": {
+          "all": "gregtech:blocks/multiblock/casings/saz_heat_vent"
+        }
+      },
+      "iaz_casing": {
+        "model": "minecraft:cube_all",
+        "textures": {
+          "all": "gregtech:blocks/multiblock/casings/iaz_casing"
+        }
+      },
+      "iaz_heat_vent": {
+        "model": "minecraft:cube_all",
+        "textures": {
+          "all": "gregtech:blocks/multiblock/casings/iaz_heat_vent"
+        }
+      },
+      "caz_casing": {
+        "model": "minecraft:cube_all",
+        "textures": {
+          "all": "gregtech:blocks/multiblock/casings/caz_casing"
+        }
+      },
+      "caz_heat_vent": {
+        "model": "minecraft:cube_all",
+        "textures": {
+          "all": "gregtech:blocks/multiblock/casings/caz_heat_vent"
+        }
+      }
+    }
+  }
+}

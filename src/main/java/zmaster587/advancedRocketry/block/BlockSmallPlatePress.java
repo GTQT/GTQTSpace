@@ -137,7 +137,7 @@ public class BlockSmallPlatePress extends BlockPistonBase {
         return ItemStack.EMPTY;
     }
 
-    private boolean doMove(World worldIn, BlockPos pos, EnumFacing direction, boolean extending) {
+    public boolean doMove(World worldIn, BlockPos pos, EnumFacing direction, boolean extending) {
         if (!extending) {
             worldIn.setBlockToAir(pos.offset(direction));
         }

@@ -1,0 +1,12 @@
+{
+  "shuttle": {
+    "category": "neutral",
+    "sounds": [
+      {
+        "name": "gtqtspace:shuttle",
+        "volume": 1.0,
+        "pitch": 1.0
+      }
+    ]
+  }
+}

@@ -1,0 +1,30 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "gtqtspace:basic_satellite.obj",
+    "custom": {
+      "flip-v": true
+    }
+  },
+  "variants": {
+    "inventory": {
+      "model": "gtqtspace:basic_satellite.obj",
+      "transform": {
+        "firstperson": {
+          "scale": 0.01,
+          "rotation": [ { "y": 130}, {"x": 90}, {"z": 0} ]
+        },
+        "thirdperson": {
+          "rotation": [ { "y": 0}, {"x": -92}, {"z": 0} ],
+          "scale": 0.006
+        },
+        "gui": {
+          "scale": 0.008,
+          "rotation": [{
+            "x": 90
+          }]
+        }
+      }
+    }
+  }
+}

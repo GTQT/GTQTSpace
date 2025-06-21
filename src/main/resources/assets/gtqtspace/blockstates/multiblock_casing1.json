@@ -1,0 +1,59 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "minecraft:cube_all",
+    "textures": {
+      "all": "gregtech:blocks/rendering_error"
+    }
+  },
+  "variants": {
+    "variant": {
+      "solar_plate_casing": {
+        "model": "minecraft:cube_all",
+        "textures": {
+          "all": "gregtech:blocks/multiblock/solar_plate/solar_generator_bottom"
+        }
+      },
+      "solar_plate_mki": {
+        "model": "minecraft:cube_bottom_top",
+        "textures": {
+          "side": "gregtech:blocks/multiblock/solar_plate/solar_generator_sides",
+          "bottom": "gregtech:blocks/multiblock/solar_plate/solar_generator_bottom",
+          "top": "gregtech:blocks/multiblock/solar_plate/solar_plate_mki"
+        }
+      },
+      "solar_plate_mkii": {
+        "model": "minecraft:cube_bottom_top",
+        "textures": {
+          "side": "gregtech:blocks/multiblock/solar_plate/solar_generator_sides",
+          "bottom": "gregtech:blocks/multiblock/solar_plate/solar_generator_bottom",
+          "top": "gregtech:blocks/multiblock/solar_plate/solar_plate_mkii"
+        }
+      },
+      "solar_plate_mkiii": {
+        "model": "minecraft:cube_bottom_top",
+        "textures": {
+          "side": "gregtech:blocks/multiblock/solar_plate/solar_generator_sides",
+          "bottom": "gregtech:blocks/multiblock/solar_plate/solar_generator_bottom",
+          "top": "gregtech:blocks/multiblock/solar_plate/solar_plate_mkiii"
+        }
+      },
+      "solar_plate_mkiv": {
+        "model": "minecraft:cube_bottom_top",
+        "textures": {
+          "side": "gregtech:blocks/multiblock/solar_plate/solar_generator_sides",
+          "bottom": "gregtech:blocks/multiblock/solar_plate/solar_generator_bottom",
+          "top": "gregtech:blocks/multiblock/solar_plate/solar_plate_mkiv"
+        }
+      },
+      "solar_plate_mkv": {
+        "model": "minecraft:cube_bottom_top",
+        "textures": {
+          "side": "gregtech:blocks/multiblock/solar_plate/solar_generator_sides",
+          "bottom": "gregtech:blocks/multiblock/solar_plate/solar_generator_bottom",
+          "top": "gregtech:blocks/multiblock/solar_plate/solar_plate_mkv"
+        }
+      }
+    }
+  }
+}

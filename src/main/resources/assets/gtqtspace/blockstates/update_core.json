@@ -1,0 +1,47 @@
+{
+  "forge_marker": 1,
+  "variants": {
+    "variant": {
+      "basic_casing": {
+        "model": "minecraft:cube_all",
+        "textures": {
+          "all": "gregtech:blocks/multiblock/casings/basic_casing"
+        }
+      },
+      "update_core_vent": {
+        "model": "minecraft:cube_all",
+        "textures": {
+          "all": "gregtech:blocks/multiblock/update/update_vent"
+        }
+      },
+      "update_core_cold": {
+        "model": "gregtech:cube_2_layer_all",
+        "textures": {
+          "bot_all": "gregtech:blocks/multiblock/update/update_vent",
+          "top_all":"gregtech:blocks/multiblock/update/update_core_cold"
+        }
+      },
+      "update_core_hot": {
+        "model": "gregtech:cube_2_layer_all",
+        "textures": {
+          "bot_all": "gregtech:blocks/multiblock/update/update_vent",
+          "top_all":"gregtech:blocks/multiblock/update/update_core_hot"
+        }
+      },
+      "update_core_ele": {
+        "model": "gregtech:cube_2_layer_all",
+        "textures": {
+          "bot_all": "gregtech:blocks/multiblock/update/update_vent",
+          "top_all":"gregtech:blocks/multiblock/update/update_core_ele"
+        }
+      },
+      "update_core_eng": {
+        "model": "gregtech:cube_2_layer_all",
+        "textures": {
+          "bot_all": "gregtech:blocks/multiblock/update/update_vent",
+          "top_all":"gregtech:blocks/multiblock/update/update_core_eng"
+        }
+      }
+    }
+  }
+}
