@@ -1,6 +1,10 @@
 gtqtspace.material.meteoric_iron=Meteoric Iron
 gtqtspace.material.desh=Desh
 
+gtqtspace.material.taz_alloy=TAZ 合金
+gtqtspace.material.saz_alloy=SAZ 合金
+gtqtspace.material.iaz_alloy=IAZ 合金
+gtqtspace.material.caz_alloy=CAZ 合金
 #Items
 metaitem.computerTier1.name=Navigation Computer (Tier 1)
 metaitem.computerTier2.name=Navigation Computer (Tier 2)
@@ -363,6 +367,13 @@ tile.gtqtspace_elevator_casing_tiered.elevator_motor_2.name=Space Elevator Motor
 tile.gtqtspace_elevator_casing_tiered.elevator_motor_3.name=Space Elevator Motor MK-III
 tile.gtqtspace_elevator_casing_tiered.elevator_motor_4.name=Space Elevator Motor MK-IV
 tile.gtqtspace_elevator_casing_tiered.elevator_motor_5.name=Space Elevator Motor MK-V
+
+gtqtspace.machine.industrial_bender.name=工业辊压机
+gtqtspace.machine.industrial_bender.tooltip.1=升级部件外壳或电压等级以提高机器性能
+gtqtspace.machine.industrial_bender.tooltip.2=当电压等级大于等于§3UV§7时，获得§b无损超频§7。
+gtqtspace.machine.industrial_bender.tooltip.3=每提高1个§e马达外壳等级§7，配方所需时间就变为原本的§l80%%§r§7。
+gtqtspace.machine.industrial_bender.tooltip.4=每提高1个§a活塞外壳等级§7，每次运行可以多处理§l16§r§7个物品。
+gtqtspace.machine.industrial_bender.desc.1=§l工业辊压机§r是一个大型多方块机器，包括卷板机与冲压机床两种模式。
 # 太阳能板相关
 gtqtspace.machine.solar_plate.name=太阳能板单元
 gtqtspace.machine.solar_plate_controller.name=太阳能板控制器

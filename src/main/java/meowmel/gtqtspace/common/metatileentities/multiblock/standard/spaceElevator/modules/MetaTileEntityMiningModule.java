@@ -22,6 +22,7 @@ import gregtech.common.items.MetaItems;
 import meowmel.gtqtspace.api.multiblock.SpaceModulesType;
 import meowmel.gtqtspace.api.recipes.properties.MaxDistenceProperty;
 import meowmel.gtqtspace.api.recipes.properties.MinDistenceProperty;
+import meowmel.gtqtspace.client.textures.GTQTSGuiTextures;
 import meowmel.gtqtspace.client.textures.GTQTSTextures;
 import meowmel.gtqtspace.common.block.GTQTSMetaBlocks;
 import meowmel.gtqtspace.common.block.blocks.GTQTSpaceElevatorCasing;
@@ -202,8 +203,8 @@ public class MetaTileEntityMiningModule extends MetaTileEntitySpaceElevatorModul
 
          */
         //Cycle mode
-        builder.widget(new ImageCycleButtonWidget(173, 173, 18, 18, GTQTSTextures.BUTTON_CYCLE, this::getCycleCircuit, this::setCycleCircuit).setTooltipHoverString("gtqtspace.gui.mining_module.circuit"));
-        builder.widget(new ImageCycleButtonWidget(173, 191, 18, 18, GTQTSTextures.BUTTON_CYCLE, this::getCycleMode, this::setCycleMode).setTooltipHoverString("gtqtspace.gui.mining_module.cycle"));
+        builder.widget(new ImageCycleButtonWidget(173, 173, 18, 18, GTQTSGuiTextures.BUTTON_CYCLE, this::getCycleCircuit, this::setCycleCircuit).setTooltipHoverString("gtqtspace.gui.mining_module.circuit"));
+        builder.widget(new ImageCycleButtonWidget(173, 191, 18, 18, GTQTSGuiTextures.BUTTON_CYCLE, this::getCycleMode, this::setCycleMode).setTooltipHoverString("gtqtspace.gui.mining_module.cycle"));
 
 
         builder.bindPlayerInventory(entityPlayer.inventory, 155);

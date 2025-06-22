@@ -1,10 +1,8 @@
 package meowmel.gtqtspace.loaders.recipes;
 
-import meowmel.gtqtspace.loaders.recipes.hanlder.ComponentCasingsRecipes;
-import meowmel.gtqtspace.loaders.recipes.hanlder.SpaceElevatorrHanlder;
-import meowmel.gtqtspace.loaders.recipes.hanlder.WirelessEnergyHatches;
+import gregtech.loaders.recipe.chemistry.MixerRecipes;
+import meowmel.gtqtspace.loaders.recipes.hanlder.*;
 import meowmel.gtqtspace.loaders.recipes.machine.GTQTSSatelliteAssembler;
-import meowmel.gtqtspace.loaders.recipes.hanlder.SpaceElevatorLoader;
 import meowmel.gtqtspace.loaders.recipes.machine.StarSuvery;
 
 public class GTQTSRecipesManager {
@@ -22,5 +20,6 @@ public class GTQTSRecipesManager {
 		GTQTSSatelliteAssembler.init();
 		SpaceElevatorrHanlder.init();
 		ComponentCasingsRecipes.init();
+		CasingHandler.init();
 	}
 }

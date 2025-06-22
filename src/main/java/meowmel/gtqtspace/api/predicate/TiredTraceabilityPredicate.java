@@ -19,6 +19,9 @@ public class TiredTraceabilityPredicate {
     public static Supplier<TierTraceabilityPredicate> CP_WIRE_COIL = () -> new TierTraceabilityPredicate(MAP_WIRE_COIL,
             Comparator.comparing((s) -> ((WrappedIntTired) MAP_WIRE_COIL.get(s)).getIntTier()), "WireCoil", null);
 
+    //  Motor Casing Predicate
+    public static Supplier<TierTraceabilityPredicate> MOTOR_CASING = () -> new TierTraceabilityPredicate(MAP_MOTOR_CASING,
+            Comparator.comparing((s) -> ((WrappedIntTired) MAP_MOTOR_CASING.get(s)).getIntTier()), "MotorCasing", null);
 
     //  Piston Casing Predicate
     public static Supplier<TierTraceabilityPredicate> PISTON_CASING = () -> new TierTraceabilityPredicate(MAP_PISTON_CASING,

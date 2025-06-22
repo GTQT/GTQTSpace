@@ -28,7 +28,7 @@ import gregtech.client.renderer.texture.Textures;
 import gregtech.client.renderer.texture.cube.OrientedOverlayRenderer;
 import keqing.gtqtcore.client.textures.GTQTTextures;
 import keqing.gtqtcore.api.metaileentity.MetaTileEntityBaseWithControl;
-import meowmel.gtqtspace.client.textures.GTQTSTextures;
+import meowmel.gtqtspace.client.textures.GTQTSGuiTextures;
 import meowmel.gtqtspace.common.block.GTQTSMetaBlocks;
 import meowmel.gtqtspace.common.block.blocks.GTQTSMultiblockCasing1;
 import net.minecraft.client.resources.I18n;
@@ -229,7 +229,7 @@ public class AsteroidSolve extends MetaTileEntityBaseWithControl implements IOpt
         builder.widget(new ClickButtonWidget(325, 136, 20, 20, "", data -> printWhitelistOrClear(data, entityPlayer)).setButtonTexture(GuiTextures.BUTTON_CLEAR_GRID).setTooltipText("gtqtspace.gui.mining_module.print_whitelist_or_clear"));
 
         //whitelist or blacklist
-        builder.widget(new ImageCycleButtonWidget(350, 136, 20, 20, GTQTSTextures.BUTTON_WHITE_BLACK_LIST, this::getWhitelistMode, this::setWhitelistMode).setTooltipHoverString("gtqtspace.gui.mining_module.change_whitelist_mode"));
+        builder.widget(new ImageCycleButtonWidget(350, 136, 20, 20, GTQTSGuiTextures.BUTTON_WHITE_BLACK_LIST, this::getWhitelistMode, this::setWhitelistMode).setTooltipHoverString("gtqtspace.gui.mining_module.change_whitelist_mode"));
 
 
         builder.bindPlayerInventory(entityPlayer.inventory, GuiTextures.SLOT, 204, 160);

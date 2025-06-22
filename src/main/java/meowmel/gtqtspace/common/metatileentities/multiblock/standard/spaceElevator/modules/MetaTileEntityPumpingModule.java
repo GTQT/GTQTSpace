@@ -22,6 +22,7 @@ import gregtech.client.utils.TooltipHelper;
 import gregtech.common.items.MetaItems;
 import meowmel.gtqtspace.api.multiblock.SpaceModulesType;
 import meowmel.gtqtspace.api.recipes.properties.DimProperty;
+import meowmel.gtqtspace.client.textures.GTQTSGuiTextures;
 import meowmel.gtqtspace.client.textures.GTQTSTextures;
 import meowmel.gtqtspace.common.block.GTQTSMetaBlocks;
 import meowmel.gtqtspace.common.block.blocks.GTQTSpaceElevatorCasing;
@@ -187,7 +188,7 @@ public class MetaTileEntityPumpingModule extends MetaTileEntitySpaceElevatorModu
 
         builder.widget((new ImageWidget(173, 173, 18, 18, GuiTextures.BUTTON_VOID_NONE)).setTooltip("gregtech.gui.multiblock_voiding_not_supported"));
         //Cycle mode
-        builder.widget(new ImageCycleButtonWidget(173, 191, 18, 18, GTQTSTextures.BUTTON_CYCLE, this::getCycleMode, this::setCycleMode).setTooltipHoverString("gtqtspace.gui.mining_module.cycle"));
+        builder.widget(new ImageCycleButtonWidget(173, 191, 18, 18, GTQTSGuiTextures.BUTTON_CYCLE, this::getCycleMode, this::setCycleMode).setTooltipHoverString("gtqtspace.gui.mining_module.cycle"));
 
         builder.bindPlayerInventory(entityPlayer.inventory, 155);
         return builder;

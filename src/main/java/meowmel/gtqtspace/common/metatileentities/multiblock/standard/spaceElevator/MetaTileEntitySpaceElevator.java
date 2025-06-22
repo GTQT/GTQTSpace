@@ -27,11 +27,12 @@ import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import gregtech.client.utils.TooltipHelper;
 import keqing.gtqtcore.api.blocks.impl.WrappedIntTired;
+import keqing.gtqtcore.api.utils.GTQTUtil;
 import meowmel.gtqtspace.api.multiblock.GTQTSMultiblockAbility;
 import meowmel.gtqtspace.api.multiblock.ISpaceElevatorProvider;
 import meowmel.gtqtspace.api.multiblock.ISpaceElevatorReceiver;
 import meowmel.gtqtspace.api.predicate.TiredTraceabilityPredicate;
-import meowmel.gtqtspace.api.utils.GTQTSUtil;
+import meowmel.gtqtspace.client.textures.GTQTSGuiTextures;
 import meowmel.gtqtspace.client.textures.GTQTSTextures;
 import meowmel.gtqtspace.common.block.GTQTSMetaBlocks;
 import meowmel.gtqtspace.common.block.blocks.GTQTSpaceElevatorCasing;
@@ -43,7 +44,6 @@ import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
-import net.minecraft.util.EnumFacing;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
@@ -245,7 +245,7 @@ public class MetaTileEntitySpaceElevator extends MultiblockWithDisplayBase {
         super.formStructure(context);
         initializeAbilities();
         Object motorTier = context.get("SpaceElevatorTieredStats");
-        this.motorTier = GTQTSUtil.getOrDefault(() -> motorTier instanceof WrappedIntTired,
+        this.motorTier = GTQTUtil.getOrDefault(() -> motorTier instanceof WrappedIntTired,
                 () -> ((WrappedIntTired) motorTier).getIntTier(),
                 0);
 
@@ -313,21 +313,21 @@ public class MetaTileEntitySpaceElevator extends MultiblockWithDisplayBase {
 
 
         builder.widget(new ClickButtonWidget(173, 155, 18, 18, "", data -> transport(entityPlayer))
-                .setButtonTexture(GTQTSTextures.BUTTON_DISABLE_STATIC)
+                .setButtonTexture(GTQTSGuiTextures.BUTTON_DISABLE_STATIC)
                 .setTooltipText("空间站折跃"));
 
         // Extend Button
-        builder.widget(new ImageCycleButtonWidget(173, 213, 18, 18, GTQTSTextures.BUTTON_ELEVATOR_EXTENSION,
+        builder.widget(new ImageCycleButtonWidget(173, 213, 18, 18, GTQTSGuiTextures.BUTTON_ELEVATOR_EXTENSION,
                 this::isExtended, this::setExtended).setTooltipHoverString("gtqtspace.gui.multiblock.space_elevator_extended"));
         builder.widget(new ImageWidget(173, 201, 18, 6, GuiTextures.BUTTON_POWER_DETAIL));
 
         // Voiding Mode Button
         builder.widget(new ClickButtonWidget(173, 173, 18, 18, "", data -> enableAllModules())
-                .setButtonTexture(GTQTSTextures.BUTTON_ENABLE_STATIC)
+                .setButtonTexture(GTQTSGuiTextures.BUTTON_ENABLE_STATIC)
                 .setTooltipText("gtqtspace.gui.multiblock.space_elevator.enable_all_modules"));
 
         builder.widget(new ClickButtonWidget(173, 191, 18, 18, "", data -> disableAllModules())
-                .setButtonTexture(GTQTSTextures.BUTTON_DISABLE_STATIC)
+                .setButtonTexture(GTQTSGuiTextures.BUTTON_DISABLE_STATIC)
                 .setTooltipText("gtqtspace.gui.multiblock.space_elevator.disable_all_modules"));
 
 

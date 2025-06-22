@@ -6,7 +6,7 @@ import gregtech.api.gui.ModularUI;
 import gregtech.api.gui.widgets.ProgressWidget;
 import gregtech.api.recipes.RecipeMap;
 import gregtech.api.recipes.ui.RecipeMapUI;
-import meowmel.gtqtspace.client.textures.GTQTSTextures;
+import meowmel.gtqtspace.client.textures.GTQTSGuiTextures;
 import net.minecraftforge.items.IItemHandlerModifiable;
 
 public class SpaceMiningUI<R extends RecipeMap<?>> extends RecipeMapUI<R> {
@@ -25,7 +25,7 @@ public class SpaceMiningUI<R extends RecipeMap<?>> extends RecipeMapUI<R> {
     public ModularUI.Builder createJeiUITemplate(IItemHandlerModifiable importItems, IItemHandlerModifiable exportItems,
                                                  FluidTankList importFluids, FluidTankList exportFluids, int yOffset) {
         ModularUI.Builder builder = ModularUI.builder(GuiTextures.BACKGROUND, 176, 166)
-                .widget(new ProgressWidget(200, 27 + SLOT_WIDTH, 0, 23, 63, GTQTSTextures.PROGRESS_BAR_MINING_MODULE, ProgressWidget.MoveType.HORIZONTAL));
+                .widget(new ProgressWidget(200, 27 + SLOT_WIDTH, 0, 23, 63, GTQTSGuiTextures.PROGRESS_BAR_MINING_MODULE, ProgressWidget.MoveType.HORIZONTAL));
         // 添加物品和流体槽位组
         addInventorySlotGroup(builder, importItems, importFluids, false, yOffset);
         addInventorySlotGroup(builder, exportItems, exportFluids, true, yOffset);

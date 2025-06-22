@@ -1,7 +1,9 @@
 package meowmel.gtqtspace.common.metatileentities;
 
+import keqing.gtqtcore.common.metatileentities.multi.multiblock.standard.updateSystem.MetaTileEntityLargeBender;
 import meowmel.gtqtspace.api.multiblock.SpaceModulesType;
 import meowmel.gtqtspace.common.metatileentities.multiblock.generator.MetaTileEntityWindGenerator;
+import meowmel.gtqtspace.common.metatileentities.multiblock.standard.MetaTileEntityIndustrialBender;
 import meowmel.gtqtspace.common.metatileentities.multiblock.standard.SpaceStation.AsteroidSystem.AsteroidController;
 import meowmel.gtqtspace.common.metatileentities.multiblock.standard.SpaceStation.AsteroidSystem.AsteroidDrill;
 import meowmel.gtqtspace.common.metatileentities.multiblock.standard.SpaceStation.AsteroidSystem.AsteroidSearch;
@@ -38,9 +40,8 @@ public class GTQTSMetaTileEntities {
     public static DockBuilder DOCK_BUILDER;
     public static Dock DOCK;
     ///////////////////////////////////////////////////
-    /*
-    public static MetaTileEntitySpaceElevator SPACE_ELEVATOR;
-    */
+    public static MetaTileEntityIndustrialBender INDUSTRIAL_BENDER;
+
     public static MetaTileEntityPumpingModule[] PUMP_MODULE = new MetaTileEntityPumpingModule[3];
     public static MetaTileEntityMiningModule[] MINING_MODULE = new MetaTileEntityMiningModule[3];
     public static MetaTileEntityAssemblerModule[] ASSEMBLER_MODULE = new MetaTileEntityAssemblerModule[3];
@@ -66,10 +67,10 @@ public class GTQTSMetaTileEntities {
 
         WIND_GENERATOR = registerMetaTileEntity(11, new MetaTileEntityWindGenerator(gtqtspaceId("wind_generator")));
 
-        /*
-        SPACE_ELEVATOR = registerMetaTileEntity(100, new MetaTileEntitySpaceElevator(gtqtspaceId("space_elevator")));
+        // ------------------ Initialized Multiblock Machines -------------------
+        INDUSTRIAL_BENDER = registerMetaTileEntity(20,  new MetaTileEntityIndustrialBender(gtqtspaceId("industrial_bender")));
 
-         */
+
         ELEVATOR_PROVIDER_HATCH =  registerMetaTileEntity(95, new MetaTileEntityElevatorProviderHatch(gtqtspaceId("elevator_provider")));
         ELEVATOR_RECEIVER_HATCH =  registerMetaTileEntity(96, new MetaTileEntityElevatorReceiverHatch(gtqtspaceId("elevator_receiver")));
 

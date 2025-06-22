@@ -19,7 +19,7 @@ import gregtech.common.blocks.BlockBoilerCasing;
 import gregtech.common.blocks.BlockMetalCasing;
 import gregtech.common.blocks.MetaBlocks;
 import keqing.gtqtcore.api.metaileentity.MetaTileEntityBaseWithControl;
-import meowmel.gtqtspace.client.textures.GTQTSTextures;
+import meowmel.gtqtspace.client.textures.GTQTSGuiTextures;
 import meowmel.gtqtspace.world.Teleporter.SpaceStationTeleporter;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
@@ -65,7 +65,7 @@ public class MetaTileEntityCoreTower extends MetaTileEntityBaseWithControl {
                 .setMaxWidthLimit(220)
                 .setClickHandler(this::handleDisplayClick));
         builder.widget(new ClickButtonWidget(173, 155, 18, 18, "", data -> transport(entityPlayer))
-                .setButtonTexture(GTQTSTextures.BUTTON_DISABLE_STATIC)
+                .setButtonTexture(GTQTSGuiTextures.BUTTON_DISABLE_STATIC)
                 .setTooltipText("返回地面基地"));
 
         builder.bindPlayerInventory(entityPlayer.inventory, 155);
