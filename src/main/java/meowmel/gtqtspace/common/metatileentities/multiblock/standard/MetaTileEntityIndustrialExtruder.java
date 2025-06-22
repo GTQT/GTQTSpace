@@ -28,28 +28,26 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
-import static meowmel.gtqtspace.api.predicate.TiredTraceabilityPredicate.MOTOR_CASING;
 import static meowmel.gtqtspace.api.predicate.TiredTraceabilityPredicate.PISTON_CASING;
 import static meowmel.gtqtspace.common.block.blocks.GTQTSMultiblockCasing.CasingType.CAZ_CASING;
 import static meowmel.gtqtspace.common.block.blocks.GTQTSMultiblockCasing.CasingType.CAZ_HEAT_VENT;
 
-public class MetaTileEntityIndustrialBender extends MultiMapMultiblockController {
+public class MetaTileEntityIndustrialExtruder extends MultiMapMultiblockController {
 
     private int pistonCasingTier;
-    private int motorCasingTier;
 
     /* ------------------------------- MetaTileEntity constructors ------------------------------- */
-    public MetaTileEntityIndustrialBender(ResourceLocation metaTileEntityId) {
+    public MetaTileEntityIndustrialExtruder(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, new RecipeMap[]{
-                RecipeMaps.BENDER_RECIPES,
-                RecipeMaps.FORMING_PRESS_RECIPES
+                RecipeMaps.FORGE_HAMMER_RECIPES,
+                RecipeMaps.COMPRESSOR_RECIPES
         });
-        this.recipeMapWorkable = new IndustrialBenderRecipeLogic(this);
+        this.recipeMapWorkable = new IndustrialForgeHammerRecipeLogic(this);
     }
 
     @Override
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity tileEntity) {
-        return new MetaTileEntityIndustrialBender(metaTileEntityId);
+        return new MetaTileEntityIndustrialExtruder(metaTileEntityId);
     }
 
     /* ----------------------------- Create MetaTileEntity structure ----------------------------- */
@@ -57,14 +55,9 @@ public class MetaTileEntityIndustrialBender extends MultiMapMultiblockController
     protected void formStructure(PatternMatchContext context) {
         super.formStructure(context);
         Object type1 = context.get("PistonCasingTieredStats");
-        Object type2 = context.get("MotorCasingTieredStats");
         this.pistonCasingTier = GTQTUtil.getOrDefault(
                 () -> type1 instanceof WrappedIntTired,
                 () -> ((WrappedIntTired) type1).getIntTier(), 0
-        );
-        this.motorCasingTier = GTQTUtil.getOrDefault(
-                () -> type2 instanceof WrappedIntTired,
-                () -> ((WrappedIntTired) type2).getIntTier(), 0
         );
     }
 
@@ -72,24 +65,23 @@ public class MetaTileEntityIndustrialBender extends MultiMapMultiblockController
     public void invalidateStructure() {
         super.invalidateStructure();
         this.pistonCasingTier = 0;
-        this.motorCasingTier = 0;
         // this.length = 0;
     }
 
     @Override
     protected BlockPattern createStructurePattern() {
         return FactoryBlockPattern.start()
-                .aisle("CCCC", "CCCC", "CCQC")
-                .aisle("CCCC", "CPMC", "CCQC")
-                .aisle("CCCC", "CPMC", "CCQC")
-                .aisle("CCCC", "CSCC", "CCQC")
+                .aisle("CCCC", "CCCC", "CCC ")
+                .aisle("CCCC", "CQPC", "CCC ") // TODO repeatable
+                .aisle("CCCC", "CQPC", "CCC ")
+                .aisle("CCCC", "CSCC", "CCC ")
                 .where('S', this.selfPredicate())
                 .where('C', states(this.getCasingState())
-                        .setMinGlobalLimited(16)
+                        .setMinGlobalLimited(6)
                         .or(this.autoAbilities(true, true, true, true, false, false, false)))
                 .where('Q', states(this.getPipeCasingState()))
                 .where('P', PISTON_CASING.get())
-                .where('M', MOTOR_CASING.get())
+                .where(' ', any())
                 .build();
     }
 
@@ -110,7 +102,7 @@ public class MetaTileEntityIndustrialBender extends MultiMapMultiblockController
     @SideOnly(Side.CLIENT)
     @Override
     protected ICubeRenderer getFrontOverlay() {
-        return Textures.BENDER_OVERLAY;
+        return Textures.PROCESSING_ARRAY_OVERLAY;
     }
 
     /* ------------------------------- MetaTileEntity Descriptions ------------------------------- */
@@ -120,16 +112,16 @@ public class MetaTileEntityIndustrialBender extends MultiMapMultiblockController
                                List<String> tooltip,
                                boolean advanced) {
         super.addInformation(stack, player, tooltip, advanced);
-        tooltip.add(I18n.format("gtqtspace.machine.industrial_bender.tooltip.1"));
-        tooltip.add(I18n.format("gtqtspace.machine.industrial_bender.tooltip.2"));
-        tooltip.add(I18n.format("gtqtspace.machine.industrial_bender.tooltip.3"));
-        tooltip.add(I18n.format("gtqtspace.machine.industrial_bender.tooltip.4"));
+        tooltip.add(I18n.format("gtqtspace.machine.industrial_extruder.tooltip.1"));
+        tooltip.add(I18n.format("gtqtspace.machine.industrial_extruder.tooltip.2"));
+        tooltip.add(I18n.format("gtqtspace.machine.industrial_extruder.tooltip.3"));
+        tooltip.add(I18n.format("gtqtspace.machine.industrial_extruder.tooltip.4"));
     }
 
     @Override
     public String[] getDescription() {
         return new String[]{
-                I18n.format("gtqtspace.machine.industrial_bender.desc.1")
+                I18n.format("gtqtspace.machine.industrial_extruder.desc.1")
         };
     }
 
@@ -139,9 +131,9 @@ public class MetaTileEntityIndustrialBender extends MultiMapMultiblockController
         return true;
     }
 
-    protected class IndustrialBenderRecipeLogic extends MultiblockRecipeLogic {
+    protected class IndustrialForgeHammerRecipeLogic extends MultiblockRecipeLogic {
 
-        public IndustrialBenderRecipeLogic(RecipeMapMultiblockController tileEntity) {
+        public IndustrialForgeHammerRecipeLogic(RecipeMapMultiblockController tileEntity) {
             super(tileEntity);
         }
 
@@ -152,7 +144,7 @@ public class MetaTileEntityIndustrialBender extends MultiMapMultiblockController
 
         @Override
         public void setMaxProgress(int maxProgress) {
-            super.setMaxProgress((int) (Math.floor(maxProgress * Math.pow(0.8, motorCasingTier))));
+            super.setMaxProgress((int) (Math.floor(maxProgress * Math.pow(0.5, pistonCasingTier))));
         }
 
         @Override

@@ -1,9 +1,8 @@
 package meowmel.gtqtspace.common.metatileentities;
 
-import keqing.gtqtcore.common.metatileentities.multi.multiblock.standard.updateSystem.MetaTileEntityLargeBender;
 import meowmel.gtqtspace.api.multiblock.SpaceModulesType;
 import meowmel.gtqtspace.common.metatileentities.multiblock.generator.MetaTileEntityWindGenerator;
-import meowmel.gtqtspace.common.metatileentities.multiblock.standard.MetaTileEntityIndustrialBender;
+import meowmel.gtqtspace.common.metatileentities.multiblock.standard.*;
 import meowmel.gtqtspace.common.metatileentities.multiblock.standard.SpaceStation.AsteroidSystem.AsteroidController;
 import meowmel.gtqtspace.common.metatileentities.multiblock.standard.SpaceStation.AsteroidSystem.AsteroidDrill;
 import meowmel.gtqtspace.common.metatileentities.multiblock.standard.SpaceStation.AsteroidSystem.AsteroidSearch;
@@ -41,6 +40,21 @@ public class GTQTSMetaTileEntities {
     public static Dock DOCK;
     ///////////////////////////////////////////////////
     public static MetaTileEntityIndustrialBender INDUSTRIAL_BENDER;
+    public static MetaTileEntityIndustrialCutter INDUSTRIAL_CUTTER;
+    public static MetaTileEntityIndustrialForgeHammer INDUSTRIAL_FORGE_HAMMER;
+    public static MetaTileEntityIndustrialExtruder INDUSTRIAL_EXTRUDER;
+    public static MetaTileEntityIndustrialWiremill INDUSTRIAL_WIREMILL;
+    public static MetaTileEntityIndustrialMixer INDUSTRIAL_MIXER;
+    public static MetaTileEntityIndustrialExtractor INDUSTRIAL_EXTRACTOR;
+    public static MetaTileEntityIndustrialAssembler INDUSTRIAL_ASSEMBLER;
+    public static MetaTileEntityIndustrialEngraver INDUSTRIAL_ENGRAVER;
+    public static MetaTileEntityIndustrialFluidSolidifier INDUSTRIAL_FLUID_SOLIDIFIER;
+    public static MetaTileEntityIndustrialBrewery INDUSTRIAL_BREWERY;
+    public static MetaTileEntityIndustrialAutoclave INDUSTRIAL_AUTOCLAVE;
+    public static MetaTileEntityIndustrialArcFurnace INDUSTRIAL_ARC_FURNACE;
+
+
+
 
     public static MetaTileEntityPumpingModule[] PUMP_MODULE = new MetaTileEntityPumpingModule[3];
     public static MetaTileEntityMiningModule[] MINING_MODULE = new MetaTileEntityMiningModule[3];
@@ -68,13 +82,25 @@ public class GTQTSMetaTileEntities {
         WIND_GENERATOR = registerMetaTileEntity(11, new MetaTileEntityWindGenerator(gtqtspaceId("wind_generator")));
 
         // ------------------ Initialized Multiblock Machines -------------------
-        INDUSTRIAL_BENDER = registerMetaTileEntity(20,  new MetaTileEntityIndustrialBender(gtqtspaceId("industrial_bender")));
+        INDUSTRIAL_BENDER = registerMetaTileEntity(20, new MetaTileEntityIndustrialBender(gtqtspaceId("industrial_bender")));
+        INDUSTRIAL_CUTTER = registerMetaTileEntity(21, new MetaTileEntityIndustrialCutter(gtqtspaceId("industrial_cutter")));
+        INDUSTRIAL_FORGE_HAMMER = registerMetaTileEntity(22, new MetaTileEntityIndustrialForgeHammer(gtqtspaceId("industrial_forge_hammer")));
+        INDUSTRIAL_EXTRUDER = registerMetaTileEntity(23, new MetaTileEntityIndustrialExtruder(gtqtspaceId("industrial_extruder")));
+        INDUSTRIAL_WIREMILL = registerMetaTileEntity(24, new MetaTileEntityIndustrialWiremill(gtqtspaceId("industrial_wiremill")));
+        INDUSTRIAL_MIXER= registerMetaTileEntity(25, new MetaTileEntityIndustrialMixer(gtqtspaceId("industrial_mixer")));
+        INDUSTRIAL_EXTRACTOR = registerMetaTileEntity(26, new MetaTileEntityIndustrialExtractor(gtqtspaceId("industrial_extractor")));
+        INDUSTRIAL_ASSEMBLER = registerMetaTileEntity(27, new MetaTileEntityIndustrialAssembler(gtqtspaceId("industrial_assembler")));
+        INDUSTRIAL_ENGRAVER= registerMetaTileEntity(28, new MetaTileEntityIndustrialEngraver(gtqtspaceId("industrial_laser_engraver")));
+        INDUSTRIAL_FLUID_SOLIDIFIER= registerMetaTileEntity(29, new MetaTileEntityIndustrialFluidSolidifier(gtqtspaceId("industrial_fluid_solidifier")));
+        INDUSTRIAL_BREWERY = registerMetaTileEntity(30, new MetaTileEntityIndustrialBrewery(gtqtspaceId("industrial_brewery")));
+        INDUSTRIAL_AUTOCLAVE = registerMetaTileEntity(31, new MetaTileEntityIndustrialAutoclave(gtqtspaceId("industrial_autoclave")));
+        INDUSTRIAL_ARC_FURNACE = registerMetaTileEntity(32, new MetaTileEntityIndustrialArcFurnace(gtqtspaceId("industrial_arc_furnace")));
 
 
-        ELEVATOR_PROVIDER_HATCH =  registerMetaTileEntity(95, new MetaTileEntityElevatorProviderHatch(gtqtspaceId("elevator_provider")));
-        ELEVATOR_RECEIVER_HATCH =  registerMetaTileEntity(96, new MetaTileEntityElevatorReceiverHatch(gtqtspaceId("elevator_receiver")));
+        ELEVATOR_PROVIDER_HATCH = registerMetaTileEntity(95, new MetaTileEntityElevatorProviderHatch(gtqtspaceId("elevator_provider")));
+        ELEVATOR_RECEIVER_HATCH = registerMetaTileEntity(96, new MetaTileEntityElevatorReceiverHatch(gtqtspaceId("elevator_receiver")));
 
-        SPACE_ELEVATOR= registerMetaTileEntity(100, new MetaTileEntitySpaceElevator(gtqtspaceId("space_elevator")));
+        SPACE_ELEVATOR = registerMetaTileEntity(100, new MetaTileEntitySpaceElevator(gtqtspaceId("space_elevator")));
 
         PUMP_MODULE[0] = registerMetaTileEntity(101, new MetaTileEntityPumpingModule(gtqtspaceId("pump_module_1"), 1, SpaceModulesType.PUMP_MODULE));
         PUMP_MODULE[1] = registerMetaTileEntity(102, new MetaTileEntityPumpingModule(gtqtspaceId("pump_module_2"), 2, SpaceModulesType.PUMP_MODULE));

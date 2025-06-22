@@ -5,15 +5,15 @@ import gregtech.api.capability.impl.MultiblockRecipeLogic;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
-import gregtech.api.metatileentity.multiblock.MultiMapMultiblockController;
 import gregtech.api.metatileentity.multiblock.RecipeMapMultiblockController;
 import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
 import gregtech.api.pattern.PatternMatchContext;
-import gregtech.api.recipes.RecipeMap;
 import gregtech.api.recipes.RecipeMaps;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
+import gregtech.common.blocks.BlockGlassCasing;
+import gregtech.common.blocks.MetaBlocks;
 import keqing.gtqtcore.api.blocks.impl.WrappedIntTired;
 import keqing.gtqtcore.api.utils.GTQTUtil;
 import meowmel.gtqtspace.client.textures.GTQTSTextures;
@@ -28,41 +28,38 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
-import static meowmel.gtqtspace.api.predicate.TiredTraceabilityPredicate.MOTOR_CASING;
-import static meowmel.gtqtspace.api.predicate.TiredTraceabilityPredicate.PISTON_CASING;
-import static meowmel.gtqtspace.common.block.blocks.GTQTSMultiblockCasing.CasingType.CAZ_CASING;
-import static meowmel.gtqtspace.common.block.blocks.GTQTSMultiblockCasing.CasingType.CAZ_HEAT_VENT;
+import static meowmel.gtqtspace.api.predicate.TiredTraceabilityPredicate.CONVEYOR_CASING;
+import static meowmel.gtqtspace.api.predicate.TiredTraceabilityPredicate.ROBOT_ARM_CASING;
+import static meowmel.gtqtspace.common.block.blocks.GTQTSMultiblockCasing.CasingType.IAZ_CASING;
+import static meowmel.gtqtspace.common.block.blocks.GTQTSMultiblockCasing.CasingType.IAZ_HEAT_VENT;
 
-public class MetaTileEntityIndustrialBender extends MultiMapMultiblockController {
+public class MetaTileEntityIndustrialAssembler extends RecipeMapMultiblockController {
 
-    private int pistonCasingTier;
-    private int motorCasingTier;
+    private int robotArmCasingTier;
+    private int conveyorCasingTier;
 
     /* ------------------------------- MetaTileEntity constructors ------------------------------- */
-    public MetaTileEntityIndustrialBender(ResourceLocation metaTileEntityId) {
-        super(metaTileEntityId, new RecipeMap[]{
-                RecipeMaps.BENDER_RECIPES,
-                RecipeMaps.FORMING_PRESS_RECIPES
-        });
-        this.recipeMapWorkable = new IndustrialBenderRecipeLogic(this);
+    public MetaTileEntityIndustrialAssembler(ResourceLocation metaTileEntityId) {
+        super(metaTileEntityId, RecipeMaps.ASSEMBLER_RECIPES);
+        this.recipeMapWorkable = new IndustrialAssemblerRecipeLogic(this);
     }
 
     @Override
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity tileEntity) {
-        return new MetaTileEntityIndustrialBender(metaTileEntityId);
+        return new MetaTileEntityIndustrialAssembler(metaTileEntityId);
     }
 
     /* ----------------------------- Create MetaTileEntity structure ----------------------------- */
     @Override
     protected void formStructure(PatternMatchContext context) {
         super.formStructure(context);
-        Object type1 = context.get("PistonCasingTieredStats");
-        Object type2 = context.get("MotorCasingTieredStats");
-        this.pistonCasingTier = GTQTUtil.getOrDefault(
+        Object type1 = context.get("RobotArmCasingTieredStats");
+        Object type2 = context.get("ConveyorCasingTieredStats");
+        this.robotArmCasingTier = GTQTUtil.getOrDefault(
                 () -> type1 instanceof WrappedIntTired,
                 () -> ((WrappedIntTired) type1).getIntTier(), 0
         );
-        this.motorCasingTier = GTQTUtil.getOrDefault(
+        this.conveyorCasingTier = GTQTUtil.getOrDefault(
                 () -> type2 instanceof WrappedIntTired,
                 () -> ((WrappedIntTired) type2).getIntTier(), 0
         );
@@ -71,46 +68,52 @@ public class MetaTileEntityIndustrialBender extends MultiMapMultiblockController
     @Override
     public void invalidateStructure() {
         super.invalidateStructure();
-        this.pistonCasingTier = 0;
-        this.motorCasingTier = 0;
+        this.robotArmCasingTier = 0;
+        this.conveyorCasingTier = 0;
         // this.length = 0;
     }
 
     @Override
     protected BlockPattern createStructurePattern() {
         return FactoryBlockPattern.start()
-                .aisle("CCCC", "CCCC", "CCQC")
-                .aisle("CCCC", "CPMC", "CCQC")
-                .aisle("CCCC", "CPMC", "CCQC")
-                .aisle("CCCC", "CSCC", "CCQC")
+                .aisle("CCCCCC", "CCCCCC", "CCCCCC", "CCCCCC")
+                .aisle("CCCCCC", "CRPPPC", "CPPPPC", "CCGGGC")
+                .aisle("CCCCCC", "CMMMMC", "CP###C", "CCGGGC")
+                .aisle("CCCCCC", "CSRRRC", "CCGGGC", "CCGGGC")
                 .where('S', this.selfPredicate())
                 .where('C', states(this.getCasingState())
-                        .setMinGlobalLimited(16)
-                        .or(this.autoAbilities(true, true, true, true, false, false, false)))
-                .where('Q', states(this.getPipeCasingState()))
-                .where('P', PISTON_CASING.get())
-                .where('M', MOTOR_CASING.get())
+                        .setMinGlobalLimited(12)
+                        .or(this.autoAbilities(true, true, true, true, true, false, false)))
+                .where('P', states(this.getPipeCasingState()))
+                .where('G', states(this.getGlassCasingState()))
+                .where('R', ROBOT_ARM_CASING.get())
+                .where('M', CONVEYOR_CASING.get())
+                .where('#', air())
                 .build();
     }
 
     private IBlockState getCasingState() {
-        return GTQTSMetaBlocks.multiblockCasing.getState(CAZ_CASING);
+        return GTQTSMetaBlocks.multiblockCasing.getState(IAZ_CASING);
     }
 
     private IBlockState getPipeCasingState() {
-        return GTQTSMetaBlocks.multiblockCasing.getState(CAZ_HEAT_VENT);
+        return GTQTSMetaBlocks.multiblockCasing.getState(IAZ_HEAT_VENT);
+    }
+
+    private IBlockState getGlassCasingState() {
+        return MetaBlocks.TRANSPARENT_CASING.getState(BlockGlassCasing.CasingType.TEMPERED_GLASS);
     }
 
     @SideOnly(Side.CLIENT)
     @Override
     public ICubeRenderer getBaseTexture(IMultiblockPart texture) {
-        return GTQTSTextures.CAZ_CASING;
+        return GTQTSTextures.IAZ_CASING;
     }
 
     @SideOnly(Side.CLIENT)
     @Override
     protected ICubeRenderer getFrontOverlay() {
-        return Textures.BENDER_OVERLAY;
+        return Textures.PROCESSING_ARRAY_OVERLAY;
     }
 
     /* ------------------------------- MetaTileEntity Descriptions ------------------------------- */
@@ -120,16 +123,16 @@ public class MetaTileEntityIndustrialBender extends MultiMapMultiblockController
                                List<String> tooltip,
                                boolean advanced) {
         super.addInformation(stack, player, tooltip, advanced);
-        tooltip.add(I18n.format("gtqtspace.machine.industrial_bender.tooltip.1"));
-        tooltip.add(I18n.format("gtqtspace.machine.industrial_bender.tooltip.2"));
-        tooltip.add(I18n.format("gtqtspace.machine.industrial_bender.tooltip.3"));
-        tooltip.add(I18n.format("gtqtspace.machine.industrial_bender.tooltip.4"));
+        tooltip.add(I18n.format("gtqtspace.machine.industrial_assembler.tooltip.1"));
+        tooltip.add(I18n.format("gtqtspace.machine.industrial_assembler.tooltip.2"));
+        tooltip.add(I18n.format("gtqtspace.machine.industrial_assembler.tooltip.3"));
+        tooltip.add(I18n.format("gtqtspace.machine.industrial_assembler.tooltip.4"));
     }
 
     @Override
     public String[] getDescription() {
         return new String[]{
-                I18n.format("gtqtspace.machine.industrial_bender.desc.1")
+                I18n.format("gtqtspace.machine.industrial_assembler.desc.1")
         };
     }
 
@@ -139,9 +142,9 @@ public class MetaTileEntityIndustrialBender extends MultiMapMultiblockController
         return true;
     }
 
-    protected class IndustrialBenderRecipeLogic extends MultiblockRecipeLogic {
+    protected class IndustrialAssemblerRecipeLogic extends MultiblockRecipeLogic {
 
-        public IndustrialBenderRecipeLogic(RecipeMapMultiblockController tileEntity) {
+        public IndustrialAssemblerRecipeLogic(RecipeMapMultiblockController tileEntity) {
             super(tileEntity);
         }
 
@@ -152,12 +155,12 @@ public class MetaTileEntityIndustrialBender extends MultiMapMultiblockController
 
         @Override
         public void setMaxProgress(int maxProgress) {
-            super.setMaxProgress((int) (Math.floor(maxProgress * Math.pow(0.8, motorCasingTier))));
+            super.setMaxProgress((int) (Math.floor(maxProgress * Math.pow(0.5, conveyorCasingTier))));
         }
 
         @Override
         public int getParallelLimit() {
-            return 16 * pistonCasingTier;
+            return 16 * robotArmCasingTier;
         }
 
     }

@@ -28,41 +28,40 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
 
-import static meowmel.gtqtspace.api.predicate.TiredTraceabilityPredicate.MOTOR_CASING;
-import static meowmel.gtqtspace.api.predicate.TiredTraceabilityPredicate.PISTON_CASING;
+import static meowmel.gtqtspace.api.predicate.TiredTraceabilityPredicate.*;
 import static meowmel.gtqtspace.common.block.blocks.GTQTSMultiblockCasing.CasingType.CAZ_CASING;
 import static meowmel.gtqtspace.common.block.blocks.GTQTSMultiblockCasing.CasingType.CAZ_HEAT_VENT;
 
-public class MetaTileEntityIndustrialBender extends MultiMapMultiblockController {
+public class MetaTileEntityIndustrialCutter extends MultiMapMultiblockController {
 
-    private int pistonCasingTier;
     private int motorCasingTier;
+    private int conveyorCasingTier;
 
     /* ------------------------------- MetaTileEntity constructors ------------------------------- */
-    public MetaTileEntityIndustrialBender(ResourceLocation metaTileEntityId) {
+    public MetaTileEntityIndustrialCutter(ResourceLocation metaTileEntityId) {
         super(metaTileEntityId, new RecipeMap[]{
-                RecipeMaps.BENDER_RECIPES,
-                RecipeMaps.FORMING_PRESS_RECIPES
+                RecipeMaps.CUTTER_RECIPES,
+                RecipeMaps.LATHE_RECIPES
         });
-        this.recipeMapWorkable = new IndustrialBenderRecipeLogic(this);
+        this.recipeMapWorkable = new IndustrialCutterRecipeLogic(this);
     }
 
     @Override
     public MetaTileEntity createMetaTileEntity(IGregTechTileEntity tileEntity) {
-        return new MetaTileEntityIndustrialBender(metaTileEntityId);
+        return new MetaTileEntityIndustrialCutter(metaTileEntityId);
     }
 
     /* ----------------------------- Create MetaTileEntity structure ----------------------------- */
     @Override
     protected void formStructure(PatternMatchContext context) {
         super.formStructure(context);
-        Object type1 = context.get("PistonCasingTieredStats");
-        Object type2 = context.get("MotorCasingTieredStats");
-        this.pistonCasingTier = GTQTUtil.getOrDefault(
+        Object type1 = context.get("MotorCasingTieredStats");
+        Object type2 = context.get("ConveyorCasingTieredStats");
+        this.motorCasingTier = GTQTUtil.getOrDefault(
                 () -> type1 instanceof WrappedIntTired,
                 () -> ((WrappedIntTired) type1).getIntTier(), 0
         );
-        this.motorCasingTier = GTQTUtil.getOrDefault(
+        this.conveyorCasingTier = GTQTUtil.getOrDefault(
                 () -> type2 instanceof WrappedIntTired,
                 () -> ((WrappedIntTired) type2).getIntTier(), 0
         );
@@ -71,34 +70,30 @@ public class MetaTileEntityIndustrialBender extends MultiMapMultiblockController
     @Override
     public void invalidateStructure() {
         super.invalidateStructure();
-        this.pistonCasingTier = 0;
         this.motorCasingTier = 0;
+        this.conveyorCasingTier = 0;
         // this.length = 0;
     }
 
     @Override
     protected BlockPattern createStructurePattern() {
         return FactoryBlockPattern.start()
-                .aisle("CCCC", "CCCC", "CCQC")
-                .aisle("CCCC", "CPMC", "CCQC")
-                .aisle("CCCC", "CPMC", "CCQC")
-                .aisle("CCCC", "CSCC", "CCQC")
+                .aisle("CCCCC", "CCC#C", "  C#C")
+                .aisle("CCCCC", "CCOMC", "  C#C")
+                .aisle("CCCCC", "CSC#C", "  C#C")
                 .where('S', this.selfPredicate())
                 .where('C', states(this.getCasingState())
-                        .setMinGlobalLimited(16)
-                        .or(this.autoAbilities(true, true, true, true, false, false, false)))
-                .where('Q', states(this.getPipeCasingState()))
-                .where('P', PISTON_CASING.get())
+                        .setMinGlobalLimited(12)
+                        .or(this.autoAbilities(true, true, true, true, true, false, false)))
                 .where('M', MOTOR_CASING.get())
+                .where('O', CONVEYOR_CASING.get())
+                .where('#', air())
+                .where(' ', any())
                 .build();
     }
 
     private IBlockState getCasingState() {
         return GTQTSMetaBlocks.multiblockCasing.getState(CAZ_CASING);
-    }
-
-    private IBlockState getPipeCasingState() {
-        return GTQTSMetaBlocks.multiblockCasing.getState(CAZ_HEAT_VENT);
     }
 
     @SideOnly(Side.CLIENT)
@@ -110,7 +105,7 @@ public class MetaTileEntityIndustrialBender extends MultiMapMultiblockController
     @SideOnly(Side.CLIENT)
     @Override
     protected ICubeRenderer getFrontOverlay() {
-        return Textures.BENDER_OVERLAY;
+        return Textures.CUTTER_OVERLAY;
     }
 
     /* ------------------------------- MetaTileEntity Descriptions ------------------------------- */
@@ -120,16 +115,16 @@ public class MetaTileEntityIndustrialBender extends MultiMapMultiblockController
                                List<String> tooltip,
                                boolean advanced) {
         super.addInformation(stack, player, tooltip, advanced);
-        tooltip.add(I18n.format("gtqtspace.machine.industrial_bender.tooltip.1"));
-        tooltip.add(I18n.format("gtqtspace.machine.industrial_bender.tooltip.2"));
-        tooltip.add(I18n.format("gtqtspace.machine.industrial_bender.tooltip.3"));
-        tooltip.add(I18n.format("gtqtspace.machine.industrial_bender.tooltip.4"));
+        tooltip.add(I18n.format("gtqtspace.machine.industrial_cutter.tooltip.1"));
+        tooltip.add(I18n.format("gtqtspace.machine.industrial_cutter.tooltip.2"));
+        tooltip.add(I18n.format("gtqtspace.machine.industrial_cutter.tooltip.3"));
+        tooltip.add(I18n.format("gtqtspace.machine.industrial_cutter.tooltip.4"));
     }
 
     @Override
     public String[] getDescription() {
         return new String[]{
-                I18n.format("gtqtspace.machine.industrial_bender.desc.1")
+                I18n.format("gtqtspace.machine.industrial_cutter.desc.1")
         };
     }
 
@@ -139,9 +134,9 @@ public class MetaTileEntityIndustrialBender extends MultiMapMultiblockController
         return true;
     }
 
-    protected class IndustrialBenderRecipeLogic extends MultiblockRecipeLogic {
+    protected class IndustrialCutterRecipeLogic extends MultiblockRecipeLogic {
 
-        public IndustrialBenderRecipeLogic(RecipeMapMultiblockController tileEntity) {
+        public IndustrialCutterRecipeLogic(RecipeMapMultiblockController tileEntity) {
             super(tileEntity);
         }
 
@@ -157,8 +152,9 @@ public class MetaTileEntityIndustrialBender extends MultiMapMultiblockController
 
         @Override
         public int getParallelLimit() {
-            return 16 * pistonCasingTier;
+            return 16 * conveyorCasingTier;
         }
+
 
     }
 }

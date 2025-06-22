@@ -436,9 +436,11 @@ public class MetaTileEntitySpaceElevator extends MultiblockWithDisplayBase {
         tooltip.add(I18n.format("拓展模式：请在UI内打开拓展模式，shift右键控制器即可预览结构"));
         tooltip.add(I18n.format("跃迁模式：可将玩家传送至空间站"));
         tooltip.add(I18n.format("最多能装备12个太空电梯模块，拓展模式下最多支持24个模块"));
-        tooltip.add(I18n.format("最大能装备的电梯模块与磁轨加速器等级正相关，升级磁轨加速器解锁更多槽位"));
-        tooltip.add(I18n.format("可将本体的能量，算力供所有模块共享"));
-        tooltip.add(I18n.format("升级磁轨加速器为模块提供升级"));
+        tooltip.add(I18n.format("电梯模块数量上限与磁轨加速器等级相关：等级1(6),2(12)"));
+        tooltip.add(I18n.format("升级磁轨加速器解锁更多槽位,等级高于3时需要拓展模式"));
+        tooltip.add(I18n.format("3(15,需要拓展模式),4(18,需要拓展模式),5(24,需要拓展模式)"));
+        tooltip.add(I18n.format("若不使用拓展模式，则默认最大可装配12模块"));
+        tooltip.add(I18n.format("在使用中可将太空电梯本体接收到的能量，算力与所有模块共享"));
     }
 
     @SideOnly(Side.CLIENT)
@@ -463,7 +465,6 @@ public class MetaTileEntitySpaceElevator extends MultiblockWithDisplayBase {
             return 18;
         if (this.motorTier == 5 && this.isExtended)
             return 24;
-
         return 12;
     }
     @Override

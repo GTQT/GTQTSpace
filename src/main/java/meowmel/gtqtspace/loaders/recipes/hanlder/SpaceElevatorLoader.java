@@ -2,10 +2,12 @@ package meowmel.gtqtspace.loaders.recipes.hanlder;
 
 import gregtech.api.metatileentity.multiblock.CleanroomType;
 import gregtech.api.unification.material.MarkerMaterials;
+import gregtech.common.metatileentities.MetaTileEntities;
 import keqing.gtqtcore.api.unification.MaterialHelper;
 import meowmel.gtqtspace.common.block.GTQTSMetaBlocks;
 
 import static gregtech.api.GTValues.*;
+import static gregtech.api.recipes.RecipeMaps.ASSEMBLER_RECIPES;
 import static gregtech.api.recipes.RecipeMaps.ASSEMBLY_LINE_RECIPES;
 import static gregtech.api.unification.material.Materials.*;
 import static gregtech.api.unification.ore.OrePrefix.*;
@@ -22,11 +24,40 @@ import static meowmel.gtqtspace.common.metatileentities.GTQTSMetaTileEntities.*;
 public class SpaceElevatorLoader {
 
     public static void init() {
+        hatch();
         casing();
         mining();
         drilling();
         motor();
         DroneRecipes();
+    }
+
+    private static void hatch() {
+        ASSEMBLER_RECIPES.recipeBuilder()
+                .input(CIRCUIT_GOOD_II, 1)
+                .input(MetaTileEntities.COMPUTATION_HATCH_TRANSMITTER[ZPM])
+                .input(circuit, MarkerMaterials.Tier.LV, 16)
+                .input(ROBOT_ARM_ZPM, 8)
+                .input(SENSOR_ZPM, 8)
+                .input(wireGtSingle, MaterialHelper.Superconductor[8], 64)
+                .fluidInputs(NaquadahAlloy.getFluid(L))
+                .output(ELEVATOR_PROVIDER_HATCH)
+                .EUt(VA[ZPM])
+                .duration(200)
+                .buildAndRegister();
+
+        ASSEMBLER_RECIPES.recipeBuilder()
+                .input(CIRCUIT_GOOD_II, 1)
+                .input(MetaTileEntities.COMPUTATION_HATCH_RECEIVER[ZPM])
+                .input(circuit, MarkerMaterials.Tier.LV, 16)
+                .input(ROBOT_ARM_ZPM, 8)
+                .input(SENSOR_ZPM, 8)
+                .input(wireGtSingle, MaterialHelper.Superconductor[8], 64)
+                .fluidInputs(NaquadahAlloy.getFluid(L))
+                .output(ELEVATOR_RECEIVER_HATCH)
+                .EUt(VA[ZPM])
+                .duration(200)
+                .buildAndRegister();
     }
 
     private static void DroneRecipes() {
