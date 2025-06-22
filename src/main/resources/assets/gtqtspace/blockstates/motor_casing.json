@@ -1,0 +1,97 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "gtqtspace:motor_casing",
+    "textures": {
+      "all": "gtqtspace:blocks/rendering_error"
+    }
+  },
+  "variants": {
+    "variant": {
+      "lv": {
+        "model": "gtqtspace:motor_casing",
+        "textures": {
+          "all": "gtqtspace:blocks/casings/tiered/lv"
+        }
+      },
+      "mv": {
+        "model": "gtqtspace:motor_casing",
+        "textures": {
+          "all": "gtqtspace:blocks/casings/tiered/mv"
+        }
+      },
+      "hv": {
+        "model": "gtqtspace:motor_casing",
+        "textures": {
+          "all": "gtqtspace:blocks/casings/tiered/hv"
+        }
+      },
+      "ev": {
+        "model": "gtqtspace:motor_casing",
+        "textures": {
+          "all": "gtqtspace:blocks/casings/tiered/ev"
+        }
+      },
+      "iv": {
+        "model": "gtqtspace:motor_casing",
+        "textures": {
+          "all": "gtqtspace:blocks/casings/tiered/iv"
+        }
+      },
+      "luv": {
+        "model": "gtqtspace:motor_casing",
+        "textures": {
+          "all": "gtqtspace:blocks/casings/tiered/luv"
+        }
+      },
+      "zpm": {
+        "model": "gtqtspace:motor_casing",
+        "textures": {
+          "all": "gtqtspace:blocks/casings/tiered/zpm"
+        }
+      },
+      "uv": {
+        "model": "gtqtspace:motor_casing",
+        "textures": {
+          "all": "gtqtspace:blocks/casings/tiered/uv"
+        }
+      },
+      "uhv": {
+        "model": "gtqtspace:motor_casing",
+        "textures": {
+          "all": "gtqtspace:blocks/casings/tiered/uhv"
+        }
+      },
+      "uev": {
+        "model": "gtqtspace:motor_casing",
+        "textures": {
+          "all": "gtqtspace:blocks/casings/tiered/uev"
+        }
+      },
+      "uiv": {
+        "model": "gtqtspace:motor_casing",
+        "textures": {
+          "all": "gtqtspace:blocks/casings/tiered/uiv"
+        }
+      },
+      "uxv": {
+        "model": "gtqtspace:motor_casing",
+        "textures": {
+          "all": "gtqtspace:blocks/casings/tiered/uxv"
+        }
+      },
+      "opv": {
+        "model": "gtqtspace:motor_casing",
+        "textures": {
+          "all": "gtqtspace:blocks/casings/tiered/opv"
+        }
+      },
+      "max": {
+        "model": "gtqtspace:motor_casing",
+        "textures": {
+          "all": "gtqtspace:blocks/casings/tiered/max"
+        }
+      }
+    }
+  }
+}

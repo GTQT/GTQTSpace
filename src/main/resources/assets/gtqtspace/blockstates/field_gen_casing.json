@@ -1,0 +1,97 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "gtqtspace:field_gen_casing",
+    "textures": {
+      "all": "gtqtspace:blocks/rendering_error"
+    }
+  },
+  "variants": {
+    "variant": {
+      "lv": {
+        "model": "gtqtspace:field_gen_casing",
+        "textures": {
+          "all": "gtqtspace:blocks/casings/tiered/lv"
+        }
+      },
+      "mv": {
+        "model": "gtqtspace:field_gen_casing",
+        "textures": {
+          "all": "gtqtspace:blocks/casings/tiered/mv"
+        }
+      },
+      "hv": {
+        "model": "gtqtspace:field_gen_casing",
+        "textures": {
+          "all": "gtqtspace:blocks/casings/tiered/hv"
+        }
+      },
+      "ev": {
+        "model": "gtqtspace:field_gen_casing",
+        "textures": {
+          "all": "gtqtspace:blocks/casings/tiered/ev"
+        }
+      },
+      "iv": {
+        "model": "gtqtspace:field_gen_casing",
+        "textures": {
+          "all": "gtqtspace:blocks/casings/tiered/iv"
+        }
+      },
+      "luv": {
+        "model": "gtqtspace:field_gen_casing",
+        "textures": {
+          "all": "gtqtspace:blocks/casings/tiered/luv"
+        }
+      },
+      "zpm": {
+        "model": "gtqtspace:field_gen_casing",
+        "textures": {
+          "all": "gtqtspace:blocks/casings/tiered/zpm"
+        }
+      },
+      "uv": {
+        "model": "gtqtspace:field_gen_casing",
+        "textures": {
+          "all": "gtqtspace:blocks/casings/tiered/uv"
+        }
+      },
+      "uhv": {
+        "model": "gtqtspace:field_gen_casing",
+        "textures": {
+          "all": "gtqtspace:blocks/casings/tiered/uhv"
+        }
+      },
+      "uev": {
+        "model": "gtqtspace:field_gen_casing",
+        "textures": {
+          "all": "gtqtspace:blocks/casings/tiered/uev"
+        }
+      },
+      "uiv": {
+        "model": "gtqtspace:field_gen_casing",
+        "textures": {
+          "all": "gtqtspace:blocks/casings/tiered/uiv"
+        }
+      },
+      "uxv": {
+        "model": "gtqtspace:field_gen_casing",
+        "textures": {
+          "all": "gtqtspace:blocks/casings/tiered/uxv"
+        }
+      },
+      "opv": {
+        "model": "gtqtspace:field_gen_casing",
+        "textures": {
+          "all": "gtqtspace:blocks/casings/tiered/opv"
+        }
+      },
+      "max": {
+        "model": "gtqtspace:field_gen_casing",
+        "textures": {
+          "all": "gtqtspace:blocks/casings/tiered/max"
+        }
+      }
+    }
+  }
+}

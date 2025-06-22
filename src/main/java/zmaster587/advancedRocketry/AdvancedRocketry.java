@@ -1,5 +1,8 @@
 package zmaster587.advancedRocketry;
 
+import gregtech.api.unification.OreDictUnifier;
+import gregtech.api.unification.ore.OrePrefix;
+import keqing.gtqtcore.api.unification.GTQTMaterials;
 import net.minecraft.block.Block;
 import net.minecraft.block.material.MapColor;
 import net.minecraft.block.material.Material;
@@ -28,7 +31,6 @@ import net.minecraftforge.common.config.Configuration;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fluids.Fluid;
 import net.minecraftforge.fluids.FluidRegistry;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.common.Loader;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -104,7 +106,6 @@ import zmaster587.advancedRocketry.tile.station.*;
 import zmaster587.advancedRocketry.util.*;
 import zmaster587.advancedRocketry.world.biome.*;
 import zmaster587.advancedRocketry.world.decoration.MapGenLander;
-import zmaster587.advancedRocketry.world.ore.OreGenerator;
 import zmaster587.advancedRocketry.world.provider.WorldProviderPlanet;
 import zmaster587.advancedRocketry.world.type.WorldTypePlanetGen;
 import zmaster587.advancedRocketry.world.type.WorldTypeSpace;
@@ -112,8 +113,6 @@ import zmaster587.libVulpes.LibVulpes;
 import zmaster587.libVulpes.api.LibVulpesBlocks;
 import zmaster587.libVulpes.api.LibVulpesItems;
 import zmaster587.libVulpes.api.material.AllowedProducts;
-import zmaster587.libVulpes.api.material.MaterialRegistry;
-import zmaster587.libVulpes.api.material.MixedMaterial;
 import zmaster587.libVulpes.block.*;
 import zmaster587.libVulpes.block.multiblock.BlockMultiBlockComponentVisible;
 import zmaster587.libVulpes.block.multiblock.BlockMultiBlockComponentVisibleAlphaTexture;
@@ -124,8 +123,6 @@ import zmaster587.libVulpes.items.ItemIngredient;
 import zmaster587.libVulpes.items.ItemProjector;
 import zmaster587.libVulpes.network.PacketHandler;
 import zmaster587.libVulpes.network.PacketItemModifcation;
-import zmaster587.libVulpes.recipe.RecipesMachine;
-import zmaster587.libVulpes.tile.TileMaterial;
 import zmaster587.libVulpes.tile.multiblock.TileMultiBlock;
 import zmaster587.libVulpes.util.FluidUtils;
 import zmaster587.libVulpes.util.HashedBlockPosition;
@@ -139,6 +136,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.*;
 import java.util.Map.Entry;
+
+import static gregtech.api.unification.material.Materials.Gold;
+import static gregtech.api.unification.material.Materials.Titanium;
 
 
 @Mod(modid = "advancedrocketry",
@@ -161,7 +161,6 @@ public class AdvancedRocketry {
     public static WorldType planetWorldType;
     public static WorldType spaceWorldType;
     public static CompatibilityMgr compat = new CompatibilityMgr();
-    public static MaterialRegistry materialRegistry = new MaterialRegistry();
     public static HashMap<AllowedProducts, HashSet<String>> modProducts = new HashMap<>();
     private static Configuration config;
 
@@ -371,8 +370,6 @@ public class AdvancedRocketry {
         GameRegistry.registerTileEntity(TileGuidanceComputer.class, "ARguidanceComputer");
         GameRegistry.registerTileEntity(TileElectricArcFurnace.class, "ARelectricArcFurnace");
         GameRegistry.registerTileEntity(TilePlanetSelector.class, "ARTilePlanetSelector");
-        //GameRegistry.registerTileEntity(TileModelRenderRotatable.class, "ARTileModelRenderRotatable");
-        GameRegistry.registerTileEntity(TileMaterial.class, "ARTileMaterial");
         GameRegistry.registerTileEntity(TileLathe.class, "ARTileLathe");
         GameRegistry.registerTileEntity(TileRollingMachine.class, "ARTileMetalBender");
         GameRegistry.registerTileEntity(TileStationAssembler.class, "ARStationBuilder");
@@ -562,7 +559,7 @@ public class AdvancedRocketry {
         LibVulpesBlocks.registerItem(AdvancedRocketryItems.itemAtmAnalyser.setTranslationKey("atmAnalyser"));
         LibVulpesBlocks.registerItem(AdvancedRocketryItems.itemSealDetector.setTranslationKey("sealDetector"));
         LibVulpesBlocks.registerItem(AdvancedRocketryItems.itemOreScanner.setTranslationKey("oreScanner"));
-        if (zmaster587.advancedRocketry.api.ARConfiguration.getCurrentConfig().enableTerraforming){
+        if (zmaster587.advancedRocketry.api.ARConfiguration.getCurrentConfig().enableTerraforming) {
             LibVulpesBlocks.registerItem(AdvancedRocketryItems.itemBiomeChanger.setTranslationKey("biomeChanger"));
             LibVulpesBlocks.registerItem(AdvancedRocketryItems.itemWeatherController.setTranslationKey("weatherController"));
         }
@@ -584,11 +581,11 @@ public class AdvancedRocketry {
         OreDictionary.registerOre("ingotCarbon", new ItemStack(AdvancedRocketryItems.itemMisc, 1, 1));
         OreDictionary.registerOre("itemLens", AdvancedRocketryItems.itemLens);
         OreDictionary.registerOre("lensPrecisionLaserEtcher", AdvancedRocketryItems.itemLens);
-        OreDictionary.registerOre("itemSilicon", MaterialRegistry.getItemStackFromMaterialAndType("Silicon", AllowedProducts.getProductByName("INGOT")));
+        OreDictionary.registerOre("itemSilicon", OreDictUnifier.get(OrePrefix.block, GTQTMaterials.Polysilicon));
         OreDictionary.registerOre("dustThermite", new ItemStack(AdvancedRocketryItems.itemThermite));
         OreDictionary.registerOre("slab", new ItemStack(Blocks.STONE_SLAB));
-        OreDictionary.registerOre("blockWarpCoreCore", new ItemStack(Blocks.GOLD_BLOCK));
-        OreDictionary.registerOre("blockWarpCoreRim", MaterialRegistry.getMaterialFromName("Titanium").getProduct(AllowedProducts.getProductByName("BLOCK")));
+        OreDictionary.registerOre("blockWarpCoreCore", OreDictUnifier.get(OrePrefix.block, Gold));
+        OreDictionary.registerOre("blockWarpCoreRim", OreDictUnifier.get(OrePrefix.block, Titanium));
     }
 
     @SubscribeEvent(priority = EventPriority.HIGH)
@@ -888,13 +885,6 @@ public class AdvancedRocketry {
         LibVulpesBlocks.registerBlock(AdvancedRocketryBlocks.blockFuelFluid.setTranslationKey("rocketFuel"), null, false);
         LibVulpesBlocks.registerBlock(AdvancedRocketryBlocks.blockEnrichedLavaFluid.setTranslationKey("enrichedLavaFluid"), null, false);
 
-
-        //Register Allowed Products
-        materialRegistry.registerMaterial(new zmaster587.libVulpes.api.material.Material("TitaniumAluminide", "pickaxe", 1, 0xaec2de, AllowedProducts.getProductByName("PLATE").getFlagValue() | AllowedProducts.getProductByName("INGOT").getFlagValue() | AllowedProducts.getProductByName("NUGGET").getFlagValue() | AllowedProducts.getProductByName("DUST").getFlagValue() | AllowedProducts.getProductByName("STICK").getFlagValue() | AllowedProducts.getProductByName("BLOCK").getFlagValue() | AllowedProducts.getProductByName("GEAR").getFlagValue() | AllowedProducts.getProductByName("SHEET").getFlagValue(), false));
-        materialRegistry.registerMaterial(new zmaster587.libVulpes.api.material.Material("TitaniumIridium", "pickaxe", 1, 0xd7dfe4, AllowedProducts.getProductByName("PLATE").getFlagValue() | AllowedProducts.getProductByName("INGOT").getFlagValue() | AllowedProducts.getProductByName("NUGGET").getFlagValue() | AllowedProducts.getProductByName("DUST").getFlagValue() | AllowedProducts.getProductByName("STICK").getFlagValue() | AllowedProducts.getProductByName("BLOCK").getFlagValue() | AllowedProducts.getProductByName("GEAR").getFlagValue() | AllowedProducts.getProductByName("SHEET").getFlagValue(), false));
-
-        materialRegistry.registerOres(LibVulpes.tabLibVulpesOres);
-
         //OreDict stuff
         OreDictionary.registerOre("turfMoon", new ItemStack(AdvancedRocketryBlocks.blockMoonTurf));
         OreDictionary.registerOre("turfMoon", new ItemStack(AdvancedRocketryBlocks.blockMoonTurfDark));
@@ -915,8 +905,6 @@ public class AdvancedRocketry {
 
     @SubscribeEvent
     public void registerRecipes(RegistryEvent<IRecipe> evt) {
-        GameRegistry.addSmelting(MaterialRegistry.getMaterialFromName("Dilithium").getProduct(AllowedProducts.getProductByName("ORE")), MaterialRegistry.getMaterialFromName("Dilithium").getProduct(AllowedProducts.getProductByName("DUST")), 0);
-
         //Register the machine recipes
         machineRecipes.registerAllMachineRecipes();
     }
@@ -927,10 +915,6 @@ public class AdvancedRocketry {
         proxy.init();
 
         zmaster587.advancedRocketry.cable.NetworkRegistry.registerFluidNetwork();
-
-        //Register Alloys
-        MaterialRegistry.registerMixedMaterial(new MixedMaterial(TileElectricArcFurnace.class, "oreRutile", new ItemStack[]{MaterialRegistry.getMaterialFromName("Titanium").getProduct(AllowedProducts.getProductByName("INGOT"))}));
-
 
         NetworkRegistry.INSTANCE.registerGuiHandler(this, new GuiHandler());
 
@@ -1085,15 +1069,7 @@ public class AdvancedRocketry {
 
         PacketHandler.init();
 
-        GameRegistry.registerWorldGenerator(new OreGenerator(), 100);
-
         ForgeChunkManager.setForcedChunkLoadingCallback(instance, new WorldEvents());
-
-
-        //Register mixed material's recipes
-        for (MixedMaterial material : MaterialRegistry.getMixedMaterialList()) {
-            RecipesMachine.getInstance().addRecipe(material.getMachine(), material.getProducts(), 100, 10, material.getInput());
-        }
 
         //Register space dimension
         net.minecraftforge.common.DimensionManager.registerDimension(zmaster587.advancedRocketry.api.ARConfiguration.getCurrentConfig().spaceDimId, DimensionManager.spaceDimensionType);

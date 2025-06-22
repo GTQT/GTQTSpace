@@ -40,7 +40,7 @@ public class ClientProxy extends CommonProxy {
 
 	@Override
 	public void init() {
-		LibVulpes.materialRegistry.init();
+
 	}
 	
 	@Override
@@ -71,8 +71,8 @@ public class ClientProxy extends CommonProxy {
         //Register Item models
         ModelLoader.setCustomModelResourceLocation(LibVulpesItems.itemLinker, 0, new ModelResourceLocation("libvulpes:linker", "inventory"));
         ModelLoader.setCustomModelResourceLocation(LibVulpesItems.itemHoloProjector, 0, new ModelResourceLocation("libvulpes:holoprojector", "inventory"));
-        ModelLoader.setCustomModelResourceLocation(LibVulpesItems.itemBattery, 0, new ModelResourceLocation("libvulpes:smallBattery", "inventory"));
-        ModelLoader.setCustomModelResourceLocation(LibVulpesItems.itemBattery, 1, new ModelResourceLocation("libvulpes:small2xBattery", "inventory"));
+        ModelLoader.setCustomModelResourceLocation(LibVulpesItems.itemBattery, 0, new ModelResourceLocation("libvulpes:smallbattery", "inventory"));
+        ModelLoader.setCustomModelResourceLocation(LibVulpesItems.itemBattery, 1, new ModelResourceLocation("libvulpes:small2xbattery", "inventory"));
 	}
 	
 	@Override

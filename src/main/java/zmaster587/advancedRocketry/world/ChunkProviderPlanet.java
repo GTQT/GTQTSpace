@@ -23,11 +23,7 @@ import net.minecraftforge.event.terraingen.TerrainGen;
 import zmaster587.advancedRocketry.api.ARConfiguration;
 import zmaster587.advancedRocketry.dimension.DimensionManager;
 import zmaster587.advancedRocketry.dimension.DimensionProperties;
-import zmaster587.advancedRocketry.event.PlanetEventHandler;
-import zmaster587.advancedRocketry.util.OreGenProperties;
-import zmaster587.advancedRocketry.util.OreGenProperties.OreEntry;
 import zmaster587.advancedRocketry.world.decoration.*;
-import zmaster587.advancedRocketry.world.ore.CustomizableOreGen;
 import zmaster587.advancedRocketry.world.provider.WorldProviderPlanet;
 
 import javax.annotation.Nullable;
@@ -66,21 +62,21 @@ public class ChunkProviderPlanet implements IChunkGenerator {
     private MapGenMineshaft mineshaftGenerator = new MapGenMineshaft();
     private MapGenScatteredFeature scatteredFeatureGenerator = new MapGenScatteredFeature();
     private MapGenBase ravineGenerator = new MapGenRavineExt();
-    private StructureOceanMonument oceanMonumentGenerator = new StructureOceanMonument();
+    private final StructureOceanMonument oceanMonumentGenerator = new StructureOceanMonument();
     private Biome[] biomesForGeneration;
     private double[] mainNoiseRegion;
     private double[] minLimitRegion;
     private double[] maxLimitRegion;
     private double[] depthRegion;
-    private boolean habitable;
+    private final boolean habitable;
 
 
-    private MapGenCraterSmall craterGeneratorSmall;
-    private MapGenCrater craterGenerator;
-    private MapGenCraterHuge craterGeneratorHuge;
-    private MapGenGeode geodeGenerator;
-    private MapGenVolcano volcanoGenerator;
-    private MapGenSwampTree swampTreeGenerator;
+    private final MapGenCraterSmall craterGeneratorSmall;
+    private final MapGenCrater craterGenerator;
+    private final MapGenCraterHuge craterGeneratorHuge;
+    private final MapGenGeode geodeGenerator;
+    private final MapGenVolcano volcanoGenerator;
+    private final MapGenSwampTree swampTreeGenerator;
 
     {
         caveGenerator = TerrainGen.getModdedMapGen(caveGenerator, CAVE);
@@ -499,7 +495,7 @@ public class ChunkProviderPlanet implements IChunkGenerator {
             }
         }
 
-        if (false && biome != Biomes.DESERT && biome != Biomes.DESERT_HILLS && this.settings.useWaterLakes && !flag && this.rand.nextInt(this.settings.waterLakeChance) == 0)
+        if (false)
             if (net.minecraftforge.event.terraingen.TerrainGen.populate(this, this.worldObj, this.rand, x, z, flag, net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.LAKE)) {
                 int i1 = this.rand.nextInt(16) + 8;
                 int j1 = this.rand.nextInt(256);
@@ -507,7 +503,7 @@ public class ChunkProviderPlanet implements IChunkGenerator {
                 (new WorldGenLakes(Blocks.WATER)).generate(this.worldObj, this.rand, blockpos.add(i1, j1, k1));
             }
 
-        if (false && !flag && this.rand.nextInt(this.settings.lavaLakeChance / 10) == 0 && this.settings.useLavaLakes)
+        if (false)
             if (net.minecraftforge.event.terraingen.TerrainGen.populate(this, this.worldObj, this.rand, x, z, flag, net.minecraftforge.event.terraingen.PopulateChunkEvent.Populate.EventType.LAVA)) {
                 int i2 = this.rand.nextInt(16) + 8;
                 int l2 = this.rand.nextInt(this.rand.nextInt(248) + 8);
@@ -563,14 +559,6 @@ public class ChunkProviderPlanet implements IChunkGenerator {
         }
         */
         net.minecraftforge.event.ForgeEventFactory.onChunkPopulate(false, this, this.worldObj, this.rand, x, z, flag);
-
-        OreGenProperties oreGenProperties = DimensionManager.getInstance().getDimensionProperties(this.worldObj.provider.getDimension()).getOreGenProperties(this.worldObj);
-
-        if (oreGenProperties != null) {
-            for (OreEntry entry : oreGenProperties.getOreEntries()) {
-                new CustomizableOreGen(entry).generate(rand, x, z, this.worldObj, this, this.worldObj.getChunkProvider());
-            }
-        }
 
         BlockFalling.fallInstantly = false;
     }

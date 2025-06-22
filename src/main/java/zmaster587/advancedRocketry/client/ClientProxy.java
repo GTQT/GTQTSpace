@@ -140,8 +140,6 @@ public class ClientProxy extends CommonProxy {
                 return tintIndex > 0 ? -1 : ((ItemArmor) stack.getItem()).getColor(stack);
             }
         }, AdvancedRocketryItems.itemSpaceSuit_Boots, AdvancedRocketryItems.itemSpaceSuit_Chest, AdvancedRocketryItems.itemSpaceSuit_Helmet, AdvancedRocketryItems.itemSpaceSuit_Leggings);
-
-        AdvancedRocketry.materialRegistry.init();
     }
 
     @Override

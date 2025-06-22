@@ -139,7 +139,7 @@ public class MetaTileEntitySolarPlate extends MultiblockWithDisplayBase{
         isSpaceStation=this.getWorld().provider.getDimension()==50;
 
         this.energyContainer = new EnergyContainerList(getAbilities(MultiblockAbility.OUTPUT_ENERGY));
-        Object tier = context.get("SPTieredStats");
+        Object tier = context.get("SolarPlateTieredStats");
         this.tier = GTQTUtil.getOrDefault(() -> tier instanceof WrappedIntTired,
                 () -> ((WrappedIntTired)tier).getIntTier(),
                 0);

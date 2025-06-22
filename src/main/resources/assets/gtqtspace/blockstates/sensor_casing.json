@@ -1,0 +1,97 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "gtqtspace:sensor_casing",
+    "textures": {
+      "all": "gtqtspace:blocks/rendering_error"
+    }
+  },
+  "variants": {
+    "variant": {
+      "lv": {
+        "model": "gtqtspace:sensor_casing",
+        "textures": {
+          "all": "gtqtspace:blocks/casings/tiered/lv"
+        }
+      },
+      "mv": {
+        "model": "gtqtspace:sensor_casing",
+        "textures": {
+          "all": "gtqtspace:blocks/casings/tiered/mv"
+        }
+      },
+      "hv": {
+        "model": "gtqtspace:sensor_casing",
+        "textures": {
+          "all": "gtqtspace:blocks/casings/tiered/hv"
+        }
+      },
+      "ev": {
+        "model": "gtqtspace:sensor_casing",
+        "textures": {
+          "all": "gtqtspace:blocks/casings/tiered/ev"
+        }
+      },
+      "iv": {
+        "model": "gtqtspace:sensor_casing",
+        "textures": {
+          "all": "gtqtspace:blocks/casings/tiered/iv"
+        }
+      },
+      "luv": {
+        "model": "gtqtspace:sensor_casing",
+        "textures": {
+          "all": "gtqtspace:blocks/casings/tiered/luv"
+        }
+      },
+      "zpm": {
+        "model": "gtqtspace:sensor_casing",
+        "textures": {
+          "all": "gtqtspace:blocks/casings/tiered/zpm"
+        }
+      },
+      "uv": {
+        "model": "gtqtspace:sensor_casing",
+        "textures": {
+          "all": "gtqtspace:blocks/casings/tiered/uv"
+        }
+      },
+      "uhv": {
+        "model": "gtqtspace:sensor_casing",
+        "textures": {
+          "all": "gtqtspace:blocks/casings/tiered/uhv"
+        }
+      },
+      "uev": {
+        "model": "gtqtspace:sensor_casing",
+        "textures": {
+          "all": "gtqtspace:blocks/casings/tiered/uev"
+        }
+      },
+      "uiv": {
+        "model": "gtqtspace:sensor_casing",
+        "textures": {
+          "all": "gtqtspace:blocks/casings/tiered/uiv"
+        }
+      },
+      "uxv": {
+        "model": "gtqtspace:sensor_casing",
+        "textures": {
+          "all": "gtqtspace:blocks/casings/tiered/uxv"
+        }
+      },
+      "opv": {
+        "model": "gtqtspace:sensor_casing",
+        "textures": {
+          "all": "gtqtspace:blocks/casings/tiered/opv"
+        }
+      },
+      "max": {
+        "model": "gtqtspace:sensor_casing",
+        "textures": {
+          "all": "gtqtspace:blocks/casings/tiered/max"
+        }
+      }
+    }
+  }
+}

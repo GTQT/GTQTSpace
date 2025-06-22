@@ -49,57 +49,6 @@ public class Material {
 		this.index = index;
 	}
 
-	/**
-	 * @param product
-	 * @param amount
-	 * @return ItemStack representing the product of this material, or ItemStack.EMPTY if nonexistent
-	 */
-	@Nonnull
-	public ItemStack getProduct(AllowedProducts product, int amount) {
-		/*ItemStack stack = OreDictionary.getOres(product.getName() + this.name()).get(0);
-			stack = stack.copy();
-			stack.stackSize = amount;
-			return stack;*/
-
-		if(isVanilla()) {
-			if(this.unlocalizedName.equals("Iron")) {
-				switch (product.getName()) {
-					case "INGOT":
-						return new ItemStack(Items.IRON_INGOT, amount);
-					case "ORE":
-						return new ItemStack(Blocks.IRON_ORE, amount);
-					case "BLOCK":
-						return new ItemStack(Blocks.IRON_BLOCK, amount);
-				}
-			}
-			if(this.unlocalizedName.equals("Gold")) {
-				switch (product.getName()) {
-					case "INGOT":
-						return new ItemStack(Items.GOLD_INGOT, amount);
-					case "ORE":
-						return new ItemStack(Blocks.GOLD_ORE, amount);
-					case "BLOCK":
-						return new ItemStack(Blocks.GOLD_BLOCK, amount);
-				}
-			}
-		}
-		
-		if(product.isBlock()) {
-			return new ItemStack(registry.getBlockForProduct(product, this, index), amount, getMeta());
-		}
-		
-		
-		
-		return new ItemStack(registry.oreProducts[product.ordinal()], amount, getMeta());
-	}
-	/**
-	 * @param product
-	 * @return ItemStack of size 1 representing the product of this material, or ItemStack.EMPTY if nonexistent
-	 */
-	@Nonnull
-	public ItemStack getProduct(AllowedProducts product) {
-		return getProduct(product,1);
-	}
 
 	/**
 	 * @return 32wide-bitmask corresponding to allowed products by this material
@@ -156,19 +105,6 @@ public class Material {
 
 	public int getIndex() {
 		return index;
-	}
-
-	/**
-	 * 
-	 * @param str 
-	 * @return the material corresponding to the string supplied or null if nonexistent
-	 */
-	public static Material valueOfSafe(String str) {
-		try {
-			return MaterialRegistry.getMaterialFromName(str);//Material.valueOf(str);
-		} catch (Exception e) {
-			return null;
-		}
 	}
 
 }

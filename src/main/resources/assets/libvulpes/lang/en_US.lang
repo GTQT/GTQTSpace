@@ -1,5 +1,5 @@
 itemGroup.multiBlock=Multi Block Machine Parts
-item.Linker.name=Linker
+item.linker.name=Linker
 
 tile.hatch.0.name=Input Hatch
 tile.hatch.1.name=Output Hatch

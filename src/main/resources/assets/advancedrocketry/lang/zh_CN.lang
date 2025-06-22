@@ -138,8 +138,8 @@ tile.solararraypanel.name=太阳能阵列板
 
 item.lens.0.name=基础透镜
 item.wafer.0.name=硅晶圆
-item.circuitplate.0.name=基础电路板
-item.circuitplate.1.name=高级电路板
+item.circuitPlate.0.name=基础电路板
+item.circuitPlate.1.name=高级电路板
 item.circuitIC.0.name=基础电路
 item.circuitIC.1.name=追踪电路
 item.circuitIC.2.name=高级电路

@@ -27,7 +27,6 @@ public class AllowedProducts {
 		product.flagValue = currentFlagValue;
 		product.name = name;
 		currentFlagValue++;
-		MaterialRegistry.productBlockListMapping.put(product, new ArrayList<>());
 		map.put(name, product);
 		list.add(product);
 	}

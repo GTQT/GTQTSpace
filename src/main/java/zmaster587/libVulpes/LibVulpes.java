@@ -71,13 +71,7 @@ public class LibVulpes {
             return new ItemStack(LibVulpesItems.itemLinker);
         }
     };
-    public static CreativeTabs tabLibVulpesOres = new CreativeTabs("advancedRocketryOres") {
-        @Nonnull
-        public ItemStack createIcon() {
-            return OreDictUnifier.get(OrePrefix.ore, Materials.Copper);
-        }
-    };
-    public static MaterialRegistry materialRegistry = new MaterialRegistry();
+
     private static final HashMap<Class, String> userModifiableRecipes = new HashMap<>();
 
     public LibVulpes() {
@@ -95,28 +89,12 @@ public class LibVulpes {
     public void registerModels(ModelRegistryEvent event) {
         proxy.preInitItems();
         proxy.preInitBlocks();
-        LibVulpesMetaBlocks.registerItemModels();
     }
 
-    @SubscribeEvent(priority = EventPriority.HIGH)
-    public void registerBlocks(RegistryEvent.Register<Block> evt) {
-        materialRegistry.registerOres(tabLibVulpesOres);
-    }
-
-    @SubscribeEvent(priority = EventPriority.HIGH)
-    public void missingMappings(RegistryEvent.MissingMappings<Item> evt) {
-        for (Mapping<Item> mapping : evt.getAllMappings()) {
-            if (mapping.key.compareTo(new ResourceLocation("libvulpes:productcrystal")) == 0)
-                mapping.remap(MaterialRegistry.getItemStackFromMaterialAndType("Dilithium", AllowedProducts.getProductByName("GEM")).getItem());
-
-        }
-    }
 
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         proxy.preInit();
-        LibVulpesMetaBlocks.init();
-
         //Configuration
         Configuration config = new Configuration(event.getSuggestedConfigurationFile());
         config.load();
@@ -144,6 +122,7 @@ public class LibVulpes {
         AllowedProducts.registerProduct("SHEET");
         AllowedProducts.registerProduct("GEAR");
 
+        /*
         //Register Ores
         materialRegistry.registerMaterial(new zmaster587.libVulpes.api.material.Material("Dilithium", "pickaxe", 3, 0xddcecb, AllowedProducts.getProductByName("DUST").getFlagValue() | AllowedProducts.getProductByName("GEM").getFlagValue()));
         materialRegistry.registerMaterial(new zmaster587.libVulpes.api.material.Material("Iron", "pickaxe", 1, 0xafafaf, AllowedProducts.getProductByName("SHEET").getFlagValue() | AllowedProducts.getProductByName("STICK").getFlagValue() | AllowedProducts.getProductByName("DUST").getFlagValue() | AllowedProducts.getProductByName("PLATE").getFlagValue(), false));
@@ -157,6 +136,7 @@ public class LibVulpes {
         materialRegistry.registerMaterial(new zmaster587.libVulpes.api.material.Material("Aluminum", "pickaxe", 1, 0xb3e4dc, AllowedProducts.getProductByName("COIL").getFlagValue() | AllowedProducts.getProductByName("BLOCK").getFlagValue() | AllowedProducts.getProductByName("INGOT").getFlagValue() | AllowedProducts.getProductByName("PLATE").getFlagValue() | AllowedProducts.getProductByName("SHEET").getFlagValue() | AllowedProducts.getProductByName("DUST").getFlagValue() | AllowedProducts.getProductByName("NUGGET").getFlagValue() | AllowedProducts.getProductByName("SHEET").getFlagValue()));
         materialRegistry.registerMaterial(new zmaster587.libVulpes.api.material.Material("Iridium", "pickaxe", 2, 0xdedcce, AllowedProducts.getProductByName("COIL").getFlagValue() | AllowedProducts.getProductByName("BLOCK").getFlagValue() | AllowedProducts.getProductByName("DUST").getFlagValue() | AllowedProducts.getProductByName("INGOT").getFlagValue() | AllowedProducts.getProductByName("NUGGET").getFlagValue() | AllowedProducts.getProductByName("PLATE").getFlagValue() | AllowedProducts.getProductByName("STICK").getFlagValue()));
 
+         */
         //
         PacketHandler.INSTANCE.addDiscriminator(PacketMachine.class);
         PacketHandler.INSTANCE.addDiscriminator(PacketEntity.class);

@@ -138,8 +138,8 @@ tile.solararraypanel.name=Solar Array Panel
 
 item.lens.0.name=Basic Lens
 item.wafer.0.name=Silicon Wafer
-item.circuitplate.0.name=Basic Circuit Plate
-item.circuitplate.1.name=Advanced Circuit Plate
+item.circuitPlate.0.name=Basic Circuit Plate
+item.circuitPlate.1.name=Advanced Circuit Plate
 item.circuitIC.0.name=Basic Circuit
 item.circuitIC.1.name=Tracking Circuit
 item.circuitIC.2.name=Advanced Circuit

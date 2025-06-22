@@ -1,6 +1,5 @@
 package zmaster587.advancedRocketry.world;
 
-import net.minecraft.block.BlockFalling;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Blocks;
@@ -17,9 +16,6 @@ import net.minecraft.world.gen.NoiseGeneratorOctaves;
 import net.minecraft.world.gen.NoiseGeneratorSimplex;
 import zmaster587.advancedRocketry.dimension.DimensionManager;
 import zmaster587.advancedRocketry.dimension.DimensionProperties;
-import zmaster587.advancedRocketry.util.OreGenProperties;
-import zmaster587.advancedRocketry.util.OreGenProperties.OreEntry;
-import zmaster587.advancedRocketry.world.ore.CustomizableOreGen;
 
 import java.util.List;
 import java.util.Random;
@@ -49,8 +45,8 @@ public class ChunkProviderAsteroids extends ChunkProviderPlanet {
      */
     private NoiseGeneratorOctaves netherrackExculsivityNoiseGen;
     private MapGenBase genNetherCaves = new MapGenCavesHell();
-    private IBlockState oceanBlock;
-    private IBlockState fillblock;
+    private final IBlockState oceanBlock;
+    private final IBlockState fillblock;
 
 
     public ChunkProviderAsteroids(World worldIn, boolean p_i45637_2_, long seed, String p_i46668_5_) {
@@ -320,19 +316,4 @@ public class ChunkProviderAsteroids extends ChunkProviderPlanet {
         return false;
     }
 
-    @Override
-    public void populate(int x, int z) {
-        net.minecraftforge.event.ForgeEventFactory.onChunkPopulate(false, this, this.world, this.rand, x, z, false);
-
-        OreGenProperties oreGenProperties = DimensionManager.getInstance().getDimensionProperties(this.world.provider.getDimension()).getOreGenProperties(this.world);
-
-        if (oreGenProperties != null) {
-            for (OreEntry entry : oreGenProperties.getOreEntries()) {
-                new CustomizableOreGen(entry).generate(rand, x, z, this.world, this, this.world.getChunkProvider());
-            }
-        }
-
-        BlockFalling.fallInstantly = false;
-
-    }
 }

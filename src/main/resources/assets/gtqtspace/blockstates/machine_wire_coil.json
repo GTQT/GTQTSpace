@@ -1,0 +1,39 @@
+{
+  "forge_marker": 1,
+  "variants": {
+    "variant": {
+      "coil_silicon": {
+        "model": "minecraft:cube_bottom_top",
+        "textures": {
+          "top": "gtqtspace:blocks/wire_coil/wire_coil_top",
+          "side": "gtqtspace:blocks/wire_coil/coil_silicon",
+          "bottom": "gtqtspace:blocks/wire_coil/wire_coil_top"
+        }
+      },
+      "coil_tin": {
+        "model": "minecraft:cube_bottom_top",
+        "textures": {
+          "top": "gtqtspace:blocks/wire_coil/wire_coil_top",
+          "side": "gtqtspace:blocks/wire_coil/coil_tin",
+          "bottom": "gtqtspace:blocks/wire_coil/wire_coil_top"
+        }
+      },
+      "coil_copper": {
+        "model": "minecraft:cube_bottom_top",
+        "textures": {
+          "top": "gtqtspace:blocks/wire_coil/wire_coil_top",
+          "side": "gtqtspace:blocks/wire_coil/coil_copper",
+          "bottom": "gtqtspace:blocks/wire_coil/wire_coil_top"
+        }
+      },
+      "coil_steel": {
+        "model": "minecraft:cube_bottom_top",
+        "textures": {
+          "top": "gtqtspace:blocks/wire_coil/wire_coil_top",
+          "side": "gtqtspace:blocks/wire_coil/coil_steel",
+          "bottom": "gtqtspace:blocks/wire_coil/wire_coil_top"
+        }
+      }
+    }
+  }
+}

@@ -8,7 +8,6 @@ import net.minecraft.util.ResourceLocation;
 import org.lwjgl.opengl.GL11;
 import zmaster587.advancedRocketry.backwardCompat.ModelFormatException;
 import zmaster587.advancedRocketry.backwardCompat.WavefrontObject;
-import zmaster587.libVulpes.api.material.MaterialRegistry;
 import zmaster587.libVulpes.block.RotatableBlock;
 import zmaster587.libVulpes.tile.multiblock.TileMultiblockMachine;
 
@@ -70,12 +69,7 @@ public class RendererLathe extends TileEntitySpecialRenderer {
             model.renderOnly("Shaft");
             GL11.glPopMatrix();
 
-            int color;
-            //Check for rare bug when outputs is null, usually occurs if player opens machine within 1st tick
-            if (multiBlockTile.getOutputs() != null && !(outputStack = multiBlockTile.getOutputs().get(0)).isEmpty())
-                color = MaterialRegistry.getColorFromItemMaterial(outputStack);
-            else
-                color = 0;
+            int color = 0;
 
             GL11.glPushMatrix();
             GL11.glColor3d((0xff & color >> 16) / 256f, (0xff & color >> 8) / 256f, (color & 0xff) / 256f);

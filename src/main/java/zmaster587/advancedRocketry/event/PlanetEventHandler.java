@@ -166,25 +166,6 @@ public class PlanetEventHandler {
     @SubscribeEvent
     public void onWorldGen(OreGenEvent.GenerateMinable event) {
 
-        if (event.getWorld().provider instanceof WorldProviderPlanet &&
-                DimensionManager.getInstance().getDimensionProperties(event.getWorld().provider.getDimension()).getOreGenProperties(event.getWorld()) != null) {
-
-            switch (event.getType()) {
-                case COAL:
-                case DIAMOND:
-                case EMERALD:
-                case GOLD:
-                case IRON:
-                case LAPIS:
-                case QUARTZ:
-                case REDSTONE:
-                case CUSTOM:
-                    event.setResult(Result.DENY);
-                    break;
-                default:
-                    event.setResult(Result.DEFAULT);
-            }
-        }
     }
 
     //Handle gravity

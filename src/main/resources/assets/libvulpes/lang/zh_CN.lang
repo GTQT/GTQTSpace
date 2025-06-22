@@ -1,5 +1,5 @@
 itemGroup.multiBlock=多方块机器组件
-item.Linker.name=连接器
+item.linker.name=连接器
 
 tile.hatch.0.name=输入口
 tile.hatch.1.name=输出口

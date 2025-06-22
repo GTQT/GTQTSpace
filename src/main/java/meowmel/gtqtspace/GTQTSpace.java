@@ -1,7 +1,6 @@
 package meowmel.gtqtspace;
 
 import meowmel.gtqtspace.api.GTQTSAPI;
-import meowmel.gtqtspace.api.utils.Datas;
 import meowmel.gtqtspace.api.utils.GTQTSLog;
 import meowmel.gtqtspace.client.ClientProxy;
 import meowmel.gtqtspace.common.CommonProxy;
@@ -48,12 +47,13 @@ public class GTQTSpace {
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) throws IOException {
         proxy.init();
-        Datas.init();
     }
+
     @Mod.EventHandler
     public void onInit(FMLInitializationEvent event) {
         GTQTSIntegration.init();
     }
+
     @Mod.EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         proxy.preLoad();

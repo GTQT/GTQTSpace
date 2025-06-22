@@ -1,7 +1,7 @@
 package meowmel.gtqtspace.common.metatileentities;
 
 import meowmel.gtqtspace.api.multiblock.SpaceModulesType;
-import meowmel.gtqtspace.common.metatileentities.multiblock.standard.MetaTileEntityWindGenerator;
+import meowmel.gtqtspace.common.metatileentities.multiblock.generator.MetaTileEntityWindGenerator;
 import meowmel.gtqtspace.common.metatileentities.multiblock.standard.SpaceStation.AsteroidSystem.AsteroidController;
 import meowmel.gtqtspace.common.metatileentities.multiblock.standard.SpaceStation.AsteroidSystem.AsteroidDrill;
 import meowmel.gtqtspace.common.metatileentities.multiblock.standard.SpaceStation.AsteroidSystem.AsteroidSearch;

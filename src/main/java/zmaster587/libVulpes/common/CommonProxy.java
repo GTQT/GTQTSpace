@@ -94,15 +94,6 @@ public class CommonProxy {
 	public static void registerBlocks(RegistryEvent.Register<Block> event) {
 		IForgeRegistry<Block> registry = event.getRegistry();
 
-		registry.register(LibVulpesMetaBlocks.MOTOR_CASING);
-		registry.register(LibVulpesMetaBlocks.PISTON_CASING);
-		registry.register(LibVulpesMetaBlocks.PUMP_CASING);
-		registry.register(LibVulpesMetaBlocks.CONVEYOR_CASING);
-		registry.register(LibVulpesMetaBlocks.ROBOT_ARM_CASING);
-		registry.register(LibVulpesMetaBlocks.EMITTER_CASING);
-		registry.register(LibVulpesMetaBlocks.SENSOR_CASING);
-		registry.register(LibVulpesMetaBlocks.FIELD_GEN_CASING);
-
 		//注册功能性方块 应该改为GT的 还应该删除部分无用内容
 		LibVulpesBlocks.registerBlock(LibVulpesBlocks.blockPhantom.setTranslationKey("phantomBlock"));
 		LibVulpesBlocks.registerBlock(LibVulpesBlocks.blockHatch.setTranslationKey("hatch"), ItemBlockMeta.class, false);
@@ -142,15 +133,6 @@ public class CommonProxy {
 	@SubscribeEvent
 	public static void registerItems(RegistryEvent.Register<Item> event) {
 		IForgeRegistry<Item> registry = event.getRegistry();
-
-		registry.register(createItemBlock(LibVulpesMetaBlocks.MOTOR_CASING, VariantItemBlock::new));
-		registry.register(createItemBlock(LibVulpesMetaBlocks.PISTON_CASING, VariantItemBlock::new));
-		registry.register(createItemBlock(LibVulpesMetaBlocks.PUMP_CASING, VariantItemBlock::new));
-		registry.register(createItemBlock(LibVulpesMetaBlocks.CONVEYOR_CASING, VariantItemBlock::new));
-		registry.register(createItemBlock(LibVulpesMetaBlocks.ROBOT_ARM_CASING, VariantItemBlock::new));
-		registry.register(createItemBlock(LibVulpesMetaBlocks.EMITTER_CASING, VariantItemBlock::new));
-		registry.register(createItemBlock(LibVulpesMetaBlocks.SENSOR_CASING, VariantItemBlock::new));
-		registry.register(createItemBlock(LibVulpesMetaBlocks.FIELD_GEN_CASING, VariantItemBlock::new));
 
 		//Register Items
 		LibVulpesBlocks.registerItem(LibVulpesItems.itemLinker);

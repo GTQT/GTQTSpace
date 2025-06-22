@@ -1,5 +1,6 @@
 package meowmel.gtqtspace.loaders.recipes;
 
+import meowmel.gtqtspace.loaders.recipes.hanlder.ComponentCasingsRecipes;
 import meowmel.gtqtspace.loaders.recipes.hanlder.SpaceElevatorrHanlder;
 import meowmel.gtqtspace.loaders.recipes.hanlder.WirelessEnergyHatches;
 import meowmel.gtqtspace.loaders.recipes.machine.GTQTSSatelliteAssembler;
@@ -20,5 +21,6 @@ public class GTQTSRecipesManager {
 		WirelessEnergyHatches.init();
 		GTQTSSatelliteAssembler.init();
 		SpaceElevatorrHanlder.init();
+		ComponentCasingsRecipes.init();
 	}
 }

@@ -320,16 +320,6 @@ public class DimensionProperties implements Cloneable, IDimensionProperties {
     }
 
     /**
-     * @param world
-     * @return null to use default world gen properties, otherwise a list of ores to generate
-     */
-    public OreGenProperties getOreGenProperties(World world) {
-        if (oreProperties != null)
-            return oreProperties;
-        return OreGenProperties.getOresForPressure(AtmosphereTypes.getAtmosphereTypeFromValue(originalAtmosphereDensity), Temps.getTempFromValue(getAverageTemp()));
-    }
-
-    /**
      * Resets all properties to default
      */
     public void resetProperties() {
