@@ -38,21 +38,6 @@ public class RecipeHandler {
         }
     }
 
-    public void registerXMLRecipes() {
-        //Load XML recipes
-        LibVulpes.instance.loadXMLRecipe(TileCuttingMachine.class);
-        LibVulpes.instance.loadXMLRecipe(TilePrecisionAssembler.class);
-        LibVulpes.instance.loadXMLRecipe(TileChemicalReactor.class);
-        LibVulpes.instance.loadXMLRecipe(TileCrystallizer.class);
-        LibVulpes.instance.loadXMLRecipe(TileElectrolyser.class);
-        LibVulpes.instance.loadXMLRecipe(TileElectricArcFurnace.class);
-        LibVulpes.instance.loadXMLRecipe(TileLathe.class);
-        LibVulpes.instance.loadXMLRecipe(TileRollingMachine.class);
-        LibVulpes.instance.loadXMLRecipe(BlockSmallPlatePress.class);
-        LibVulpes.instance.loadXMLRecipe(TileCentrifuge.class);
-        LibVulpes.instance.loadXMLRecipe(TilePrecisionLaserEtcher.class);
-    }
-
     public void registerAllMachineRecipes() {
 
         for (Class<? extends TileMultiblockMachine> clazz : machineList)

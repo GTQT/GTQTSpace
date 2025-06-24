@@ -1075,8 +1075,6 @@ public class AdvancedRocketry {
         net.minecraftforge.common.DimensionManager.registerDimension(zmaster587.advancedRocketry.api.ARConfiguration.getCurrentConfig().spaceDimId, DimensionManager.spaceDimensionType);
 
         ARConfiguration.loadPostInit();
-        //TODO recipes?
-        machineRecipes.registerXMLRecipes();
 
         //Add the overworld as a discovered planet
         zmaster587.advancedRocketry.api.ARConfiguration.getCurrentConfig().initiallyKnownPlanets.add(0);

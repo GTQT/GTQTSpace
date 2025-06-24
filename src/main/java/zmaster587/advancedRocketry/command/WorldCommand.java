@@ -256,7 +256,6 @@ public class WorldCommand implements ICommand {
             AdvancedRocketry.machineRecipes.clearAllMachineRecipes();
             AdvancedRocketry.machineRecipes.registerAllMachineRecipes();
             AdvancedRocketry.machineRecipes.createAutoGennedRecipes(AdvancedRocketry.modProducts);
-            AdvancedRocketry.machineRecipes.registerXMLRecipes();
 
             sender.sendMessage(new TextComponentString("Recipes reloaded"));
 

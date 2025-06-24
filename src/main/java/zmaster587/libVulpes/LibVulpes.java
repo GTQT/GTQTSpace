@@ -1,19 +1,11 @@
 package zmaster587.libVulpes;
 
 
-import gregtech.api.unification.OreDictUnifier;
-import gregtech.api.unification.material.Materials;
-import gregtech.api.unification.ore.OrePrefix;
-import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
-import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.event.RegistryEvent;
-import net.minecraftforge.event.RegistryEvent.MissingMappings.Mapping;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.Mod.Instance;
@@ -21,7 +13,6 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.eventhandler.EventPriority;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.common.gameevent.TickEvent;
 import net.minecraftforge.fml.common.network.NetworkRegistry;
@@ -31,24 +22,18 @@ import org.apache.logging.log4j.LogManager;
 import zmaster587.libVulpes.api.LibVulpesBlocks;
 import zmaster587.libVulpes.api.LibVulpesItems;
 import zmaster587.libVulpes.api.material.AllowedProducts;
-import zmaster587.libVulpes.api.material.MaterialRegistry;
 import zmaster587.libVulpes.block.BlockMeta;
 import zmaster587.libVulpes.common.CommonProxy;
-import zmaster587.libVulpes.common.block.LibVulpesMetaBlocks;
 import zmaster587.libVulpes.event.BucketHandler;
-import zmaster587.libVulpes.interfaces.IRecipe;
 import zmaster587.libVulpes.inventory.GuiHandler;
 import zmaster587.libVulpes.network.PacketChangeKeyState;
 import zmaster587.libVulpes.network.PacketEntity;
 import zmaster587.libVulpes.network.PacketHandler;
 import zmaster587.libVulpes.network.PacketMachine;
-import zmaster587.libVulpes.recipe.RecipesMachine;
 import zmaster587.libVulpes.tile.multiblock.TileMultiBlock;
 import zmaster587.libVulpes.util.TeslaCapabilityProvider;
-import zmaster587.libVulpes.util.XMLRecipeLoader;
 
 import javax.annotation.Nonnull;
-import java.io.*;
 import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.List;
@@ -59,6 +44,7 @@ import static zmaster587.libVulpes.common.item.LibVulpesMetaItems.InitializeItem
 @Mod(modid = "libvulpes", name = "Vulpes library", version = "0.5.0", useMetadata = true)
 
 public class LibVulpes {
+    private static final HashMap<Class, String> userModifiableRecipes = new HashMap<>();
     public static org.apache.logging.log4j.Logger logger = LogManager.getLogger("libVulpes");
     public static int time = 0;
     @Instance(value = "libvulpes")
@@ -71,8 +57,6 @@ public class LibVulpes {
             return new ItemStack(LibVulpesItems.itemLinker);
         }
     };
-
-    private static final HashMap<Class, String> userModifiableRecipes = new HashMap<>();
 
     public LibVulpes() {
         MinecraftForge.EVENT_BUS.register(this);
@@ -202,59 +186,6 @@ public class LibVulpes {
 
     }
 
-    public void loadXMLRecipe(Class clazz) {
-        File file = new File(userModifiableRecipes.get(clazz));
-        if (!file.exists()) {
-            try {
-                file.createNewFile();
-                BufferedReader inputStream = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/assets/libvulpes/defaultrecipe.xml")));
-
-                BufferedWriter stream2 = new BufferedWriter(new FileWriter(file));
-
-
-                while (inputStream.ready()) {
-                    stream2.write(inputStream.readLine() + "\n");
-                }
-
-
-                //Write recipes
-
-                stream2.write("<Recipes useDefault=\"true\">\n");
-                for (IRecipe recipe : RecipesMachine.getInstance().getRecipes(clazz)) {
-                    boolean writeable = true;
-                    for (ItemStack stack : recipe.getOutput()) {
-                        if (stack.hasTagCompound()) {
-                            writeable = false;
-                            break;
-                        }
-                    }
-
-                    if (((RecipesMachine.Recipe) recipe).outputToOnlyEmptySlots())
-                        writeable = false;
-
-                    if (writeable)
-                        stream2.write(XMLRecipeLoader.writeRecipe(recipe) + "\n");
-                }
-                stream2.write("</Recipes>");
-                stream2.close();
-
-                inputStream.close();
-
-
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else {
-            XMLRecipeLoader loader = new XMLRecipeLoader();
-            try {
-                loader.loadFile(file);
-                loader.registerRecipes(clazz);
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-    }
 
     @SubscribeEvent
     public void tick(TickEvent.ServerTickEvent event) {
