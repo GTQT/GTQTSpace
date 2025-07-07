@@ -451,7 +451,10 @@ public class AsteroidSolve extends MetaTileEntityBaseWithControl implements IOpt
     public IOpticalComputationProvider getComputationProvider() {
         return this.computationProvider;
     }
-
+    @Override
+    public boolean usesMui2() {
+        return false;
+    }
     @Override
     public List<ITextComponent> getDataInfo() {
         return Collections.emptyList();

@@ -94,6 +94,10 @@ public class MetaTileEntitySolarPlateController extends MultiblockWithDisplayBas
         getFrontOverlay().renderOrientedState(renderState, translation, pipeline, getFrontFacing(), this.isActive(),
                 this.isStructureFormed());
     }
+    @Override
+    public boolean usesMui2() {
+        return false;
+    }
     @SideOnly(Side.CLIENT)
     @Nonnull
     @Override

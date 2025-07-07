@@ -525,7 +525,10 @@ public class AsteroidDrill extends MetaTileEntityBaseWithControl {
     public List<ITextComponent> getDataInfo() {
         return Collections.emptyList();
     }
-
+    @Override
+    public boolean usesMui2() {
+        return false;
+    }
     //NBT操作
     public NBTTagCompound writeToNBT(NBTTagCompound data) {
         // 写入单个整数

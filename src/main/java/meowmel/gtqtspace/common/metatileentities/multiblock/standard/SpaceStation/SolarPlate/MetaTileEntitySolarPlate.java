@@ -175,6 +175,10 @@ public class MetaTileEntitySolarPlate extends MultiblockWithDisplayBase{
         getFrontOverlay().renderOrientedState(renderState, translation, pipeline, getFrontFacing(), this.isActive(),
                 this.isWorkingEnabled());
     }
+    @Override
+    public boolean usesMui2() {
+        return false;
+    }
     public boolean checkNaturalLighting() {
 
         if (!this.getWorld().isDaytime())

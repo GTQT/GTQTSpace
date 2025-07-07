@@ -192,4 +192,8 @@ public class AsteroidSearch extends MultiblockWithDisplayBase {
     public boolean hasMufflerMechanics() {
         return false;
     }
+    @Override
+    public boolean usesMui2() {
+        return false;
+    }
 }

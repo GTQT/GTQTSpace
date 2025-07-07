@@ -198,7 +198,10 @@ public class Dock extends MetaTileEntityBaseWithControl {
     public boolean hasMufflerMechanics() {
         return false;
     }
-
+    @Override
+    public boolean usesMui2() {
+        return false;
+    }
     @Override
     public List<ITextComponent> getDataInfo() {
         return Collections.emptyList();

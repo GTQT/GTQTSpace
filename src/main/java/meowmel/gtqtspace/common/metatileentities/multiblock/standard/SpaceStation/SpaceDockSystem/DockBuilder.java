@@ -410,7 +410,10 @@ public class DockBuilder extends MetaTileEntityBaseWithControl implements IOptic
     public IOpticalComputationProvider getComputationProvider() {
         return this.computationProvider;
     }
-
+    @Override
+    public boolean usesMui2() {
+        return false;
+    }
     @Override
     public List<ITextComponent> getDataInfo() {
         return Collections.emptyList();

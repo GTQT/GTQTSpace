@@ -581,27 +581,40 @@ public class ChunkProviderPlanet implements IChunkGenerator {
 
     @Override
     public void recreateStructures(Chunk chunkIn, int x, int z) {
+        /*
         if (this.mapFeaturesEnabled || !habitable) {
+            // 创建新的 ChunkPrimer 而不是使用 null
+            ChunkPrimer primer = new ChunkPrimer();
+
+            // 设置区块的基本地形和生物群系
+            this.setBlocksInChunk(x, z, primer);
+            this.biomesForGeneration = this.worldObj.getBiomeProvider().getBiomes(
+                    this.biomesForGeneration, x * 16, z * 16, 16, 16);
+            this.replaceBiomeBlocks(x, z, primer, this.biomesForGeneration);
+
+            // 使用有效的 primer 生成结构
             if (this.settings.useMineShafts) {
-                this.mineshaftGenerator.generate(this.worldObj, x, z, null);
+                this.mineshaftGenerator.generate(this.worldObj, x, z, primer);
             }
 
             if (this.settings.useVillages) {
-                this.villageGenerator.generate(this.worldObj, x, z, null);
+                this.villageGenerator.generate(this.worldObj, x, z, primer);
             }
 
             if (this.settings.useStrongholds) {
-                this.strongholdGenerator.generate(this.worldObj, x, z, null);
+                this.strongholdGenerator.generate(this.worldObj, x, z, primer);
             }
 
             if (this.settings.useTemples) {
-                this.scatteredFeatureGenerator.generate(this.worldObj, x, z, null);
+                this.scatteredFeatureGenerator.generate(this.worldObj, x, z, primer);
             }
 
             if (this.settings.useMonuments) {
-                this.oceanMonumentGenerator.generate(this.worldObj, x, z, null);
+                this.oceanMonumentGenerator.generate(this.worldObj, x, z, primer);
             }
         }
+
+         */
     }
 
     @Override
