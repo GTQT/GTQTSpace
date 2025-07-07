@@ -1,8 +1,15 @@
 package meowmel.gtqtspace.common;
 
 import gregtech.api.block.VariantItemBlock;
+import gregtech.common.blocks.MetaBlocks;
+import gregtech.common.blocks.StoneVariantBlock;
+import keqing.gtqtcore.common.block.GTQTMetaBlocks;
+import keqing.gtqtcore.common.block.blocks.GTQTStoneVariantBlock;
+import meowmel.gtqtspace.api.unifications.ore.GTQTSStoneTypes;
 import meowmel.gtqtspace.api.utils.GTQTSLog;
 import meowmel.gtqtspace.common.block.GTQTSMetaBlocks;
+import meowmel.gtqtspace.common.block.blocks.GTQTSDirtVariantBlock;
+import meowmel.gtqtspace.common.block.blocks.GTQTSStoneVariantBlock;
 import meowmel.gtqtspace.common.items.GTQTSMetaItems;
 import meowmel.gtqtspace.loaders.recipes.GTQTSRecipesManager;
 import net.minecraft.block.Block;
@@ -20,8 +27,7 @@ import java.io.IOException;
 import java.util.Objects;
 import java.util.function.Function;
 
-import static meowmel.gtqtspace.common.block.GTQTSMetaBlocks.MOTOR_CASING;
-import static meowmel.gtqtspace.common.block.GTQTSMetaBlocks.spaceElevatorCasing;
+import static meowmel.gtqtspace.common.block.GTQTSMetaBlocks.*;
 import static meowmel.gtqtspace.common.block.blocks.BlockMotorCasing.MotorCasingTier.LV;
 import static meowmel.gtqtspace.common.block.blocks.GTQTSpaceElevatorCasing.ElevatorCasingType.BASIC_CASING;
 
@@ -54,6 +60,13 @@ public class CommonProxy {
             return MOTOR_CASING.getItemVariant(LV);
         }
     };
+    public static final CreativeTabs Planet_TAB = new CreativeTabs("gtqtspace_planet") {
+        @Override
+        public ItemStack createIcon() {
+            return GTQTS_STONE_BLOCKS.get(GTQTSStoneVariantBlock.StoneVariant.SMOOTH)
+                    .getItemVariant(GTQTSStoneVariantBlock.StoneType.MOON_STONE);
+        }
+    };
     @SubscribeEvent
     public static void registerBlocks(RegistryEvent.Register<Block> event) {
         GTQTSLog.logger.info("Registering blocks...");
@@ -78,6 +91,10 @@ public class CommonProxy {
         registry.register(GTQTSMetaBlocks.SENSOR_CASING);
         registry.register(GTQTSMetaBlocks.FIELD_GEN_CASING);
         registry.register(GTQTSMetaBlocks.WIRE_COIL);
+
+        for (GTQTSStoneVariantBlock block : GTQTSMetaBlocks.GTQTS_STONE_BLOCKS.values()) registry.register(block);
+        for (GTQTSDirtVariantBlock block : GTQTS_DIRT_BLOCKS.values()) registry.register(block);
+
     }
 
     @SubscribeEvent
@@ -105,6 +122,10 @@ public class CommonProxy {
         registry.register(createItemBlock(GTQTSMetaBlocks.FIELD_GEN_CASING, VariantItemBlock::new));
         registry.register(createItemBlock(GTQTSMetaBlocks.WIRE_COIL, VariantItemBlock::new));
 
+        for (GTQTSStoneVariantBlock block : GTQTSMetaBlocks.GTQTS_STONE_BLOCKS.values())
+            registry.register(createItemBlock(block, VariantItemBlock::new));
+        for (GTQTSDirtVariantBlock block : GTQTS_DIRT_BLOCKS.values())
+            registry.register(createItemBlock(block, VariantItemBlock::new));
     }
 
     private static <T extends Block> ItemBlock createItemBlock(T block, Function<T, ItemBlock> producer) {
@@ -123,5 +144,6 @@ public class CommonProxy {
     }
 
     public void preLoad() {
+        GTQTSStoneTypes.init();
     }
 }

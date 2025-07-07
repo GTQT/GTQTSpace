@@ -8,6 +8,10 @@ public class GTQTSpaceMaterials {
 	public static Material MeteoricIron;
 	public static Material Desh;
 
+	public static Material MoonStone;
+	public static Material MarsStone;
+	public static Material VenusStone;
+
 	public static Material TAZAlloy;
 	public static Material SAZAlloy;
 	public static Material IAZAlloy;

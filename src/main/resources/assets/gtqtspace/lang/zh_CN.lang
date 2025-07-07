@@ -1,5 +1,8 @@
 gtqtspace.material.meteoric_iron=陨铁
 gtqtspace.material.desh=戴斯
+gtqtspace.material.moon_stone=月岩
+gtqtspace.material.mars_stone=火星岩石
+gtqtspace.material.venus_stone=金星岩石
 
 gtqtspace.material.taz_alloy=TAZ 合金
 gtqtspace.material.saz_alloy=SAZ 合金
@@ -81,6 +84,27 @@ metaitem.solar_plate_v.name=终极卫星太阳能板
 
 item.pos_binding_card.name=坐标绑定卡
 #方块
+tile.gtqts_stone_smooth.moon.name=月球石头
+tile.gtqts_stone_smooth.mars.name=火星石头
+tile.gtqts_stone_smooth.venus.name=金星石头
+
+
+tile.gtqts_stone_cobble.moon.name=月球圆石
+tile.gtqts_stone_cobble.mars.name=火星圆石
+tile.gtqts_stone_cobble.venus.name=金星圆石
+
+tile.gtqts_stone_bricks.moon.name=月球石砖
+tile.gtqts_stone_bricks.mars.name=火星石砖
+tile.gtqts_stone_bricks.venus.name=金星石砖
+
+tile.gtqts_dirt.moon.name=月壤
+tile.gtqts_dirt.mars.name=火星土壤
+tile.gtqts_dirt.venus.name=金星土壤
+
+tile.gtqts_turf.moon.name=月尘
+tile.gtqts_turf.mars.name=火星尘埃
+tile.gtqts_turf.venus.name=金星尘埃
+
 tile.update_core.update_core_vent.name=空白升级核心
 tile.update_core.update_core_cold.name=超频升级核心
 tile.update_core.update_core_hot.name=并行升级核心
@@ -467,6 +491,10 @@ gtqtspace.machine.asteroid_drill.name=小行星开采管理器
 gtqtspace.machine.dock_manager.name=太空船坞管理器
 gtqtspace.machine.dock_builder.name=太空造船厂
 gtqtspace.machine.dock.name=太空船坞单元
+# Ore Prefixes (%s is the localised material name)
+item.material.oreprefix.oreMoon=月球%s矿石
+item.material.oreprefix.oreMars=火星%s矿石
+item.material.oreprefix.oreVenus=金星%s矿石
 #
 itemGroup.gtqtspace_core=GTQT | 太空系统
 itemGroup.gtqtspace_core_ship=GTQT | 航天器设计

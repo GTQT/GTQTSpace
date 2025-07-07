@@ -1,0 +1,25 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "model": "minecraft:cube_all"
+  },
+  "variants": {
+    "variant": {
+      "moon" : {
+        "textures" : {
+          "all" : "gregtech:blocks/gtqts_stones/moon_dirt"
+        }
+      },
+      "mars" : {
+        "textures" : {
+          "all" : "gregtech:blocks/gtqts_stones/mars_dirt"
+        }
+      },
+      "venus" : {
+        "textures" : {
+          "all" : "gregtech:blocks/gtqts_stones/venus_dirt"
+        }
+      }
+    }
+  }
+}
