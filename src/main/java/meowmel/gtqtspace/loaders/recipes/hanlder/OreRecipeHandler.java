@@ -15,9 +15,7 @@ public class OreRecipeHandler {
             GTQTSOrePrefix.oreMars.addProcessingHandler(PropertyKey.ORE, gregtech.loaders.recipe.handlers.OreRecipeHandler::processOre);
             GTQTSOrePrefix.oreVenus.addProcessingHandler(PropertyKey.ORE, gregtech.loaders.recipe.handlers.OreRecipeHandler::processOre);
 
-            GTQTSOrePrefix.oreMoon.addSecondaryMaterial(new MaterialStack(GTQTSpaceMaterials.MoonStone, 144));
-            GTQTSOrePrefix.oreMars.addSecondaryMaterial(new MaterialStack(GTQTSpaceMaterials.MarsStone, 144));
-            GTQTSOrePrefix.oreVenus.addSecondaryMaterial(new MaterialStack(GTQTSpaceMaterials.VenusStone, 144));
+
         }
     }
 }
