@@ -16,6 +16,7 @@ import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import keqing.gtqtcore.api.blocks.impl.WrappedIntTired;
 import keqing.gtqtcore.api.utils.GTQTUtil;
+import meowmel.gtqtspace.api.multiblock.GTQTSpaceMultiblockController;
 import meowmel.gtqtspace.client.textures.GTQTSTextures;
 import meowmel.gtqtspace.common.block.GTQTSMetaBlocks;
 import net.minecraft.block.state.IBlockState;
@@ -32,7 +33,7 @@ import static meowmel.gtqtspace.api.predicate.TiredTraceabilityPredicate.PISTON_
 import static meowmel.gtqtspace.common.block.blocks.GTQTSMultiblockCasing.CasingType.CAZ_CASING;
 import static meowmel.gtqtspace.common.block.blocks.GTQTSMultiblockCasing.CasingType.CAZ_HEAT_VENT;
 
-public class MetaTileEntityIndustrialExtruder extends MultiMapMultiblockController {
+public class MetaTileEntityIndustrialExtruder extends GTQTSpaceMultiblockController {
 
     private int pistonCasingTier;
 
@@ -118,20 +119,13 @@ public class MetaTileEntityIndustrialExtruder extends MultiMapMultiblockControll
         tooltip.add(I18n.format("gtqtspace.machine.industrial_extruder.tooltip.4"));
     }
 
-    @Override
-    public String[] getDescription() {
-        return new String[]{
-                I18n.format("gtqtspace.machine.industrial_extruder.desc.1")
-        };
-    }
-
     /* ---------------------------------- MetaTileEntity Logics ---------------------------------- */
     @Override
     public boolean canBeDistinct() {
         return true;
     }
 
-    protected class IndustrialForgeHammerRecipeLogic extends MultiblockRecipeLogic {
+    protected class IndustrialForgeHammerRecipeLogic extends SpaceMultiblockRecipeLogic {
 
         public IndustrialForgeHammerRecipeLogic(RecipeMapMultiblockController tileEntity) {
             super(tileEntity);

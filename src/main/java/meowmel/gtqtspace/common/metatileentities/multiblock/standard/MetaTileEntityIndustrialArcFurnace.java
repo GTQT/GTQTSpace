@@ -20,6 +20,7 @@ import gregtech.common.blocks.MetaBlocks;
 import keqing.gtqtcore.api.blocks.impl.WrappedIntTired;
 import keqing.gtqtcore.api.recipes.GTQTcoreRecipeMaps;
 import keqing.gtqtcore.api.utils.GTQTUtil;
+import meowmel.gtqtspace.api.multiblock.GTQTSpaceMultiblockController;
 import meowmel.gtqtspace.client.textures.GTQTSTextures;
 import meowmel.gtqtspace.common.block.GTQTSMetaBlocks;
 import net.minecraft.block.state.IBlockState;
@@ -36,14 +37,18 @@ import static meowmel.gtqtspace.api.predicate.TiredTraceabilityPredicate.*;
 import static meowmel.gtqtspace.common.block.blocks.GTQTSMultiblockCasing.CasingType.CAZ_CASING;
 import static meowmel.gtqtspace.common.block.blocks.GTQTSMultiblockCasing.CasingType.CAZ_HEAT_VENT;
 
-public class MetaTileEntityIndustrialArcFurnace extends RecipeMapMultiblockController {
+public class MetaTileEntityIndustrialArcFurnace extends GTQTSpaceMultiblockController {
 
     private int pumpCasingTier;
     private int coilTier;
 
     /* ------------------------------- MetaTileEntity constructors ------------------------------- */
     public MetaTileEntityIndustrialArcFurnace(ResourceLocation metaTileEntityId) {
-        super(metaTileEntityId, RecipeMaps.ARC_FURNACE_RECIPES);
+        super(metaTileEntityId, new RecipeMap[]{
+                RecipeMaps.ARC_FURNACE_RECIPES,
+                RecipeMaps.ALLOY_SMELTER_RECIPES,
+                RecipeMaps.FURNACE_RECIPES,
+        });
         this.recipeMapWorkable = new IndustrialAutoclaveRecipeLogic(this);
     }
 
@@ -132,12 +137,6 @@ public class MetaTileEntityIndustrialArcFurnace extends RecipeMapMultiblockContr
         tooltip.add(I18n.format("gtqtspace.machine.industrial_arc_furnace.tooltip.4"));
     }
 
-    @Override
-    public String[] getDescription() {
-        return new String[]{
-                I18n.format("gtqtspace.machine.industrial_arc_furnace.desc.1")
-        };
-    }
 
     /* ---------------------------------- MetaTileEntity Logics ---------------------------------- */
     @Override
@@ -145,7 +144,7 @@ public class MetaTileEntityIndustrialArcFurnace extends RecipeMapMultiblockContr
         return true;
     }
 
-    protected class IndustrialAutoclaveRecipeLogic extends MultiblockRecipeLogic {
+    protected class IndustrialAutoclaveRecipeLogic extends SpaceMultiblockRecipeLogic {
 
         public IndustrialAutoclaveRecipeLogic(RecipeMapMultiblockController tileEntity) {
             super(tileEntity);

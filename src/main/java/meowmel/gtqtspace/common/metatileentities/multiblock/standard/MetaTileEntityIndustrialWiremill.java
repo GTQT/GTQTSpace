@@ -17,6 +17,7 @@ import gregtech.client.renderer.texture.Textures;
 import keqing.gtqtcore.api.blocks.impl.WrappedIntTired;
 import keqing.gtqtcore.api.recipes.GTQTcoreRecipeMaps;
 import keqing.gtqtcore.api.utils.GTQTUtil;
+import meowmel.gtqtspace.api.multiblock.GTQTSpaceMultiblockController;
 import meowmel.gtqtspace.client.textures.GTQTSTextures;
 import meowmel.gtqtspace.common.block.GTQTSMetaBlocks;
 import net.minecraft.block.state.IBlockState;
@@ -34,7 +35,7 @@ import static meowmel.gtqtspace.api.predicate.TiredTraceabilityPredicate.PISTON_
 import static meowmel.gtqtspace.common.block.blocks.GTQTSMultiblockCasing.CasingType.CAZ_CASING;
 import static meowmel.gtqtspace.common.block.blocks.GTQTSMultiblockCasing.CasingType.CAZ_HEAT_VENT;
 
-public class MetaTileEntityIndustrialWiremill extends MultiMapMultiblockController {
+public class MetaTileEntityIndustrialWiremill extends GTQTSpaceMultiblockController {
 
     private int motorCasingTier;
 
@@ -120,12 +121,6 @@ public class MetaTileEntityIndustrialWiremill extends MultiMapMultiblockControll
         tooltip.add(I18n.format("gtqtspace.machine.industrial_extruder.tooltip.4"));
     }
 
-    @Override
-    public String[] getDescription() {
-        return new String[]{
-                I18n.format("gtqtspace.machine.industrial_extruder.desc.1")
-        };
-    }
 
     /* ---------------------------------- MetaTileEntity Logics ---------------------------------- */
     @Override
@@ -133,7 +128,7 @@ public class MetaTileEntityIndustrialWiremill extends MultiMapMultiblockControll
         return true;
     }
 
-    protected class IndustrialWiremillRecipeLogic extends MultiblockRecipeLogic {
+    protected class IndustrialWiremillRecipeLogic extends SpaceMultiblockRecipeLogic {
 
         public IndustrialWiremillRecipeLogic(RecipeMapMultiblockController tileEntity) {
             super(tileEntity);

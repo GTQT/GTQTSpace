@@ -2,7 +2,7 @@ package meowmel.gtqtspace.api.multiblock;
 
 import gregtech.api.recipes.RecipeMap;
 
-import static meowmel.gtqtspace.api.recipes.GTQTScoreRecipeMaps.*;
+import static meowmel.gtqtspace.api.recipes.GTQTSpaceRecipeMaps.*;
 
 public enum SpaceModulesType {
     MINING_MODULE(MINING_MODULE_RECIPES),

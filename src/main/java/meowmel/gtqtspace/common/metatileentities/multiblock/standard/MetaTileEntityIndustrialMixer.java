@@ -18,6 +18,7 @@ import gregtech.client.renderer.texture.Textures;
 import keqing.gtqtcore.api.blocks.impl.WrappedIntTired;
 import keqing.gtqtcore.api.recipes.GTQTcoreRecipeMaps;
 import keqing.gtqtcore.api.utils.GTQTUtil;
+import meowmel.gtqtspace.api.multiblock.GTQTSpaceMultiblockController;
 import meowmel.gtqtspace.client.textures.GTQTSTextures;
 import meowmel.gtqtspace.common.block.GTQTSMetaBlocks;
 import net.minecraft.block.state.IBlockState;
@@ -34,7 +35,7 @@ import static meowmel.gtqtspace.api.predicate.TiredTraceabilityPredicate.MOTOR_C
 import static meowmel.gtqtspace.common.block.blocks.GTQTSMultiblockCasing.CasingType.CAZ_CASING;
 import static meowmel.gtqtspace.common.block.blocks.GTQTSMultiblockCasing.CasingType.CAZ_HEAT_VENT;
 
-public class MetaTileEntityIndustrialMixer extends MultiMapMultiblockController {
+public class MetaTileEntityIndustrialMixer extends GTQTSpaceMultiblockController {
 
     private int motorCasingTier;
 
@@ -120,20 +121,13 @@ public class MetaTileEntityIndustrialMixer extends MultiMapMultiblockController 
         tooltip.add(I18n.format("gtqtspace.machine.industrial_mixer.tooltip.4"));
     }
 
-    @Override
-    public String[] getDescription() {
-        return new String[]{
-                I18n.format("gtqtspace.machine.industrial_mixer.desc.1")
-        };
-    }
-
     /* ---------------------------------- MetaTileEntity Logics ---------------------------------- */
     @Override
     public boolean canBeDistinct() {
         return true;
     }
 
-    protected class IndustrialMixerRecipeLogic extends MultiblockRecipeLogic {
+    protected class IndustrialMixerRecipeLogic extends SpaceMultiblockRecipeLogic {
 
         public IndustrialMixerRecipeLogic(RecipeMapMultiblockController tileEntity) {
             super(tileEntity);

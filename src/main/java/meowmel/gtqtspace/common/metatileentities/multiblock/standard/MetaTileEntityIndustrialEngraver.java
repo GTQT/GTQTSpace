@@ -9,6 +9,7 @@ import gregtech.api.metatileentity.multiblock.RecipeMapMultiblockController;
 import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
 import gregtech.api.pattern.PatternMatchContext;
+import gregtech.api.recipes.RecipeMap;
 import gregtech.api.recipes.RecipeMaps;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
@@ -16,6 +17,7 @@ import gregtech.common.blocks.BlockGlassCasing;
 import gregtech.common.blocks.MetaBlocks;
 import keqing.gtqtcore.api.blocks.impl.WrappedIntTired;
 import keqing.gtqtcore.api.utils.GTQTUtil;
+import meowmel.gtqtspace.api.multiblock.GTQTSpaceMultiblockController;
 import meowmel.gtqtspace.client.textures.GTQTSTextures;
 import meowmel.gtqtspace.common.block.GTQTSMetaBlocks;
 import net.minecraft.block.state.IBlockState;
@@ -32,14 +34,17 @@ import static meowmel.gtqtspace.api.predicate.TiredTraceabilityPredicate.*;
 import static meowmel.gtqtspace.common.block.blocks.GTQTSMultiblockCasing.CasingType.IAZ_CASING;
 import static meowmel.gtqtspace.common.block.blocks.GTQTSMultiblockCasing.CasingType.IAZ_HEAT_VENT;
 
-public class MetaTileEntityIndustrialEngraver extends RecipeMapMultiblockController {
+public class MetaTileEntityIndustrialEngraver extends GTQTSpaceMultiblockController {
 
     private int emitterCasingTier;
     private int conveyorCasingTier;
 
     /* ------------------------------- MetaTileEntity constructors ------------------------------- */
     public MetaTileEntityIndustrialEngraver(ResourceLocation metaTileEntityId) {
-        super(metaTileEntityId, RecipeMaps.LASER_ENGRAVER_RECIPES);
+        super(metaTileEntityId, new RecipeMap[]{
+                RecipeMaps.LASER_ENGRAVER_RECIPES,
+                RecipeMaps.POLARIZER_RECIPES
+        });
         this.recipeMapWorkable = new IndustrialEngraverRecipeLogic(this);
     }
 
@@ -124,12 +129,6 @@ public class MetaTileEntityIndustrialEngraver extends RecipeMapMultiblockControl
         tooltip.add(I18n.format("gtqtspace.machine.industrial_laser_engraver.tooltip.4"));
     }
 
-    @Override
-    public String[] getDescription() {
-        return new String[]{
-                I18n.format("gtqtspace.machine.industrial_laser_engraver.desc.1")
-        };
-    }
 
     /* ---------------------------------- MetaTileEntity Logics ---------------------------------- */
     @Override
@@ -137,7 +136,7 @@ public class MetaTileEntityIndustrialEngraver extends RecipeMapMultiblockControl
         return true;
     }
 
-    protected class IndustrialEngraverRecipeLogic extends MultiblockRecipeLogic {
+    protected class IndustrialEngraverRecipeLogic extends SpaceMultiblockRecipeLogic {
 
         public IndustrialEngraverRecipeLogic(RecipeMapMultiblockController tileEntity) {
             super(tileEntity);

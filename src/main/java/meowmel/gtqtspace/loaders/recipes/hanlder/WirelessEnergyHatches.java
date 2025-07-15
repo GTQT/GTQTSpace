@@ -18,7 +18,7 @@ import static keqing.gtqtcore.common.block.blocks.BlockCompressedFusionReactor.C
 import static keqing.gtqtcore.common.block.blocks.BlockQuantumCasing.CasingType.HIGH_ENERGY_CASING;
 import static keqing.gtqtcore.common.block.blocks.BlockQuantumCasing.CasingType.MOLECULAR_COIL;
 import static keqing.gtqtcore.common.items.GTQTMetaItems.CRUDE_HYPERCUBE;
-import static meowmel.gtqtspace.api.recipes.GTQTScoreRecipeMaps.ASSEMBLER_MODULE_RECIPES;
+import static meowmel.gtqtspace.api.recipes.GTQTSpaceRecipeMaps.ASSEMBLER_MODULE_RECIPES;
 import static meowmel.gtqtspace.api.utils.GTQTSUtil.tierList;
 
 public class WirelessEnergyHatches {

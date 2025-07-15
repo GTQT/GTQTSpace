@@ -3,6 +3,7 @@ package meowmel.gtqtspace.api.utils;
 
 import gregtech.api.unification.material.MarkerMaterials;
 import gregtech.api.unification.material.Material;
+import meowmel.gtqtspace.api.multiblock.GTQTSpaceMultiblockController;
 import meowmel.gtqtspace.common.block.GTQTSMetaBlocks;
 import meowmel.gtqtspace.common.block.blocks.*;
 import net.minecraft.item.ItemStack;
@@ -13,7 +14,10 @@ import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.translation.I18n;
 
 import javax.annotation.Nonnull;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.BitSet;
+import java.util.List;
 import java.util.function.BooleanSupplier;
 import java.util.function.Supplier;
 
@@ -200,4 +204,9 @@ public class GTQTSUtil {
 			GTQTSMetaBlocks.FIELD_GEN_CASING.getItemVariant(BlockFieldGenCasing.FieldGenCasingTier.MAX)
 	};
 
+
+	static List<Integer> spaceDime = new ArrayList<>(Arrays.asList(1, 2));
+	public static boolean checkDimension(GTQTSpaceMultiblockController gtqtSpaceMultiblockController) {
+		return spaceDime.contains(gtqtSpaceMultiblockController.getWorld().provider.getDimension());
+	}
 }

@@ -19,6 +19,7 @@ import gregtech.common.blocks.MetaBlocks;
 import keqing.gtqtcore.api.blocks.impl.WrappedIntTired;
 import keqing.gtqtcore.api.recipes.GTQTcoreRecipeMaps;
 import keqing.gtqtcore.api.utils.GTQTUtil;
+import meowmel.gtqtspace.api.multiblock.GTQTSpaceMultiblockController;
 import meowmel.gtqtspace.client.textures.GTQTSTextures;
 import meowmel.gtqtspace.common.block.GTQTSMetaBlocks;
 import net.minecraft.block.state.IBlockState;
@@ -36,7 +37,7 @@ import static meowmel.gtqtspace.api.predicate.TiredTraceabilityPredicate.PUMP_CA
 import static meowmel.gtqtspace.common.block.blocks.GTQTSMultiblockCasing.CasingType.CAZ_CASING;
 import static meowmel.gtqtspace.common.block.blocks.GTQTSMultiblockCasing.CasingType.CAZ_HEAT_VENT;
 
-public class MetaTileEntityIndustrialBrewery extends MultiMapMultiblockController {
+public class MetaTileEntityIndustrialBrewery extends GTQTSpaceMultiblockController {
 
     private int pumpCasingTier;
     private int motorCasingTier;
@@ -151,7 +152,7 @@ public class MetaTileEntityIndustrialBrewery extends MultiMapMultiblockControlle
         return true;
     }
 
-    protected class IndustrialBreweryRecipeLogic extends MultiblockRecipeLogic {
+    protected class IndustrialBreweryRecipeLogic extends SpaceMultiblockRecipeLogic {
 
         public IndustrialBreweryRecipeLogic(RecipeMapMultiblockController tileEntity) {
             super(tileEntity);

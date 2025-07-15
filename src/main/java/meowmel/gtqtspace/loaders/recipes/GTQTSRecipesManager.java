@@ -20,6 +20,7 @@ public class GTQTSRecipesManager {
 		OreDictionaryLoader.init();
 		SpaceElevatorLoader.init();
 		StarSuvery.init();
+		HatchHandler.init();
 		WirelessEnergyHatches.init();
 		GTQTSSatelliteAssembler.init();
 		SpaceElevatorrHanlder.init();

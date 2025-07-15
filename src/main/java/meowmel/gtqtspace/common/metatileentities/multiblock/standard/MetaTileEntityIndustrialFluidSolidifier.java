@@ -16,6 +16,7 @@ import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import keqing.gtqtcore.api.blocks.impl.WrappedIntTired;
 import keqing.gtqtcore.api.utils.GTQTUtil;
+import meowmel.gtqtspace.api.multiblock.GTQTSpaceMultiblockController;
 import meowmel.gtqtspace.client.textures.GTQTSTextures;
 import meowmel.gtqtspace.common.block.GTQTSMetaBlocks;
 import net.minecraft.block.state.IBlockState;
@@ -33,13 +34,15 @@ import static meowmel.gtqtspace.api.predicate.TiredTraceabilityPredicate.PUMP_CA
 import static meowmel.gtqtspace.common.block.blocks.GTQTSMultiblockCasing.CasingType.CAZ_CASING;
 import static meowmel.gtqtspace.common.block.blocks.GTQTSMultiblockCasing.CasingType.CAZ_HEAT_VENT;
 
-public class MetaTileEntityIndustrialFluidSolidifier extends RecipeMapMultiblockController {
+public class MetaTileEntityIndustrialFluidSolidifier extends GTQTSpaceMultiblockController {
 
     private int pumpCasingTier;
 
     /* ------------------------------- MetaTileEntity constructors ------------------------------- */
     public MetaTileEntityIndustrialFluidSolidifier(ResourceLocation metaTileEntityId) {
-        super(metaTileEntityId, RecipeMaps.FLUID_SOLIDFICATION_RECIPES);
+        super(metaTileEntityId, new RecipeMap[]{
+                RecipeMaps.FLUID_SOLIDFICATION_RECIPES,
+        });
         this.recipeMapWorkable = new IndustrialFluidSolidifierRecipeLogic(this);
     }
 
@@ -114,12 +117,6 @@ public class MetaTileEntityIndustrialFluidSolidifier extends RecipeMapMultiblock
         tooltip.add(I18n.format("gtqtspace.machine.industrial_fluid_solidifier.tooltip.3"));
     }
 
-    @Override
-    public String[] getDescription() {
-        return new String[]{
-                I18n.format("gtqtspace.machine.industrial_fluid_solidifier.desc.1")
-        };
-    }
 
     /* ---------------------------------- MetaTileEntity Logics ---------------------------------- */
     @Override
@@ -127,7 +124,7 @@ public class MetaTileEntityIndustrialFluidSolidifier extends RecipeMapMultiblock
         return true;
     }
 
-    protected class IndustrialFluidSolidifierRecipeLogic extends MultiblockRecipeLogic {
+    protected class IndustrialFluidSolidifierRecipeLogic extends SpaceMultiblockRecipeLogic {
 
         public IndustrialFluidSolidifierRecipeLogic(RecipeMapMultiblockController tileEntity) {
             super(tileEntity);

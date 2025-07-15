@@ -313,6 +313,8 @@ gtqtspace.multiblock.pump_module.planet=Planet:
 gtqtspace.multiblock.pump_module.fluid=Fluid:
 space_pump.name=Space Fluid Extractor
 
+gtqtspace.machine.space_maintenance_hatch.name=Space Maintenance Hatch
+
 gtqtspace.machine.elevator_provider.name=Elevator Data Transmission Hatch
 gtqtspace.machine.elevator_receiver.name=Elevator Data Teceiving Hatch
 
@@ -392,95 +394,128 @@ tile.gtqtspace_elevator_casing_tiered.elevator_motor_3.name=Space Elevator Motor
 tile.gtqtspace_elevator_casing_tiered.elevator_motor_4.name=Space Elevator Motor MK-IV
 tile.gtqtspace_elevator_casing_tiered.elevator_motor_5.name=Space Elevator Motor MK-V
 
+
 gtqtspace.machine.industrial_bender.name=工业辊压机
 gtqtspace.machine.industrial_bender.tooltip.1=升级部件外壳或电压等级以提高机器性能
 gtqtspace.machine.industrial_bender.tooltip.2=当电压等级大于等于§3UV§7时，获得§b无损超频§7。
 gtqtspace.machine.industrial_bender.tooltip.3=每提高1个§e马达外壳等级§7，配方所需时间就变为原本的§l80%%§r§7。
 gtqtspace.machine.industrial_bender.tooltip.4=每提高1个§a活塞外壳等级§7，每次运行可以多处理§l16§r§7个物品。
-gtqtspace.machine.industrial_bender.desc.1=§l工业辊压机§r是一个大型多方块机器，包括卷板机与冲压机床两种模式。
 
 gtqtspace.machine.industrial_cutter.name=工业切割机
 gtqtspace.machine.industrial_cutter.tooltip.1=升级部件外壳或电压等级以提高机器性能
 gtqtspace.machine.industrial_cutter.tooltip.2=当电压等级大于等于§3UV§7时，获得§b无损超频§7。
 gtqtspace.machine.industrial_cutter.tooltip.3=每提高1个§e马达外壳等级§7，配方所需时间就变为原本的§l80%%§r§7。
 gtqtspace.machine.industrial_cutter.tooltip.4=每提高1个§a传送带外壳等级§7，每次运行可以多处理§l16§r§7个物品。
-gtqtspace.machine.industrial_cutter.desc.1=§l大型切割机§r是一个大型多方块机器，包括切割机与车床两种模式。
 
 gtqtspace.machine.industrial_forge_hammer.name=工业锻造锤
 gtqtspace.machine.industrial_forge_hammer.tooltip.1=升级部件外壳或电压等级以提高机器性能
 gtqtspace.machine.industrial_forge_hammer.tooltip.2=当电压等级大于等于§3UV§7时，获得§b无损超频§7。
 gtqtspace.machine.industrial_forge_hammer.tooltip.3=每提高1个§e电压等级§7，配方所需时间就变为原本的§l80%%§r§7。
 gtqtspace.machine.industrial_forge_hammer.tooltip.4=每提高1个§a外壳等级§7，每次运行可以多处理§l4§r§7个物品。
-gtqtspace.machine.industrial_forge_hammer.desc.1=§l大型锻造锤§r是一个大型多方块机器，包括锻造锤与压缩机两种模式。
 
 gtqtspace.machine.industrial_extruder.name=工业压模器
 gtqtspace.machine.industrial_extruder.tooltip.1=升级部件外壳或电压等级以提高机器性能
 gtqtspace.machine.industrial_extruder.tooltip.2=当电压等级大于等于§3UV§7时，获得§b无损超频§7。
 gtqtspace.machine.industrial_extruder.tooltip.3=每提高1个§e外壳等级§7，配方所需时间就变为原本的§l50%%§r§7。
 gtqtspace.machine.industrial_extruder.tooltip.4=每提高1个§a外壳等级§7，每次运行可以多处理§l16§r§7个物品。
-gtqtspace.machine.industrial_extruder.desc.1=§l大型压模器§r是一个大型多方块机器。
 
 gtqtspace.machine.industrial_wiremill.name=工业线材轧机
 gtqtspace.machine.industrial_wiremill.tooltip.1=升级部件外壳或电压等级以提高机器性能
 gtqtspace.machine.industrial_wiremill.tooltip.2=当电压等级大于等于§3UV§7时，获得§b无损超频§7。
 gtqtspace.machine.industrial_wiremill.tooltip.3=每提高1个§e外壳等级§7，配方所需时间就变为原本的§l80%%§r§7。
 gtqtspace.machine.industrial_wiremill.tooltip.4=每提高1个§a电压等级§7，每次运行可以多处理§l16§r§7个物品。
-gtqtspace.machine.industrial_wiremill.desc.1=§l大型线材轧机§r是一个大型多方块机器，包括线材轧机与纺线器两种模式。
 
 gtqtspace.machine.industrial_mixer.name=工业搅拌机
 gtqtspace.machine.industrial_mixer.tooltip.1=兼容所有§2搅拌机§7配方，且具有一部分独占配方
 gtqtspace.machine.industrial_mixer.tooltip.2=升级部件外壳或电压等级以提高机器性能
 gtqtspace.machine.industrial_mixer.tooltip.3=每提高1个§e电压等级§7，配方所需时间就变为原本的§l80%%§r§7。
-gtqtspace.machine.industrial_mixer.tooltip.4=每提高1个§a外壳等级§7，每次运行可以多处理§l8§r§7个物品。
-gtqtspace.machine.industrial_mixer.desc.1=§l大型搅拌机§r是一个大型多方块机器。
 
 gtqtspace.machine.industrial_extractor.name=工业提取器
 gtqtspace.machine.industrial_extractor.tooltip.1=升级部件外壳或电压等级以提高机器性能
 gtqtspace.machine.industrial_extractor.tooltip.2=当电压等级大于等于§3UV§7时，获得§b无损超频§7。
 gtqtspace.machine.industrial_extractor.tooltip.3=每提高1个§e马达外壳等级§7，配方所需时间就变为原本的§l50%%§r§7。
 gtqtspace.machine.industrial_extractor.tooltip.4=每提高1个§a泵外壳等级§7，每次运行可以多处理§l16§r§7个物品。
-gtqtspace.machine.industrial_extractor.desc.1=§l大型提取器§r是一个大型多方块机器。
 
 gtqtspace.machine.industrial_assembler.name=工业组装机
 gtqtspace.machine.industrial_assembler.tooltip.1=升级部件外壳或电压等级以提高机器性能
 gtqtspace.machine.industrial_assembler.tooltip.2=当电压等级大于等于§3UV§7时，获得§b无损超频§7。
 gtqtspace.machine.industrial_assembler.tooltip.3=每提高1个§e传送带外壳等级§7，配方所需时间就变为原本的§l50%%§r§7。
 gtqtspace.machine.industrial_assembler.tooltip.4=每提高1个§a机械臂外壳等级§7，每次运行可以多处理§l16§r§7个物品。
-gtqtspace.machine.industrial_assembler.desc.1=§l大型组装机§r是一个大型多方块机器。
 
 gtqtspace.machine.industrial_laser_engraver.name=工业激光蚀刻机
 gtqtspace.machine.industrial_laser_engraver.tooltip.1=升级部件外壳或电压等级以提高机器性能
 gtqtspace.machine.industrial_laser_engraver.tooltip.2=当电压等级大于等于§3UV§7时，获得§b无损超频§7。
 gtqtspace.machine.industrial_laser_engraver.tooltip.3=每提高1个§e传送带外壳等级§7，配方所需时间就变为原本的§l50%%§r§7。
 gtqtspace.machine.industrial_laser_engraver.tooltip.4=每提高1个§a发射器外壳等级§7，每次运行可以多处理§l16§r§7个物品。
-gtqtspace.machine.industrial_laser_engraver.desc.1=§l大型激光蚀刻机§r是一个大型多方块机器。
 
 gtqtspace.machine.industrial_fluid_solidifier.name=工业流体固化器
 gtqtspace.machine.industrial_fluid_solidifier.tooltip.1=升级部件外壳或电压等级以提高机器性能
 gtqtspace.machine.industrial_fluid_solidifier.tooltip.2=每提高1个§e泵外壳等级§7，配方所需时间就变为原本的§l80%%§r§7。
 gtqtspace.machine.industrial_fluid_solidifier.tooltip.3=每提高1个§a电压等级§7，每次运行可以多处理§l4§r§7个物品。
-gtqtspace.machine.industrial_fluid_solidifier.desc.1=§l大型流体固化器§r是一个大型多方块机器。
 
 gtqtspace.machine.industrial_brewery.name=工业酿造室
 gtqtspace.machine.industrial_brewery.tooltip.1=升级部件外壳或电压等级以提高机器性能
 gtqtspace.machine.industrial_brewery.tooltip.2=当电压等级大于等于§3UV§7时，获得§b无损超频§7。
 gtqtspace.machine.industrial_brewery.tooltip.3=每提高1个§e马达外壳等级§7，配方所需时间就变为原本的§l80%%§r§7。
 gtqtspace.machine.industrial_brewery.tooltip.4=每提高1个§a泵外壳等级§7，每次运行可以多处理§l16§r§7个物品。
-gtqtspace.machine.industrial_brewery.desc.1=§l大型酿造室§r是一个大型多方块机器，包括酿造室，发酵槽，流体加热器与真空干燥四种模式。
 
 gtqtspace.machine.industrial_autoclave.name=工业高压釜
 gtqtspace.machine.industrial_autoclave.tooltip.1=升级部件外壳或电压等级以提高机器性能
 gtqtspace.machine.industrial_autoclave.tooltip.2=当电压等级大于等于§3UV§7时，获得§b无损超频§7。
 gtqtspace.machine.industrial_autoclave.tooltip.3=每提高1个§e泵外壳等级§7，配方所需时间就变为原本的§l50%%§r§7。
 gtqtspace.machine.industrial_autoclave.tooltip.4=每提高1个§a活塞外壳等级§7，每次运行可以多处理§l16§r§7个物品。
-gtqtspace.machine.industrial_autoclave.desc.1=§l大型高压釜§r是一个大型多方块机器，包括高压釜，真空室，浮选槽与聚合缸四种模式。
 
 gtqtspace.machine.industrial_arc_furnace.name=工业电弧炉
 gtqtspace.machine.industrial_arc_furnace.tooltip.1=升级部件外壳，线圈等级或电压等级以提高机器性能
 gtqtspace.machine.industrial_arc_furnace.tooltip.2=当电压等级大于等于§3UV§7时，获得§b无损超频§7。
 gtqtspace.machine.industrial_arc_furnace.tooltip.3=每提高1个§e线圈等级§7，配方所需时间就变为原本的§l80%%§r§7。
 gtqtspace.machine.industrial_arc_furnace.tooltip.4=每提高1个§a泵外壳等级§7，每次运行可以多处理§l8§r§7个物品。
-gtqtspace.machine.industrial_arc_furnace.desc.1=§l大型电弧炉§r是一个大型多方块机器。
+
+gtqtspace.machine.industrial_macerator.name=大型研磨机
+gtqtspace.machine.industrial_macerator.tooltip.1=升级部件外壳或电压等级以提高机器性能
+gtqtspace.machine.industrial_macerator.tooltip.2=当电压等级大于等于§3UV§7时，获得§b无损超频§7。
+gtqtspace.machine.industrial_macerator.tooltip.3=每提高1个§e马达外壳等级§7，配方所需时间就变为原本的§l50%%§r§7。
+gtqtspace.machine.industrial_macerator.tooltip.4=每提高1个§a活塞外壳等级§7，每次运行可以多处理§l8§r§7个物品。
+
+gtqtspace.machine.industrial_centrifuge.name=大型离心机
+gtqtspace.machine.industrial_centrifuge.tooltip.1=升级部件外壳或电压等级以提高机器性能
+gtqtspace.machine.industrial_centrifuge.tooltip.2=当电压等级大于等于§3UV§7时，获得§b无损超频§7。
+gtqtspace.machine.industrial_centrifuge.tooltip.3=每提高1个§e马达外壳等级§7，配方所需时间就变为原本的§l50%%§r§7。
+
+gtqtspace.machine.industrial_sifter.name=大型筛选器
+gtqtspace.machine.industrial_sifter.tooltip.1=升级部件外壳或电压等级以提高机器性能
+gtqtspace.machine.industrial_sifter.tooltip.2=每提高1个§e电压等级§7，配方所需时间就变为原本的§l50%%§r§7。
+gtqtspace.machine.industrial_sifter.tooltip.3=每提高1个§a传送带外壳等级§7，每次运行可以多处理§l8§r§7个物品。
+
+gtqtspace.machine.industrial_electrolyzer.name=大型电解机
+gtqtspace.machine.industrial_electrolyzer.tooltip.1=升级部件外壳或电压等级以提高机器性能
+gtqtspace.machine.industrial_electrolyzer.tooltip.2=当电压等级大于等于§3UV§7时，获得§b无损超频§7。
+gtqtspace.machine.industrial_electrolyzer.tooltip.3=每提高1个§e马达外壳等级§7，配方所需时间就变为原本的§l80%%§r§7。
+gtqtspace.machine.industrial_electrolyzer.tooltip.4=每提高1个§a泵外壳等级§7，每次运行可以多处理§l16§r§7个物品。
+
+gtqtspace.machine.industrial_ore_washer.name=大型洗矿厂
+gtqtspace.machine.industrial_ore_washer.tooltip.1=升级部件外壳或电压等级以提高机器性能
+gtqtspace.machine.industrial_ore_washer.tooltip.2=当电压等级大于等于§3UV§7时，获得§b无损超频§7。
+gtqtspace.machine.industrial_ore_washer.tooltip.3=每提高1个§e电压等级§7，配方所需时间就变为原本的§l80%%§r§7。
+gtqtspace.machine.industrial_ore_washer.tooltip.4=每提高1个§a泵外壳等级§7，每次运行可以多处理§l16§r§7个物品。
+
+gtqtspace.machine.industrial_packer.name=大型打包机
+gtqtspace.machine.industrial_packer.tooltip.1=升级部件外壳或电压等级以提高机器性能
+gtqtspace.machine.industrial_packer.tooltip.2=当电压等级大于等于§3UV§7时，获得§b无损超频§7。
+gtqtspace.machine.industrial_packer.tooltip.3=每提高1个§e电压等级§7，配方所需时间就变为原本的§l50%%§r§7。
+gtqtspace.machine.industrial_packer.tooltip.4=每提高1个§a机械臂外壳等级§7，每次运行可以多处理§l8§r§7个物品。
+
+gtqtspace.machine.industrial_gas_collector.name=大型集气室
+gtqtspace.machine.industrial_gas_collector.tooltip.1=升级部件外壳或电压等级以提高机器性能
+gtqtspace.machine.industrial_gas_collector.tooltip.2=当电压等级大于等于§3UV§7时，获得§b无损超频§7。
+gtqtspace.machine.industrial_gas_collector.tooltip.3=每提高1个§e电压等级§7，配方所需时间就变为原本的§l50%%§r§7。
+gtqtspace.machine.industrial_gas_collector.tooltip.4=每提高1个§a泵外壳等级§7，每次运行可以多处理§l16§r§7个物品。
+
+gtqtspace.machine.industrial_chemical_plant.name=大型化工厂
+gtqtspace.machine.industrial_chemical_plant.tooltip.1=兼容所有§2化学反应釜§7配方，且具有一部分独占配方
+gtqtspace.machine.industrial_chemical_plant.tooltip.2=升级部件外壳或电压等级以提高机器性能
+gtqtspace.machine.industrial_chemical_plant.tooltip.3=每提高1个§e线圈等级§7，配方所需时间就变为原本的§l50%%§r§7。
+gtqtspace.machine.industrial_chemical_plant.tooltip.4=每提高1个§a泵外壳等级§7，每次运行可以多处理§l16§r§7个物品。
 # 太阳能板相关
 gtqtspace.machine.solar_plate.name=太阳能板单元
 gtqtspace.machine.solar_plate_controller.name=太阳能板控制器

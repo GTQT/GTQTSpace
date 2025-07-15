@@ -19,6 +19,7 @@ import gregtech.common.blocks.MetaBlocks;
 import keqing.gtqtcore.api.blocks.impl.WrappedIntTired;
 import keqing.gtqtcore.api.recipes.GTQTcoreRecipeMaps;
 import keqing.gtqtcore.api.utils.GTQTUtil;
+import meowmel.gtqtspace.api.multiblock.GTQTSpaceMultiblockController;
 import meowmel.gtqtspace.client.textures.GTQTSTextures;
 import meowmel.gtqtspace.common.block.GTQTSMetaBlocks;
 import net.minecraft.block.state.IBlockState;
@@ -35,7 +36,7 @@ import static meowmel.gtqtspace.api.predicate.TiredTraceabilityPredicate.*;
 import static meowmel.gtqtspace.common.block.blocks.GTQTSMultiblockCasing.CasingType.CAZ_CASING;
 import static meowmel.gtqtspace.common.block.blocks.GTQTSMultiblockCasing.CasingType.CAZ_HEAT_VENT;
 
-public class MetaTileEntityIndustrialAutoclave extends MultiMapMultiblockController {
+public class MetaTileEntityIndustrialAutoclave extends GTQTSpaceMultiblockController {
 
     private int pumpCasingTier;
     private int pistonCasingTier;
@@ -45,8 +46,7 @@ public class MetaTileEntityIndustrialAutoclave extends MultiMapMultiblockControl
         super(metaTileEntityId, new RecipeMap[]{
                 RecipeMaps.AUTOCLAVE_RECIPES,
                 GTQTcoreRecipeMaps.VACUUM_CHAMBER_RECIPES,
-                GTQTcoreRecipeMaps.FLOTATION_FACTORY_RECIPES,
-                GTQTcoreRecipeMaps.POLYMERIZATION_RECIPES
+                GTQTcoreRecipeMaps.FLOTATION_FACTORY_RECIPES
         });
         this.recipeMapWorkable = new IndustrialAutoclaveRecipeLogic(this);
     }
@@ -137,12 +137,6 @@ public class MetaTileEntityIndustrialAutoclave extends MultiMapMultiblockControl
         tooltip.add(I18n.format("gtqtspace.machine.industrial_autoclave.tooltip.4"));
     }
 
-    @Override
-    public String[] getDescription() {
-        return new String[]{
-                I18n.format("gtqtspace.machine.industrial_autoclave.desc.1")
-        };
-    }
 
     /* ---------------------------------- MetaTileEntity Logics ---------------------------------- */
     @Override
@@ -150,7 +144,7 @@ public class MetaTileEntityIndustrialAutoclave extends MultiMapMultiblockControl
         return true;
     }
 
-    protected class IndustrialAutoclaveRecipeLogic extends MultiblockRecipeLogic {
+    protected class IndustrialAutoclaveRecipeLogic extends SpaceMultiblockRecipeLogic {
 
         public IndustrialAutoclaveRecipeLogic(RecipeMapMultiblockController tileEntity) {
             super(tileEntity);

@@ -16,6 +16,7 @@ import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
 import keqing.gtqtcore.api.blocks.impl.WrappedIntTired;
 import keqing.gtqtcore.api.utils.GTQTUtil;
+import meowmel.gtqtspace.api.multiblock.GTQTSpaceMultiblockController;
 import meowmel.gtqtspace.client.textures.GTQTSTextures;
 import meowmel.gtqtspace.common.block.GTQTSMetaBlocks;
 import net.minecraft.block.state.IBlockState;
@@ -32,7 +33,7 @@ import static meowmel.gtqtspace.api.predicate.TiredTraceabilityPredicate.*;
 import static meowmel.gtqtspace.common.block.blocks.GTQTSMultiblockCasing.CasingType.CAZ_CASING;
 import static meowmel.gtqtspace.common.block.blocks.GTQTSMultiblockCasing.CasingType.CAZ_HEAT_VENT;
 
-public class MetaTileEntityIndustrialCutter extends MultiMapMultiblockController {
+public class MetaTileEntityIndustrialCutter extends GTQTSpaceMultiblockController {
 
     private int motorCasingTier;
     private int conveyorCasingTier;
@@ -121,12 +122,6 @@ public class MetaTileEntityIndustrialCutter extends MultiMapMultiblockController
         tooltip.add(I18n.format("gtqtspace.machine.industrial_cutter.tooltip.4"));
     }
 
-    @Override
-    public String[] getDescription() {
-        return new String[]{
-                I18n.format("gtqtspace.machine.industrial_cutter.desc.1")
-        };
-    }
 
     /* ---------------------------------- MetaTileEntity Logics ---------------------------------- */
     @Override
@@ -134,7 +129,7 @@ public class MetaTileEntityIndustrialCutter extends MultiMapMultiblockController
         return true;
     }
 
-    protected class IndustrialCutterRecipeLogic extends MultiblockRecipeLogic {
+    protected class IndustrialCutterRecipeLogic extends SpaceMultiblockRecipeLogic {
 
         public IndustrialCutterRecipeLogic(RecipeMapMultiblockController tileEntity) {
             super(tileEntity);

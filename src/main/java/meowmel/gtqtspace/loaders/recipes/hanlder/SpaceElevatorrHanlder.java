@@ -11,7 +11,7 @@ import static gregtech.api.GTValues.*;
 import static gregtech.api.unification.material.Materials.*;
 import static keqing.gtqtcore.api.unification.GTQTMaterials.Formaldehyde;
 import static keqing.gtqtcore.api.unification.GTQTMaterials.Infinity;
-import static meowmel.gtqtspace.api.recipes.GTQTScoreRecipeMaps.*;
+import static meowmel.gtqtspace.api.recipes.GTQTSpaceRecipeMaps.*;
 
 public class SpaceElevatorrHanlder {
 

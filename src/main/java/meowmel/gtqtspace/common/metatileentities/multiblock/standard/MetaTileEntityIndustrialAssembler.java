@@ -1,7 +1,6 @@
 package meowmel.gtqtspace.common.metatileentities.multiblock.standard;
 
 import gregtech.api.GTValues;
-import gregtech.api.capability.impl.MultiblockRecipeLogic;
 import gregtech.api.metatileentity.MetaTileEntity;
 import gregtech.api.metatileentity.interfaces.IGregTechTileEntity;
 import gregtech.api.metatileentity.multiblock.IMultiblockPart;
@@ -9,6 +8,7 @@ import gregtech.api.metatileentity.multiblock.RecipeMapMultiblockController;
 import gregtech.api.pattern.BlockPattern;
 import gregtech.api.pattern.FactoryBlockPattern;
 import gregtech.api.pattern.PatternMatchContext;
+import gregtech.api.recipes.RecipeMap;
 import gregtech.api.recipes.RecipeMaps;
 import gregtech.client.renderer.ICubeRenderer;
 import gregtech.client.renderer.texture.Textures;
@@ -16,6 +16,8 @@ import gregtech.common.blocks.BlockGlassCasing;
 import gregtech.common.blocks.MetaBlocks;
 import keqing.gtqtcore.api.blocks.impl.WrappedIntTired;
 import keqing.gtqtcore.api.utils.GTQTUtil;
+import meowmel.gtqtspace.api.multiblock.GTQTSpaceMultiblockController;
+import meowmel.gtqtspace.api.recipes.GTQTSpaceRecipeMaps;
 import meowmel.gtqtspace.client.textures.GTQTSTextures;
 import meowmel.gtqtspace.common.block.GTQTSMetaBlocks;
 import net.minecraft.block.state.IBlockState;
@@ -33,14 +35,17 @@ import static meowmel.gtqtspace.api.predicate.TiredTraceabilityPredicate.ROBOT_A
 import static meowmel.gtqtspace.common.block.blocks.GTQTSMultiblockCasing.CasingType.IAZ_CASING;
 import static meowmel.gtqtspace.common.block.blocks.GTQTSMultiblockCasing.CasingType.IAZ_HEAT_VENT;
 
-public class MetaTileEntityIndustrialAssembler extends RecipeMapMultiblockController {
+public class MetaTileEntityIndustrialAssembler extends GTQTSpaceMultiblockController {
 
     private int robotArmCasingTier;
     private int conveyorCasingTier;
 
     /* ------------------------------- MetaTileEntity constructors ------------------------------- */
     public MetaTileEntityIndustrialAssembler(ResourceLocation metaTileEntityId) {
-        super(metaTileEntityId, RecipeMaps.ASSEMBLER_RECIPES);
+        super(metaTileEntityId, new RecipeMap[]{
+                RecipeMaps.ASSEMBLER_RECIPES,
+                GTQTSpaceRecipeMaps.PRECISION_COMPONENT_ASSEMBLY
+        });
         this.recipeMapWorkable = new IndustrialAssemblerRecipeLogic(this);
     }
 
@@ -129,12 +134,6 @@ public class MetaTileEntityIndustrialAssembler extends RecipeMapMultiblockContro
         tooltip.add(I18n.format("gtqtspace.machine.industrial_assembler.tooltip.4"));
     }
 
-    @Override
-    public String[] getDescription() {
-        return new String[]{
-                I18n.format("gtqtspace.machine.industrial_assembler.desc.1")
-        };
-    }
 
     /* ---------------------------------- MetaTileEntity Logics ---------------------------------- */
     @Override
@@ -142,7 +141,7 @@ public class MetaTileEntityIndustrialAssembler extends RecipeMapMultiblockContro
         return true;
     }
 
-    protected class IndustrialAssemblerRecipeLogic extends MultiblockRecipeLogic {
+    protected class IndustrialAssemblerRecipeLogic extends SpaceMultiblockRecipeLogic {
 
         public IndustrialAssemblerRecipeLogic(RecipeMapMultiblockController tileEntity) {
             super(tileEntity);
