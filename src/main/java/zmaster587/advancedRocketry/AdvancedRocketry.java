@@ -176,6 +176,8 @@ public class AdvancedRocketry {
         System.out.println("REGISTERING BIOMES");
         //Biome properties
         AdvancedRocketryBiomes.moonBiome = new BiomeGenMoon(new Biome.BiomeProperties("Regolith Highlands").setRainDisabled().setBaseHeight(1f).setHeightVariation(0.2f).setRainfall(0).setTemperature(0.3f));
+        AdvancedRocketryBiomes.marsBiome = new BiomeGenMars(new Biome.BiomeProperties("Mars").setBaseHeight(0.125F).setHeightVariation(0.05F).setTemperature(2.0F).setRainfall(0.0F).setRainDisabled());
+        AdvancedRocketryBiomes.venusBiome = new BiomeGenVenus(new Biome.BiomeProperties("Venus").setBaseHeight(0.125F).setHeightVariation(0.05F).setTemperature(2.0F).setRainfall(0.0F).setRainDisabled());
         AdvancedRocketryBiomes.alienForest = new BiomeGenAlienForest(new Biome.BiomeProperties("Alien Forest").setWaterColor(0x8888FF));
         AdvancedRocketryBiomes.hotDryBiome = new BiomeGenHotDryRock(new Biome.BiomeProperties("Ferric Regolith Wasteland").setRainDisabled().setBaseHeight(1f).setHeightVariation(0.01f).setRainfall(0).setTemperature(0.9f));
         AdvancedRocketryBiomes.spaceBiome = new BiomeGenSpace(new Biome.BiomeProperties("Space").setRainDisabled().setBaseHeight(-2f).setHeightVariation(0f).setTemperature(1f));
@@ -190,6 +192,8 @@ public class AdvancedRocketry {
 
         //Biome registry names outside of constructor
         AdvancedRocketryBiomes.moonBiome.setRegistryName(Constants.modId, "moon");
+        AdvancedRocketryBiomes.marsBiome.setRegistryName(Constants.modId, "mars");
+        AdvancedRocketryBiomes.venusBiome.setRegistryName(Constants.modId, "venus");
         AdvancedRocketryBiomes.alienForest.setRegistryName(Constants.modId, "alien_forest");
         AdvancedRocketryBiomes.hotDryBiome.setRegistryName(Constants.modId, "hotdryrock");
         AdvancedRocketryBiomes.spaceBiome.setRegistryName(Constants.modId, "space");
@@ -204,6 +208,8 @@ public class AdvancedRocketry {
 
         //Actual registry
         AdvancedRocketryBiomes.instance.registerBiome(AdvancedRocketryBiomes.moonBiome, evt.getRegistry());
+        AdvancedRocketryBiomes.instance.registerBiome(AdvancedRocketryBiomes.marsBiome, evt.getRegistry());
+        AdvancedRocketryBiomes.instance.registerBiome(AdvancedRocketryBiomes.venusBiome, evt.getRegistry());
         AdvancedRocketryBiomes.instance.registerBiome(AdvancedRocketryBiomes.alienForest, evt.getRegistry());
         AdvancedRocketryBiomes.instance.registerBiome(AdvancedRocketryBiomes.hotDryBiome, evt.getRegistry());
         AdvancedRocketryBiomes.instance.registerBiome(AdvancedRocketryBiomes.spaceBiome, evt.getRegistry());
@@ -225,6 +231,16 @@ public class AdvancedRocketry {
                 BiomeDictionary.Type.WASTELAND,
                 BiomeDictionary.Type.DRY,
                 BiomeDictionary.Type.COLD
+        );
+        BiomeDictionary.addTypes(AdvancedRocketryBiomes.marsBiome,
+                BiomeDictionary.Type.SANDY,
+                BiomeDictionary.Type.DRY,
+                BiomeDictionary.Type.COLD
+        );
+        BiomeDictionary.addTypes(AdvancedRocketryBiomes.venusBiome,
+                BiomeDictionary.Type.SANDY,
+                BiomeDictionary.Type.DRY,
+                BiomeDictionary.Type.HOT
         );
         BiomeDictionary.addTypes(AdvancedRocketryBiomes.alienForest,
                 BiomeDictionary.Type.MAGICAL,
@@ -1190,7 +1206,7 @@ public class AdvancedRocketry {
         }
         //End open and load ore files
 
-        DimensionManager.getInstance().createAndLoadDimensions(resetFromXml);
+        DimensionManager.getInstance().createAndLoadDimensions();
     }
 
 

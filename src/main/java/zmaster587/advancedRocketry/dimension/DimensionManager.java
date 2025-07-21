@@ -1,5 +1,7 @@
 package zmaster587.advancedRocketry.dimension;
 
+import meowmel.gtqtspace.common.block.GTQTSMetaBlocks;
+import meowmel.gtqtspace.common.block.blocks.GTQTSStoneVariantBlock;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
@@ -8,7 +10,6 @@ import net.minecraft.world.DimensionType;
 import net.minecraft.world.World;
 import net.minecraft.world.WorldProvider;
 import net.minecraftforge.fml.common.FMLCommonHandler;
-import net.minecraftforge.fml.common.Loader;
 import org.apache.commons.io.FileUtils;
 import org.apache.logging.log4j.Logger;
 import zmaster587.advancedRocketry.AdvancedRocketry;
@@ -26,7 +27,6 @@ import zmaster587.advancedRocketry.util.AstronomicalBodyHelper;
 import zmaster587.advancedRocketry.util.FluidGasGiantGas;
 import zmaster587.advancedRocketry.util.PlanetaryTravelHelper;
 import zmaster587.advancedRocketry.util.XMLPlanetLoader;
-import zmaster587.advancedRocketry.util.XMLPlanetLoader.DimensionPropertyCoupling;
 import zmaster587.advancedRocketry.world.provider.WorldProviderAsteroid;
 import zmaster587.advancedRocketry.world.provider.WorldProviderPlanet;
 import zmaster587.advancedRocketry.world.provider.WorldProviderSpace;
@@ -63,13 +63,13 @@ public class DimensionManager implements IGalaxy {
     public static DimensionProperties overworldProperties;
     //the default property for any dimension created in space, normally, space over earth
     public static DimensionProperties defaultSpaceDimensionProperties;
-    private static DimensionManager instance = (DimensionManager) (AdvancedRocketryAPI.dimensionManager = new DimensionManager());
+    private static final DimensionManager instance = (DimensionManager) (AdvancedRocketryAPI.dimensionManager = new DimensionManager());
     private static long nextSatelliteId;
     public Set<Integer> knownPlanets;
-    private Random random;
+    private final Random random;
     private boolean hasBeenInitialized = false;
-    private HashMap<Integer, DimensionProperties> dimensionList;
-    private HashMap<Integer, StellarBody> starList;
+    private final HashMap<Integer, DimensionProperties> dimensionList;
+    private final HashMap<Integer, StellarBody> starList;
 
     public DimensionManager() {
         dimensionList = new HashMap<>();
@@ -741,275 +741,148 @@ public class DimensionManager implements IGalaxy {
         return dimPropList;
     }
 
-    public void createAndLoadDimensions(boolean resetFromXml) {
-        //Load planet files
-        //Note: loading this modifies dimOffset
+    public void createAndLoadDimensions() {
+        // 移除所有XML配置文件相关的读取逻辑
         int dimOffset = DimensionManager.dimOffset;
-        DimensionPropertyCoupling dimCouplingList = null;
-        XMLPlanetLoader loader = null;
-        boolean loadedFromXML = false;
-        File file;
 
-        //Check advRocketry folder first
-        File localFile;
-        localFile = file = new File(net.minecraftforge.common.DimensionManager.getCurrentSaveRootDirectory() + "/" + DimensionManager.workingPath + "/planetDefs.xml");
-        logger.info("Checking for config at " + file.getAbsolutePath());
+        // 注册硬编码维度
 
-        if (!file.exists() || resetFromXml) { //Hi, I'm if check #42, I am true if the config is not in the world/advRocketry folder
-            String newFilePath = "./config/" + zmaster587.advancedRocketry.api.ARConfiguration.configFolder + "/planetDefs.xml";
-            if (!file.exists()) logger.info("File not found.  Now checking for config at " + newFilePath);
+        int numRandomGeneratedPlanets = 9;
+        int numRandomGeneratedGasGiants = 1;
 
-            file = new File(newFilePath);
+        // 直接使用硬编码生成维度
+        // 创建太阳系
+        StellarBody sol = new StellarBody();
+        sol.setTemperature(100);
+        sol.setId(0);
+        sol.setName("Sol");
+        DimensionManager.getInstance().addStar(sol);
 
-            //Copy file to local dir
-            if (file.exists()) {
-                logger.info("Advanced Planet Config file Found!  Copying to world specific directory");
-                try {
-                    File dir = new File(localFile.getAbsolutePath().substring(0, localFile.getAbsolutePath().length() - localFile.getName().length()));
-
-                    //File cannot exist due to if check #42
-                    if ((dir.exists() || dir.mkdir()) && localFile.createNewFile()) {
-                        char[] buffer = new char[1024];
-
-                        FileReader reader = new FileReader(file);
-                        FileWriter writer = new FileWriter(localFile);
-                        int numChars;
-                        while ((numChars = reader.read(buffer)) > 0) {
-                            writer.write(buffer, 0, numChars);
-                        }
-
-                        reader.close();
-                        writer.close();
-                        logger.info("Copy success!");
-                    } else logger.warn("Unable to create file " + localFile.getAbsolutePath());
-                } catch (IOException e) {
-                    logger.warn("Unable to write file " + localFile.getAbsolutePath());
-                }
-            }
-        }
-
-        if (file.exists()) {
-            logger.info("Advanced Planet Config file Found!  Loading from file.");
-            loader = new XMLPlanetLoader();
-            boolean loadSuccessful = true;
-
-            try {
-                if (loader.loadFile(file)) {
-                    dimCouplingList = loader.readAllPlanets();
-                    DimensionManager.dimOffset += dimCouplingList.dims.size();
-                } else {
-                    loadSuccessful = false;
-                }
-            } catch (Exception e) {
-                e.printStackTrace();
-                loadSuccessful = false;
-            }
-
-            if (!loadSuccessful) {
-                logger.fatal("A serious error has occurred while loading the planetDefs XML");
-                FMLCommonHandler.instance().exitJava(-1, false);
-            }
-        }
-        //End load planet files
-
-        //Register hard coded dimensions
-        Map<Integer, IDimensionProperties> loadedPlanets = loadDimensions(zmaster587.advancedRocketry.dimension.DimensionManager.workingPath);
-        if (loadedPlanets.isEmpty()) {
-            int numRandomGeneratedPlanets = 9;
-            int numRandomGeneratedGasGiants = 1;
-
-            if (dimCouplingList != null) {
-                logger.info("Loading initial planet config!");
-
-                for (StellarBody star : dimCouplingList.stars) {
-                    DimensionManager.getInstance().addStar(star);
-                }
-
-                for (DimensionProperties properties : dimCouplingList.dims) {
-                    DimensionManager.getInstance().registerDimNoUpdate(properties, properties.isNativeDimension);
-                    properties.setStar(properties.getStarId());
-                }
-
-                for (StellarBody star : dimCouplingList.stars) {
-                    numRandomGeneratedPlanets = loader.getMaxNumPlanets(star);
-                    numRandomGeneratedGasGiants = loader.getMaxNumGasGiants(star);
-                    dimCouplingList.dims.addAll(generateRandomPlanets(star, numRandomGeneratedPlanets, numRandomGeneratedGasGiants));
-                }
-
-                loadedFromXML = true;
-            }
-
-            if (!loadedFromXML) {
-                //Make Sol
-                StellarBody sol = new StellarBody();
-                sol.setTemperature(100);
-                sol.setId(0);
-                sol.setName("Sol");
-
-                DimensionManager.getInstance().addStar(sol);
-
-                //Add the overworld
-                DimensionManager.getInstance().registerDimNoUpdate(DimensionManager.overworldProperties, false);
-                sol.addPlanet(DimensionManager.overworldProperties);
-
-                if (zmaster587.advancedRocketry.api.ARConfiguration.getCurrentConfig().MoonId == Constants.INVALID_PLANET)
-                    zmaster587.advancedRocketry.api.ARConfiguration.getCurrentConfig().MoonId = DimensionManager.getInstance().getNextFreeDim(dimOffset);
+        // 添加主世界
+        DimensionManager.getInstance().registerDimNoUpdate(DimensionManager.overworldProperties, false);
+        sol.addPlanet(DimensionManager.overworldProperties);
 
 
-                //Register the moon
-                if (zmaster587.advancedRocketry.api.ARConfiguration.getCurrentConfig().MoonId != Constants.INVALID_PLANET) {
-                    DimensionProperties dimensionProperties = new DimensionProperties(zmaster587.advancedRocketry.api.ARConfiguration.getCurrentConfig().MoonId);
-                    dimensionProperties.setAtmosphereDensityDirect(0);
-                    dimensionProperties.averageTemperature = 20;
-                    dimensionProperties.rotationalPeriod = 128000;
-                    dimensionProperties.gravitationalMultiplier = .166f; //Actual moon value
-                    dimensionProperties.setName("Luna");
-                    dimensionProperties.orbitalDist = 150;
-                    dimensionProperties.addBiome(AdvancedRocketryBiomes.moonBiome);
-                    dimensionProperties.addBiome(AdvancedRocketryBiomes.moonBiomeDark);
+        // 注册月球 T1
+        DimensionProperties dimensionProperties = new DimensionProperties(51);
+        dimensionProperties.setAtmosphereDensityDirect(0);
+        dimensionProperties.averageTemperature = 20;
+        dimensionProperties.rotationalPeriod = 128000;
+        dimensionProperties.gravitationalMultiplier = 0.166f; // 月球重力为地球的1/6
+        dimensionProperties.setName("Moon");
+        dimensionProperties.orbitalDist = 150;
+        dimensionProperties.setStoneBlock(GTQTSMetaBlocks.GTQTS_STONE_BLOCKS.get(GTQTSStoneVariantBlock.StoneVariant.SMOOTH).getState(GTQTSStoneVariantBlock.StoneType.MOON_STONE));
+        dimensionProperties.addBiome(AdvancedRocketryBiomes.moonBiome);
+        dimensionProperties.addBiome(AdvancedRocketryBiomes.moonBiomeDark);
+        dimensionProperties.setParentPlanet(DimensionManager.overworldProperties);
+        dimensionProperties.setStar(sol);
+        dimensionProperties.isNativeDimension = true;
+        dimensionProperties.initDefaultAttributes();
+        DimensionManager.getInstance().registerDimNoUpdate(dimensionProperties, true);
 
-                    dimensionProperties.setParentPlanet(DimensionManager.overworldProperties);
-                    dimensionProperties.setStar(DimensionManager.getInstance().getStar(0));
-                    dimensionProperties.isNativeDimension = true;
-                    dimensionProperties.initDefaultAttributes();
+        //注册火星 T2
+        DimensionProperties marsProperties = new DimensionProperties(52);
+        marsProperties.setAtmosphereDensityDirect(6);
+        marsProperties.averageTemperature = -63;
+        marsProperties.rotationalPeriod = 24660;
+        marsProperties.gravitationalMultiplier = 0.38f;
+        marsProperties.fogColor = new float[]{1.0f, 0.4f, 0.3f};
+        marsProperties.skyColor = new float[]{0.8f, 0.5f, 0.3f};
+        marsProperties.setName("Mars");
+        marsProperties.orbitalDist = 152;
+        marsProperties.setStoneBlock(GTQTSMetaBlocks.GTQTS_STONE_BLOCKS.get(GTQTSStoneVariantBlock.StoneVariant.SMOOTH).getState(GTQTSStoneVariantBlock.StoneType.MARS_STONE)); // 替换为火星石头
+        marsProperties.addBiome(AdvancedRocketryBiomes.marsBiome);
+        //marsProperties.setParentPlanet(null); // 火星是行星，无父行星
+        marsProperties.setStar(sol);
+        marsProperties.isNativeDimension = true;
+        marsProperties.initDefaultAttributes();
+        DimensionManager.getInstance().registerDimNoUpdate(marsProperties, true);
 
-                    DimensionManager.getInstance().registerDimNoUpdate(dimensionProperties, !Loader.isModLoaded("GalacticraftCore"));
-                }
+        //注册金星 T3
+        DimensionProperties venusProperties = new DimensionProperties(53);
+        venusProperties.setAtmosphereDensityDirect(920);
+        venusProperties.averageTemperature = 464;
+        venusProperties.rotationalPeriod = 20995200;
+        venusProperties.gravitationalMultiplier = 0.904f;
+        venusProperties.fogColor = new float[]{0.9f, 0.8f, 0.6f};
+        venusProperties.skyColor = new float[]{0.8f, 0.7f, 0.5f};
+        venusProperties.setName("Venus");
+        venusProperties.orbitalDist = 72;
+        venusProperties.setStoneBlock(GTQTSMetaBlocks.GTQTS_STONE_BLOCKS.get(GTQTSStoneVariantBlock.StoneVariant.SMOOTH).getState(GTQTSStoneVariantBlock.StoneType.VENUS_STONE));
+        venusProperties.addBiome(AdvancedRocketryBiomes.venusBiome);
+        venusProperties.addBiome(AdvancedRocketryBiomes.volcanic);
+        venusProperties.addBiome(AdvancedRocketryBiomes.volcanicBarren);
+        venusProperties.setStar(sol);
+        venusProperties.isNativeDimension = true;
+        venusProperties.initDefaultAttributes();
+        DimensionManager.getInstance().registerDimNoUpdate(venusProperties, true);
 
-                generateRandomPlanets(DimensionManager.getInstance().getStar(0), numRandomGeneratedPlanets, numRandomGeneratedGasGiants);
+        // 为太阳生成随机行星
+        //generateRandomPlanets(sol, numRandomGeneratedPlanets, numRandomGeneratedGasGiants);
 
-                StellarBody star = new StellarBody();
-                star.setTemperature(10);
-                star.setPosX(300);
-                star.setPosZ(-200);
-                star.setId(DimensionManager.getInstance().getNextFreeStarId());
-                star.setName("Wolf 12");
-                DimensionManager.getInstance().addStar(star);
-                generateRandomPlanets(star, 5, 0);
+        /*
+        // 添加其他恒星系统
+        StellarBody star = new StellarBody();
+        star.setTemperature(10);
+        star.setPosX(300);
+        star.setPosZ(-200);
+        star.setId(DimensionManager.getInstance().getNextFreeStarId());
+        star.setName("Wolf 12");
+        DimensionManager.getInstance().addStar(star);
+        generateRandomPlanets(star, 5, 0);
 
-                star = new StellarBody();
-                star.setTemperature(170);
-                star.setPosX(-200);
-                star.setPosZ(80);
-                star.setId(DimensionManager.getInstance().getNextFreeStarId());
-                star.setName("Epsilon ire");
-                DimensionManager.getInstance().addStar(star);
-                generateRandomPlanets(star, 7, 0);
+        star = new StellarBody();
+        star.setTemperature(170);
+        star.setPosX(-200);
+        star.setPosZ(80);
+        star.setId(DimensionManager.getInstance().getNextFreeStarId());
+        star.setName("Epsilon ire");
+        DimensionManager.getInstance().addStar(star);
+        generateRandomPlanets(star, 7, 0);
 
-                star = new StellarBody();
-                star.setTemperature(200);
-                star.setPosX(-150);
-                star.setPosZ(250);
-                star.setId(DimensionManager.getInstance().getNextFreeStarId());
-                star.setName("Proxima Centaurs");
-                DimensionManager.getInstance().addStar(star);
-                generateRandomPlanets(star, 3, 0);
+        star = new StellarBody();
+        star.setTemperature(200);
+        star.setPosX(-150);
+        star.setPosZ(250);
+        star.setId(DimensionManager.getInstance().getNextFreeStarId());
+        star.setName("Proxima Centaurs");
+        DimensionManager.getInstance().addStar(star);
+        generateRandomPlanets(star, 3, 0);
 
-                star = new StellarBody();
-                star.setTemperature(70);
-                star.setPosX(-150);
-                star.setPosZ(-250);
-                star.setId(DimensionManager.getInstance().getNextFreeStarId());
-                star.setName("Magnis Vulpes");
-                DimensionManager.getInstance().addStar(star);
-                generateRandomPlanets(star, 2, 0);
+        star = new StellarBody();
+        star.setTemperature(70);
+        star.setPosX(-150);
+        star.setPosZ(-250);
+        star.setId(DimensionManager.getInstance().getNextFreeStarId());
+        star.setName("Magnis Vulpes");
+        DimensionManager.getInstance().addStar(star);
+        generateRandomPlanets(star, 2, 0);
 
+        star = new StellarBody();
+        star.setTemperature(200);
+        star.setPosX(50);
+        star.setPosZ(-250);
+        star.setId(DimensionManager.getInstance().getNextFreeStarId());
+        star.setName("Ma-Roo");
+        DimensionManager.getInstance().addStar(star);
+        generateRandomPlanets(star, 6, 0);
 
-                star = new StellarBody();
-                star.setTemperature(200);
-                star.setPosX(50);
-                star.setPosZ(-250);
-                star.setId(DimensionManager.getInstance().getNextFreeStarId());
-                star.setName("Ma-Roo");
-                DimensionManager.getInstance().addStar(star);
-                generateRandomPlanets(star, 6, 0);
+        star = new StellarBody();
+        star.setTemperature(120);
+        star.setPosX(75);
+        star.setPosZ(200);
+        star.setId(DimensionManager.getInstance().getNextFreeStarId());
+        star.setName("Alykitt");
+        DimensionManager.getInstance().addStar(star);
+        generateRandomPlanets(star, 3, 1);
 
-                star = new StellarBody();
-                star.setTemperature(120);
-                star.setPosX(75);
-                star.setPosZ(200);
-                star.setId(DimensionManager.getInstance().getNextFreeStarId());
-                star.setName("Alykitt");
-                DimensionManager.getInstance().addStar(star);
-                generateRandomPlanets(star, 3, 1);
-
-            }
-        }
-        //Maybe add this back one day when we have a version of AR that needs it
-		/*else {
-			VersionCompat.upgradeDimensionManagerPostLoad(DimensionManager.prevBuild);
-		}*/
-
-        //Attempt to load ore config from adv planet XML
-        if (dimCouplingList != null) {
-            //Register new stars
-            for (StellarBody star : dimCouplingList.stars) {
-                if (DimensionManager.getInstance().getStar(star.getId()) == null)
-                    DimensionManager.getInstance().addStar(star);
-
-                DimensionManager.getInstance().getStar(star.getId()).setName(star.getName());
-                DimensionManager.getInstance().getStar(star.getId()).setPosX(star.getPosX());
-                DimensionManager.getInstance().getStar(star.getId()).setPosZ(star.getPosZ());
-                DimensionManager.getInstance().getStar(star.getId()).setSize(star.getSize());
-                DimensionManager.getInstance().getStar(star.getId()).setTemperature(star.getTemperature());
-                DimensionManager.getInstance().getStar(star.getId()).subStars = star.subStars;
-                DimensionManager.getInstance().getStar(star.getId()).setBlackHole(star.isBlackHole());
-            }
-
-            for (DimensionProperties properties : dimCouplingList.dims) {
-
-                //Register dimensions loaded by other mods if not already loaded
-                if (!properties.isNativeDimension && properties.getStar() != null && !DimensionManager.getInstance().isDimensionCreated(properties.getId())) {
-                    for (StellarBody star : dimCouplingList.stars) {
-                        for (StellarBody loadedStar : DimensionManager.getInstance().getStars()) {
-                            if (star.getId() == properties.getStarId() && star.getName().equals(loadedStar.getName())) {
-                                DimensionManager.getInstance().registerDimNoUpdate(properties, false);
-                                properties.setStar(loadedStar);
-                            }
-                        }
-                    }
-                }
-
-
-                if (loadedPlanets.containsKey(properties.getId())) {
-                    DimensionProperties loadedDim = (DimensionProperties) loadedPlanets.get(properties.getId());
-                    if (loadedDim != null) {
-                        properties.copySatellites(loadedDim);
-                        properties.copyTerraformedBiomes(loadedDim);
-                    }
-                }
-                if (properties.isNativeDimension)
-                    DimensionManager.getInstance().registerDim(properties, properties.isNativeDimension);
-                //TODO: add properties fromXML
+         */
 
 
-                if (properties.oreProperties != null) {
-                    DimensionProperties loadedProps = DimensionManager.getInstance().getDimensionProperties(properties.getId());
-
-                    if (loadedProps != null) loadedProps.oreProperties = properties.oreProperties;
-                }
-            }
-
-            //Don't load random planets twice on initial load
-            //TODO: rework the logic, low priority because low time cost and one time run per world
-            if (!loadedFromXML) {
-                //Add planets
-                for (StellarBody star : dimCouplingList.stars) {
-                    int numRandomGeneratedPlanets = loader.getMaxNumPlanets(star);
-                    int numRandomGeneratedGasGiants = loader.getMaxNumGasGiants(star);
-                    generateRandomPlanets(star, numRandomGeneratedPlanets, numRandomGeneratedGasGiants);
-                }
-            }
-        }
-
-        // make sure to set dim offset back to original to make things consistant
-        DimensionManager.dimOffset = dimOffset;
-
+        // 添加初始已知行星
         DimensionManager.getInstance().knownPlanets.addAll(zmaster587.advancedRocketry.api.ARConfiguration.getCurrentConfig().initiallyKnownPlanets);
 
-
-        // Run all sanity checks now
-        //Try to fix invalid objects
+        // 执行完整性检查
         for (ISpaceObject spaceObject : SpaceObjectManager.getSpaceManager().getSpaceObjects()) {
             int orbitingId = spaceObject.getOrbitingPlanetId();
             if (!isDimensionCreated(orbitingId) && orbitingId != 0 && orbitingId != SpaceObjectManager.WARPDIMID && orbitingId < Constants.STAR_ID_OFFSET) {
@@ -1020,6 +893,7 @@ public class DimensionManager implements IGalaxy {
             }
         }
     }
+
 
     /**
      * Loads all information to rebuild the galaxy and solar systems from disk into the current instance of DimensionManager

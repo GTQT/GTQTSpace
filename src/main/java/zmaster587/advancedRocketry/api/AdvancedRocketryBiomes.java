@@ -17,6 +17,8 @@ public class AdvancedRocketryBiomes {
 
     public static final AdvancedRocketryBiomes instance = new AdvancedRocketryBiomes();
     public static Biome moonBiome;
+    public static Biome marsBiome;
+    public static Biome venusBiome;
     public static Biome hotDryBiome;
     public static Biome alienForest;
     public static Biome spaceBiome;

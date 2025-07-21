@@ -1,16 +1,13 @@
 package meowmel.gtqtspace.common;
 
 import gregtech.api.block.VariantItemBlock;
-import gregtech.common.blocks.MetaBlocks;
-import gregtech.common.blocks.StoneVariantBlock;
-import keqing.gtqtcore.common.block.GTQTMetaBlocks;
-import keqing.gtqtcore.common.block.blocks.GTQTStoneVariantBlock;
 import meowmel.gtqtspace.api.unifications.ore.GTQTSStoneTypes;
 import meowmel.gtqtspace.api.utils.GTQTSLog;
 import meowmel.gtqtspace.common.block.GTQTSMetaBlocks;
 import meowmel.gtqtspace.common.block.blocks.GTQTSDirtVariantBlock;
 import meowmel.gtqtspace.common.block.blocks.GTQTSStoneVariantBlock;
 import meowmel.gtqtspace.common.items.GTQTSMetaItems;
+import meowmel.gtqtspace.loaders.recipes.GTQTSRecipes;
 import meowmel.gtqtspace.loaders.recipes.GTQTSRecipesManager;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
@@ -137,13 +134,17 @@ public class CommonProxy {
     @SubscribeEvent
     public static void registerRecipes(RegistryEvent.Register<IRecipe> event) {
         GTQTSLog.logger.info("Registering recipes...");
-    }
-
-    public void init() throws IOException {
         GTQTSRecipesManager.init();
     }
 
+    public void init() throws IOException {
+
+    }
+    public void preInit() {
+
+    }
     public void preLoad() {
         GTQTSStoneTypes.init();
+        GTQTSRecipes.registerOrePrefix();
     }
 }

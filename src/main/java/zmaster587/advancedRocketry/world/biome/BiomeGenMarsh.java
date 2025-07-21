@@ -27,8 +27,7 @@ public class BiomeGenMarsh extends Biome {
     }
 
     @Override
-    public void genTerrainBlocks(World worldIn, Random rand,
-                                 ChunkPrimer chunkPrimerIn, int x, int z, double noiseVal) {
+    public void genTerrainBlocks(World worldIn, Random rand, ChunkPrimer chunkPrimerIn, int x, int z, double noiseVal) {
         super.genTerrainBlocks(worldIn, rand, chunkPrimerIn, x, z, noiseVal);
 
         double d1 = GRASS_COLOR_NOISE.getValue((double) x * 0.25D, (double) z * 0.25D);

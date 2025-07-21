@@ -1,10 +1,14 @@
 package zmaster587.advancedRocketry.world.biome;
 
+import meowmel.gtqtspace.common.block.GTQTSMetaBlocks;
+import meowmel.gtqtspace.common.block.blocks.GTQTSDirtVariantBlock;
+import meowmel.gtqtspace.common.block.blocks.GTQTSStoneVariantBlock;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.gen.MapGenBase;
 import zmaster587.advancedRocketry.api.AdvancedRocketryBlocks;
+import zmaster587.advancedRocketry.dimension.biome.CustomBiome;
 import zmaster587.advancedRocketry.world.decoration.MapGenVolcano;
 
 public class BiomeGenBarrenVolcanic extends Biome {
@@ -16,14 +20,12 @@ public class BiomeGenBarrenVolcanic extends Biome {
         super(properties);
 
         spawnableMonsterList.clear();
-        this.spawnableMonsterList.add(new Biome.SpawnListEntry(EntityCreeper.class, 5, 1, 1));
         this.spawnableCreatureList.clear();
         this.decorator.generateFalls = false;
         this.decorator.flowersPerChunk = 0;
         this.decorator.grassPerChunk = 0;
         this.decorator.treesPerChunk = 0;
         this.decorator.mushroomsPerChunk = 0;
-        this.fillerBlock = this.topBlock = AdvancedRocketryBlocks.blockBasalt.getDefaultState();
         volcano = new MapGenVolcano(800);
     }
 

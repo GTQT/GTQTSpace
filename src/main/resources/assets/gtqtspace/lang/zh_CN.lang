@@ -1,5 +1,7 @@
 gtqtspace.material.meteoric_iron=陨铁
 gtqtspace.material.desh=戴斯
+gtqtspace.material.columbite=铌钽铁
+gtqtspace.material.gallite=灰镓矿
 gtqtspace.material.moon_stone=月岩
 gtqtspace.material.mars_stone=火星岩石
 gtqtspace.material.venus_stone=金星岩石
@@ -529,6 +531,25 @@ gtqtspace.machine.dock.name=太空船坞单元
 item.material.oreprefix.oreMoon=月球%s矿石
 item.material.oreprefix.oreMars=火星%s矿石
 item.material.oreprefix.oreVenus=金星%s矿石
+
+gtqtspace.veins.fluid.helium=氦矿藏
+gtqtspace.veins.fluid.helium_3=氦-3矿藏
+
+gtqtspace.veins.fluid.carbon_dioxide=二氧化碳矿藏
+gtqtspace.veins.fluid.sulfur_dioxide=二氧化硫矿藏
+
+gtqtspace.veins.ore.gallite=灰镓矿脉
+gtqtspace.veins.ore.columbite=铌钽铁矿脉
+gtqtspace.veins.ore.meteoric_iron=陨铁矿脉
+gtqtspace.veins.ore.radioactive=放射性矿脉
+gtqtspace.veins.ore.desh=戴斯矿脉
+gtqtspace.veins.ore.fluorite=氟石矿脉
+gtqtspace.veins.ore.naquadah=氧化硅岩矿脉
+gtqtspace.veins.ore.rutile=金红石矿脉
+
+gregtech.veins.ore.sulfuric_acid_sphere=硫酸球
+
+item.material.oreprefix.densePlate=超致密%s板
 #
 itemGroup.gtqtspace_core=GTQT | 太空系统
 itemGroup.gtqtspace_core_ship=GTQT | 航天器设计
