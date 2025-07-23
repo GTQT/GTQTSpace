@@ -1,6 +1,8 @@
 package zmaster587.advancedRocketry.common;
 
+import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.Entity;
+import net.minecraft.item.ItemStack;
 import net.minecraft.profiler.Profiler;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -8,14 +10,25 @@ import net.minecraft.world.biome.Biome;
 import net.minecraftforge.common.DimensionManager;
 import net.minecraftforge.fml.common.FMLCommonHandler;
 import zmaster587.advancedRocketry.api.ARConfiguration;
+import zmaster587.advancedRocketry.api.AdvancedRocketryItems;
 import zmaster587.advancedRocketry.api.stations.ISpaceObject;
 import zmaster587.advancedRocketry.network.PacketLaserGun;
 import zmaster587.advancedRocketry.network.PacketStationUpdate;
 import zmaster587.libVulpes.network.PacketHandler;
 
+import javax.annotation.Nonnull;
+
 public class CommonProxy {
 
     private static final zmaster587.advancedRocketry.dimension.DimensionManager dimensionManagerServer = new zmaster587.advancedRocketry.dimension.DimensionManager();
+
+    //table bar
+    public static final CreativeTabs tabAdvRocketry = new CreativeTabs("advancedRocketry") {
+        @Nonnull
+        public ItemStack createIcon() {
+            return new ItemStack(AdvancedRocketryItems.itemSatelliteIdChip);
+        }
+    };
 
     public void registerRenderers() {
 

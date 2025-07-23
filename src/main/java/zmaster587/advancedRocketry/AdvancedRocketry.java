@@ -24,7 +24,6 @@ import net.minecraft.world.World;
 import net.minecraft.world.WorldType;
 import net.minecraft.world.biome.Biome;
 import net.minecraftforge.client.event.ModelRegistryEvent;
-import net.minecraftforge.common.BiomeDictionary;
 import net.minecraftforge.common.ForgeChunkManager;
 import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.common.config.Configuration;
@@ -67,6 +66,7 @@ import zmaster587.advancedRocketry.dimension.DimensionManager;
 import zmaster587.advancedRocketry.dimension.DimensionProperties;
 import zmaster587.advancedRocketry.dimension.DimensionProperties.AtmosphereTypes;
 import zmaster587.advancedRocketry.dimension.DimensionProperties.Temps;
+import zmaster587.advancedRocketry.dimension.biome.BiomeManager;
 import zmaster587.advancedRocketry.enchant.EnchantmentSpaceBreathing;
 import zmaster587.advancedRocketry.entity.*;
 import zmaster587.advancedRocketry.event.CableTickHandler;
@@ -104,7 +104,6 @@ import zmaster587.advancedRocketry.tile.satellite.TileSatelliteTerminal;
 import zmaster587.advancedRocketry.tile.satellite.TileTerraformingTerminal;
 import zmaster587.advancedRocketry.tile.station.*;
 import zmaster587.advancedRocketry.util.*;
-import zmaster587.advancedRocketry.world.biome.*;
 import zmaster587.advancedRocketry.world.decoration.MapGenLander;
 import zmaster587.advancedRocketry.world.provider.WorldProviderPlanet;
 import zmaster587.advancedRocketry.world.type.WorldTypePlanetGen;
@@ -129,7 +128,6 @@ import zmaster587.libVulpes.util.HashedBlockPosition;
 import zmaster587.libVulpes.util.InputSyncHandler;
 import zmaster587.libVulpes.util.SingleEntry;
 
-import javax.annotation.Nonnull;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
@@ -147,145 +145,35 @@ public class AdvancedRocketry {
 
     public static final RecipeHandler machineRecipes = new RecipeHandler();
     public static final Logger logger = LogManager.getLogger(Constants.modId);
-    private static final CreativeTabs tabAdvRocketry = new CreativeTabs("advancedRocketry") {
-        @Nonnull
-        public ItemStack createIcon() {
-            return new ItemStack(AdvancedRocketryItems.itemSatelliteIdChip);
-        }
-    };
-    @SidedProxy(clientSide = "zmaster587.advancedRocketry.client.ClientProxy", serverSide = "zmaster587.advancedRocketry.common.CommonProxy")
+
+    @SidedProxy(
+            clientSide = "zmaster587.advancedRocketry.client.ClientProxy",
+            serverSide = "zmaster587.advancedRocketry.common.CommonProxy"
+    )
+
     public static CommonProxy proxy;
     public static String version;
+
     @Instance(value = Constants.modId)
     public static AdvancedRocketry instance;
+
     public static WorldType planetWorldType;
     public static WorldType spaceWorldType;
+
     public static CompatibilityMgr compat = new CompatibilityMgr();
     public static HashMap<AllowedProducts, HashSet<String>> modProducts = new HashMap<>();
+
     private static Configuration config;
 
     static {
         FluidRegistry.enableUniversalBucket(); // Must be called before preInit
     }
 
-    private boolean resetFromXml;
-
     //Biome registry.
     @SubscribeEvent
     public void register(RegistryEvent.Register<Biome> evt) {
         System.out.println("REGISTERING BIOMES");
-        //Biome properties
-        AdvancedRocketryBiomes.moonBiome = new BiomeGenMoon(new Biome.BiomeProperties("Regolith Highlands").setRainDisabled().setBaseHeight(1f).setHeightVariation(0.2f).setRainfall(0).setTemperature(0.3f));
-        AdvancedRocketryBiomes.marsBiome = new BiomeGenMars(new Biome.BiomeProperties("Mars").setBaseHeight(0.125F).setHeightVariation(0.05F).setTemperature(2.0F).setRainfall(0.0F).setRainDisabled());
-        AdvancedRocketryBiomes.venusBiome = new BiomeGenVenus(new Biome.BiomeProperties("Venus").setBaseHeight(0.125F).setHeightVariation(0.05F).setTemperature(2.0F).setRainfall(0.0F).setRainDisabled());
-        AdvancedRocketryBiomes.alienForest = new BiomeGenAlienForest(new Biome.BiomeProperties("Alien Forest").setWaterColor(0x8888FF));
-        AdvancedRocketryBiomes.hotDryBiome = new BiomeGenHotDryRock(new Biome.BiomeProperties("Ferric Regolith Wasteland").setRainDisabled().setBaseHeight(1f).setHeightVariation(0.01f).setRainfall(0).setTemperature(0.9f));
-        AdvancedRocketryBiomes.spaceBiome = new BiomeGenSpace(new Biome.BiomeProperties("Space").setRainDisabled().setBaseHeight(-2f).setHeightVariation(0f).setTemperature(1f));
-        AdvancedRocketryBiomes.stormLandsBiome = new BiomeGenStormland(new Biome.BiomeProperties("Stormland").setBaseHeight(1f).setHeightVariation(0.1f).setRainfall(0.9f).setTemperature(0.9f));
-        AdvancedRocketryBiomes.crystalChasms = new BiomeGenCrystal(new Biome.BiomeProperties("Crystal Chasms").setHeightVariation(0.1f).setBaseHeight(1f).setRainfall(0.2f).setTemperature(0.1f));
-        AdvancedRocketryBiomes.swampDeepBiome = new BiomeGenDeepSwamp(new Biome.BiomeProperties("Deep Swamp").setBaseHeight(-0.1f).setHeightVariation(0.2f).setRainfall(0.9f).setTemperature(0.9f).setWaterColor(14745518));
-        AdvancedRocketryBiomes.marsh = new BiomeGenMarsh(new Biome.BiomeProperties("Marsh").setBaseHeight(-0.4f).setHeightVariation(0f));
-        AdvancedRocketryBiomes.oceanSpires = new BiomeGenOceanSpires(new Biome.BiomeProperties("Ocean Spires").setBaseHeight(-0.5f).setHeightVariation(0f));
-        AdvancedRocketryBiomes.moonBiomeDark = new BiomeGenMoonDark(new Biome.BiomeProperties("Regolith Lowlands").setRainDisabled().setBaseHeight(0.5f).setHeightVariation(0.01f).setRainfall(0).setTemperature(0.3f));
-        AdvancedRocketryBiomes.volcanic = new BiomeGenVolcanic(new Biome.BiomeProperties("Volcanic").setRainDisabled().setBaseHeight(0f).setHeightVariation(0.9f).setRainfall(0).setTemperature(1.0f));
-        AdvancedRocketryBiomes.volcanicBarren = new BiomeGenBarrenVolcanic(new Biome.BiomeProperties("Volcanic Lowlands").setRainDisabled().setBaseHeight(0f).setHeightVariation(0.9f).setRainfall(0).setTemperature(1.0f));
-
-        //Biome registry names outside of constructor
-        AdvancedRocketryBiomes.moonBiome.setRegistryName(Constants.modId, "moon");
-        AdvancedRocketryBiomes.marsBiome.setRegistryName(Constants.modId, "mars");
-        AdvancedRocketryBiomes.venusBiome.setRegistryName(Constants.modId, "venus");
-        AdvancedRocketryBiomes.alienForest.setRegistryName(Constants.modId, "alien_forest");
-        AdvancedRocketryBiomes.hotDryBiome.setRegistryName(Constants.modId, "hotdryrock");
-        AdvancedRocketryBiomes.spaceBiome.setRegistryName(Constants.modId, "space");
-        AdvancedRocketryBiomes.stormLandsBiome.setRegistryName(Constants.modId, "stormland");
-        AdvancedRocketryBiomes.crystalChasms.setRegistryName(Constants.modId, "crystalchasms");
-        AdvancedRocketryBiomes.swampDeepBiome.setRegistryName(Constants.modId, "deepswamp");
-        AdvancedRocketryBiomes.marsh.setRegistryName(Constants.modId, "marsh");
-        AdvancedRocketryBiomes.oceanSpires.setRegistryName(Constants.modId, "oceanspires");
-        AdvancedRocketryBiomes.moonBiomeDark.setRegistryName(Constants.modId, "moondark");
-        AdvancedRocketryBiomes.volcanic.setRegistryName(Constants.modId, "volcanic");
-        AdvancedRocketryBiomes.volcanicBarren.setRegistryName(Constants.modId, "volcanicbarren");
-
-        //Actual registry
-        AdvancedRocketryBiomes.instance.registerBiome(AdvancedRocketryBiomes.moonBiome, evt.getRegistry());
-        AdvancedRocketryBiomes.instance.registerBiome(AdvancedRocketryBiomes.marsBiome, evt.getRegistry());
-        AdvancedRocketryBiomes.instance.registerBiome(AdvancedRocketryBiomes.venusBiome, evt.getRegistry());
-        AdvancedRocketryBiomes.instance.registerBiome(AdvancedRocketryBiomes.alienForest, evt.getRegistry());
-        AdvancedRocketryBiomes.instance.registerBiome(AdvancedRocketryBiomes.hotDryBiome, evt.getRegistry());
-        AdvancedRocketryBiomes.instance.registerBiome(AdvancedRocketryBiomes.spaceBiome, evt.getRegistry());
-        AdvancedRocketryBiomes.instance.registerBiome(AdvancedRocketryBiomes.stormLandsBiome, evt.getRegistry());
-        AdvancedRocketryBiomes.instance.registerBiome(AdvancedRocketryBiomes.crystalChasms, evt.getRegistry());
-        AdvancedRocketryBiomes.instance.registerBiome(AdvancedRocketryBiomes.swampDeepBiome, evt.getRegistry());
-        AdvancedRocketryBiomes.instance.registerBiome(AdvancedRocketryBiomes.marsh, evt.getRegistry());
-        AdvancedRocketryBiomes.instance.registerBiome(AdvancedRocketryBiomes.oceanSpires, evt.getRegistry());
-        AdvancedRocketryBiomes.instance.registerBiome(AdvancedRocketryBiomes.moonBiomeDark, evt.getRegistry());
-        AdvancedRocketryBiomes.instance.registerBiome(AdvancedRocketryBiomes.volcanic, evt.getRegistry());
-        AdvancedRocketryBiomes.instance.registerBiome(AdvancedRocketryBiomes.volcanicBarren, evt.getRegistry());
-
-        BiomeDictionary.addTypes(AdvancedRocketryBiomes.moonBiome,
-                BiomeDictionary.Type.WASTELAND,
-                BiomeDictionary.Type.DRY,
-                BiomeDictionary.Type.COLD
-        );
-        BiomeDictionary.addTypes(AdvancedRocketryBiomes.moonBiomeDark,
-                BiomeDictionary.Type.WASTELAND,
-                BiomeDictionary.Type.DRY,
-                BiomeDictionary.Type.COLD
-        );
-        BiomeDictionary.addTypes(AdvancedRocketryBiomes.marsBiome,
-                BiomeDictionary.Type.SANDY,
-                BiomeDictionary.Type.DRY,
-                BiomeDictionary.Type.COLD
-        );
-        BiomeDictionary.addTypes(AdvancedRocketryBiomes.venusBiome,
-                BiomeDictionary.Type.SANDY,
-                BiomeDictionary.Type.DRY,
-                BiomeDictionary.Type.HOT
-        );
-        BiomeDictionary.addTypes(AdvancedRocketryBiomes.alienForest,
-                BiomeDictionary.Type.MAGICAL,
-                BiomeDictionary.Type.FOREST
-        );
-        BiomeDictionary.addTypes(AdvancedRocketryBiomes.hotDryBiome,
-                BiomeDictionary.Type.WASTELAND,
-                BiomeDictionary.Type.DRY,
-                BiomeDictionary.Type.HOT
-        );
-        BiomeDictionary.addTypes(AdvancedRocketryBiomes.volcanic,
-                BiomeDictionary.Type.WASTELAND,
-                BiomeDictionary.Type.DRY,
-                BiomeDictionary.Type.HOT,
-                BiomeDictionary.Type.MOUNTAIN
-        );
-        BiomeDictionary.addTypes(AdvancedRocketryBiomes.volcanicBarren,
-                BiomeDictionary.Type.WASTELAND,
-                BiomeDictionary.Type.DRY,
-                BiomeDictionary.Type.HOT,
-                BiomeDictionary.Type.MOUNTAIN
-        );
-        BiomeDictionary.addTypes(AdvancedRocketryBiomes.spaceBiome, BiomeDictionary.Type.VOID);
-        BiomeDictionary.addTypes(AdvancedRocketryBiomes.stormLandsBiome,
-                BiomeDictionary.Type.WASTELAND,
-                BiomeDictionary.Type.WET,
-                BiomeDictionary.Type.HOT
-        );
-
-        BiomeDictionary.addTypes(AdvancedRocketryBiomes.swampDeepBiome,
-                BiomeDictionary.Type.WET,
-                BiomeDictionary.Type.HOT
-        );
-        BiomeDictionary.addTypes(AdvancedRocketryBiomes.marsh,
-                BiomeDictionary.Type.WET,
-                BiomeDictionary.Type.HOT
-        );
-        BiomeDictionary.addTypes(AdvancedRocketryBiomes.oceanSpires,
-                BiomeDictionary.Type.OCEAN
-        );
-        BiomeDictionary.addTypes(AdvancedRocketryBiomes.crystalChasms,
-                BiomeDictionary.Type.SNOWY,
-                BiomeDictionary.Type.WASTELAND,
-                BiomeDictionary.Type.COLD
-        );
+        BiomeManager.registerBiomes(evt);
     }
 
     @EventHandler
@@ -305,8 +193,6 @@ public class AdvancedRocketry {
         config.load();
 
         ARConfiguration.loadPreInit();
-        resetFromXml = config.getBoolean("resetPlanetsFromXML", Configuration.CATEGORY_GENERAL, false, "setting this to true will force AR to read from the XML file in the config/advRocketry instead of the local data, intended for use pack developers to ensure updates are pushed through");
-
         //Load client and UI positioning stuff
         proxy.loadUILayout(config);
 
@@ -482,51 +368,51 @@ public class AdvancedRocketry {
     @SubscribeEvent(priority = EventPriority.HIGH)
     public void registerItems(RegistryEvent.Register<Item> evt) {
         //Items -------------------------------------------------------------------------------------
-        AdvancedRocketryItems.itemWafer = new ItemIngredient(1).setRegistryName("advancedrocketry:wafer").setCreativeTab(tabAdvRocketry);
-        AdvancedRocketryItems.itemCircuitPlate = new ItemIngredient(2).setRegistryName("advancedrocketry:circuitplate").setCreativeTab(tabAdvRocketry);
-        AdvancedRocketryItems.itemIC = new ItemIngredient(6).setRegistryName("advancedrocketry:circuitIC").setCreativeTab(tabAdvRocketry);
-        AdvancedRocketryItems.itemMisc = new ItemIngredient(2).setRegistryName("advancedrocketry:miscpart").setCreativeTab(tabAdvRocketry);
-        AdvancedRocketryItems.itemSawBlade = new ItemIngredient(1).setRegistryName("advancedrocketry:sawBladeIron").setCreativeTab(tabAdvRocketry);
-        AdvancedRocketryItems.itemSpaceStationChip = new ItemStationChip().setRegistryName("stationChip").setCreativeTab(tabAdvRocketry);
-        AdvancedRocketryItems.itemSpaceElevatorChip = new ItemSpaceElevatorChip().setRegistryName("elevatorChip").setCreativeTab(tabAdvRocketry);
-        AdvancedRocketryItems.itemAsteroidChip = new ItemAsteroidChip().setRegistryName("asteroidChip").setCreativeTab(tabAdvRocketry);
+        AdvancedRocketryItems.itemWafer = new ItemIngredient(1).setRegistryName("advancedrocketry:wafer").setCreativeTab(CommonProxy.tabAdvRocketry);
+        AdvancedRocketryItems.itemCircuitPlate = new ItemIngredient(2).setRegistryName("advancedrocketry:circuitplate").setCreativeTab(CommonProxy.tabAdvRocketry);
+        AdvancedRocketryItems.itemIC = new ItemIngredient(6).setRegistryName("advancedrocketry:circuitIC").setCreativeTab(CommonProxy.tabAdvRocketry);
+        AdvancedRocketryItems.itemMisc = new ItemIngredient(2).setRegistryName("advancedrocketry:miscpart").setCreativeTab(CommonProxy.tabAdvRocketry);
+        AdvancedRocketryItems.itemSawBlade = new ItemIngredient(1).setRegistryName("advancedrocketry:sawBladeIron").setCreativeTab(CommonProxy.tabAdvRocketry);
+        AdvancedRocketryItems.itemSpaceStationChip = new ItemStationChip().setRegistryName("stationChip").setCreativeTab(CommonProxy.tabAdvRocketry);
+        AdvancedRocketryItems.itemSpaceElevatorChip = new ItemSpaceElevatorChip().setRegistryName("elevatorChip").setCreativeTab(CommonProxy.tabAdvRocketry);
+        AdvancedRocketryItems.itemAsteroidChip = new ItemAsteroidChip().setRegistryName("asteroidChip").setCreativeTab(CommonProxy.tabAdvRocketry);
         AdvancedRocketryItems.itemSpaceStation = new ItemPackedStructure().setRegistryName("station");
-        AdvancedRocketryItems.itemSmallAirlockDoor = new ItemDoor(AdvancedRocketryBlocks.blockAirLock).setRegistryName("smallAirlock").setCreativeTab(tabAdvRocketry);
+        AdvancedRocketryItems.itemSmallAirlockDoor = new ItemDoor(AdvancedRocketryBlocks.blockAirLock).setRegistryName("smallAirlock").setCreativeTab(CommonProxy.tabAdvRocketry);
         //Short.MAX_VALUE is forge's wildcard, don't use it
-        AdvancedRocketryItems.itemCarbonScrubberCartridge = new Item().setMaxDamage(Short.MAX_VALUE - 1).setRegistryName("carbonScrubberCartridge").setCreativeTab(tabAdvRocketry);
-        AdvancedRocketryItems.itemLens = new ItemIngredient(1).setRegistryName("advancedrocketry:itemLens").setCreativeTab(tabAdvRocketry);
-        AdvancedRocketryItems.itemSatellitePowerSource = new ItemIngredient(2).setRegistryName("advancedrocketry:satellitePowerSource").setCreativeTab(tabAdvRocketry);
-        AdvancedRocketryItems.itemSatellitePrimaryFunction = new ItemIngredient(7).setRegistryName("advancedrocketry:satellitePrimaryFunction").setCreativeTab(tabAdvRocketry);
-        AdvancedRocketryItems.itemThermite = new ItemThermite().setRegistryName("thermite").setCreativeTab(tabAdvRocketry);
+        AdvancedRocketryItems.itemCarbonScrubberCartridge = new Item().setMaxDamage(Short.MAX_VALUE - 1).setRegistryName("carbonScrubberCartridge").setCreativeTab(CommonProxy.tabAdvRocketry);
+        AdvancedRocketryItems.itemLens = new ItemIngredient(1).setRegistryName("advancedrocketry:itemLens").setCreativeTab(CommonProxy.tabAdvRocketry);
+        AdvancedRocketryItems.itemSatellitePowerSource = new ItemIngredient(2).setRegistryName("advancedrocketry:satellitePowerSource").setCreativeTab(CommonProxy.tabAdvRocketry);
+        AdvancedRocketryItems.itemSatellitePrimaryFunction = new ItemIngredient(7).setRegistryName("advancedrocketry:satellitePrimaryFunction").setCreativeTab(CommonProxy.tabAdvRocketry);
+        AdvancedRocketryItems.itemThermite = new ItemThermite().setRegistryName("thermite").setCreativeTab(CommonProxy.tabAdvRocketry);
 
         //TODO: move registration in the case we have more than one chip type
-        AdvancedRocketryItems.itemDataUnit = new ItemData().setRegistryName("advancedrocketry:dataUnit").setCreativeTab(tabAdvRocketry);
-        AdvancedRocketryItems.itemOreScanner = new ItemOreScanner().setRegistryName("OreScanner").setCreativeTab(tabAdvRocketry);
-        AdvancedRocketryItems.itemQuartzCrucible = new ItemBlock(AdvancedRocketryBlocks.blockQuartzCrucible).setRegistryName("qcrucible").setCreativeTab(tabAdvRocketry);
-        AdvancedRocketryItems.itemSatellite = new ItemSatellite().setRegistryName("satellite").setCreativeTab(tabAdvRocketry).setMaxStackSize(1);
-        AdvancedRocketryItems.itemSatelliteIdChip = new ItemSatelliteIdentificationChip().setRegistryName("satelliteIdChip").setCreativeTab(tabAdvRocketry);
-        AdvancedRocketryItems.itemPlanetIdChip = new ItemPlanetIdentificationChip().setRegistryName("planetIdChip").setCreativeTab(tabAdvRocketry);
-        AdvancedRocketryItems.itemBiomeChanger = new ItemBiomeChanger().setRegistryName("biomeChanger").setCreativeTab(tabAdvRocketry);
-        AdvancedRocketryItems.itemWeatherController = new ItemWeatherController().setRegistryName("weatherController").setCreativeTab(tabAdvRocketry);
-        AdvancedRocketryItems.itemBasicLaserGun = new ItemBasicLaserGun().setRegistryName("basicLaserGun").setCreativeTab(tabAdvRocketry);
-        AdvancedRocketryItems.itemHovercraft = new ItemHovercraft().setRegistryName("hovercraft").setCreativeTab(tabAdvRocketry);
+        AdvancedRocketryItems.itemDataUnit = new ItemData().setRegistryName("advancedrocketry:dataUnit").setCreativeTab(CommonProxy.tabAdvRocketry);
+        AdvancedRocketryItems.itemOreScanner = new ItemOreScanner().setRegistryName("OreScanner").setCreativeTab(CommonProxy.tabAdvRocketry);
+        AdvancedRocketryItems.itemQuartzCrucible = new ItemBlock(AdvancedRocketryBlocks.blockQuartzCrucible).setRegistryName("qcrucible").setCreativeTab(CommonProxy.tabAdvRocketry);
+        AdvancedRocketryItems.itemSatellite = new ItemSatellite().setRegistryName("satellite").setCreativeTab(CommonProxy.tabAdvRocketry).setMaxStackSize(1);
+        AdvancedRocketryItems.itemSatelliteIdChip = new ItemSatelliteIdentificationChip().setRegistryName("satelliteIdChip").setCreativeTab(CommonProxy.tabAdvRocketry);
+        AdvancedRocketryItems.itemPlanetIdChip = new ItemPlanetIdentificationChip().setRegistryName("planetIdChip").setCreativeTab(CommonProxy.tabAdvRocketry);
+        AdvancedRocketryItems.itemBiomeChanger = new ItemBiomeChanger().setRegistryName("biomeChanger").setCreativeTab(CommonProxy.tabAdvRocketry);
+        AdvancedRocketryItems.itemWeatherController = new ItemWeatherController().setRegistryName("weatherController").setCreativeTab(CommonProxy.tabAdvRocketry);
+        AdvancedRocketryItems.itemBasicLaserGun = new ItemBasicLaserGun().setRegistryName("basicLaserGun").setCreativeTab(CommonProxy.tabAdvRocketry);
+        AdvancedRocketryItems.itemHovercraft = new ItemHovercraft().setRegistryName("hovercraft").setCreativeTab(CommonProxy.tabAdvRocketry);
 
         //Suit Component Registration
-        AdvancedRocketryItems.itemJetpack = new ItemJetpack().setCreativeTab(tabAdvRocketry).setRegistryName("jetPack");
-        AdvancedRocketryItems.itemPressureTank = new ItemPressureTank(4, (int) (1000 * ARConfiguration.getCurrentConfig().suitTankCapacity)).setCreativeTab(tabAdvRocketry).setRegistryName("advancedrocketry:pressureTank");
-        AdvancedRocketryItems.itemUpgrade = new ItemUpgrade(6).setCreativeTab(tabAdvRocketry).setRegistryName("advancedrocketry:itemUpgrade");
-        AdvancedRocketryItems.itemAtmAnalyser = new ItemAtmosphereAnalzer().setCreativeTab(tabAdvRocketry).setRegistryName("atmAnalyser");
-        AdvancedRocketryItems.itemBeaconFinder = new ItemBeaconFinder().setCreativeTab(tabAdvRocketry).setRegistryName("beaconFinder");
+        AdvancedRocketryItems.itemJetpack = new ItemJetpack().setCreativeTab(CommonProxy.tabAdvRocketry).setRegistryName("jetPack");
+        AdvancedRocketryItems.itemPressureTank = new ItemPressureTank(4, (int) (1000 * ARConfiguration.getCurrentConfig().suitTankCapacity)).setCreativeTab(CommonProxy.tabAdvRocketry).setRegistryName("advancedrocketry:pressureTank");
+        AdvancedRocketryItems.itemUpgrade = new ItemUpgrade(6).setCreativeTab(CommonProxy.tabAdvRocketry).setRegistryName("advancedrocketry:itemUpgrade");
+        AdvancedRocketryItems.itemAtmAnalyser = new ItemAtmosphereAnalzer().setCreativeTab(CommonProxy.tabAdvRocketry).setRegistryName("atmAnalyser");
+        AdvancedRocketryItems.itemBeaconFinder = new ItemBeaconFinder().setCreativeTab(CommonProxy.tabAdvRocketry).setRegistryName("beaconFinder");
 
         //Armor registration
-        AdvancedRocketryItems.itemSpaceSuit_Helmet = new ItemSpaceArmor(ArmorMaterial.LEATHER, EntityEquipmentSlot.HEAD, 4).setCreativeTab(tabAdvRocketry).setRegistryName("spaceHelmet");
-        AdvancedRocketryItems.itemSpaceSuit_Chest = new ItemSpaceChest(ArmorMaterial.LEATHER, EntityEquipmentSlot.CHEST, 6).setCreativeTab(tabAdvRocketry).setRegistryName("spaceChest");
-        AdvancedRocketryItems.itemSpaceSuit_Leggings = new ItemSpaceArmor(ArmorMaterial.LEATHER, EntityEquipmentSlot.LEGS, 4).setCreativeTab(tabAdvRocketry).setRegistryName("spaceLeggings");
-        AdvancedRocketryItems.itemSpaceSuit_Boots = new ItemSpaceArmor(ArmorMaterial.LEATHER, EntityEquipmentSlot.FEET, 4).setCreativeTab(tabAdvRocketry).setRegistryName("spaceBoots");
-        AdvancedRocketryItems.itemSealDetector = new ItemSealDetector().setMaxStackSize(1).setCreativeTab(tabAdvRocketry).setRegistryName("sealDetector");
+        AdvancedRocketryItems.itemSpaceSuit_Helmet = new ItemSpaceArmor(ArmorMaterial.LEATHER, EntityEquipmentSlot.HEAD, 4).setCreativeTab(CommonProxy.tabAdvRocketry).setRegistryName("spaceHelmet");
+        AdvancedRocketryItems.itemSpaceSuit_Chest = new ItemSpaceChest(ArmorMaterial.LEATHER, EntityEquipmentSlot.CHEST, 6).setCreativeTab(CommonProxy.tabAdvRocketry).setRegistryName("spaceChest");
+        AdvancedRocketryItems.itemSpaceSuit_Leggings = new ItemSpaceArmor(ArmorMaterial.LEATHER, EntityEquipmentSlot.LEGS, 4).setCreativeTab(CommonProxy.tabAdvRocketry).setRegistryName("spaceLeggings");
+        AdvancedRocketryItems.itemSpaceSuit_Boots = new ItemSpaceArmor(ArmorMaterial.LEATHER, EntityEquipmentSlot.FEET, 4).setCreativeTab(CommonProxy.tabAdvRocketry).setRegistryName("spaceBoots");
+        AdvancedRocketryItems.itemSealDetector = new ItemSealDetector().setMaxStackSize(1).setCreativeTab(CommonProxy.tabAdvRocketry).setRegistryName("sealDetector");
 
         //Tools
-        AdvancedRocketryItems.itemJackhammer = new ItemJackHammer(ToolMaterial.DIAMOND).setRegistryName("jackhammer").setCreativeTab(tabAdvRocketry);
+        AdvancedRocketryItems.itemJackhammer = new ItemJackHammer(ToolMaterial.DIAMOND).setRegistryName("jackhammer").setCreativeTab(CommonProxy.tabAdvRocketry);
         AdvancedRocketryItems.itemJackhammer.setHarvestLevel("jackhammer", 3);
         AdvancedRocketryItems.itemJackhammer.setHarvestLevel("pickaxe", 3);
 
@@ -609,123 +495,123 @@ public class AdvancedRocketry {
         //Blocks -------------------------------------------------------------------------------------
         //Machines
         //Machine parts
-        AdvancedRocketryBlocks.blockConcrete = new Block(Material.ROCK).setRegistryName("concrete").setCreativeTab(tabAdvRocketry).setHardness(3f).setResistance(16f);
-        AdvancedRocketryBlocks.blockBlastBrick = new BlockMultiBlockComponentVisible(Material.ROCK).setCreativeTab(tabAdvRocketry).setRegistryName("blastBrick").setHardness(3F).setResistance(15F);
-        AdvancedRocketryBlocks.blockStructureTower = new BlockAlphaTexture(Material.IRON).setRegistryName("structuretower").setCreativeTab(tabAdvRocketry).setHardness(2f);
-        AdvancedRocketryBlocks.blockLens = new BlockLens().setRegistryName("blockLens").setCreativeTab(tabAdvRocketry).setHardness(0.3f);
-        AdvancedRocketryBlocks.blockSolarPanel = new Block(Material.IRON).setRegistryName("solarPanel").setCreativeTab(tabAdvRocketry).setHardness(3f);
-        AdvancedRocketryBlocks.blockSolarArrayPanel = new BlockMultiBlockComponentVisibleAlphaTexture(Material.IRON).setRegistryName("solararraypanel").setCreativeTab(tabAdvRocketry).setHardness(1).setResistance(1f);
-        AdvancedRocketryBlocks.blockQuartzCrucible = new BlockQuartzCrucible().setRegistryName("quartzcrucible").setCreativeTab(tabAdvRocketry);
-        AdvancedRocketryBlocks.blockSawBlade = new BlockMotor(Material.IRON, 1f).setCreativeTab(tabAdvRocketry).setRegistryName("sawBlade").setHardness(2f);
+        AdvancedRocketryBlocks.blockConcrete = new Block(Material.ROCK).setRegistryName("concrete").setCreativeTab(CommonProxy.tabAdvRocketry).setHardness(3f).setResistance(16f);
+        AdvancedRocketryBlocks.blockBlastBrick = new BlockMultiBlockComponentVisible(Material.ROCK).setCreativeTab(CommonProxy.tabAdvRocketry).setRegistryName("blastBrick").setHardness(3F).setResistance(15F);
+        AdvancedRocketryBlocks.blockStructureTower = new BlockAlphaTexture(Material.IRON).setRegistryName("structuretower").setCreativeTab(CommonProxy.tabAdvRocketry).setHardness(2f);
+        AdvancedRocketryBlocks.blockLens = new BlockLens().setRegistryName("blockLens").setCreativeTab(CommonProxy.tabAdvRocketry).setHardness(0.3f);
+        AdvancedRocketryBlocks.blockSolarPanel = new Block(Material.IRON).setRegistryName("solarPanel").setCreativeTab(CommonProxy.tabAdvRocketry).setHardness(3f);
+        AdvancedRocketryBlocks.blockSolarArrayPanel = new BlockMultiBlockComponentVisibleAlphaTexture(Material.IRON).setRegistryName("solararraypanel").setCreativeTab(CommonProxy.tabAdvRocketry).setHardness(1).setResistance(1f);
+        AdvancedRocketryBlocks.blockQuartzCrucible = new BlockQuartzCrucible().setRegistryName("quartzcrucible").setCreativeTab(CommonProxy.tabAdvRocketry);
+        AdvancedRocketryBlocks.blockSawBlade = new BlockMotor(Material.IRON, 1f).setCreativeTab(CommonProxy.tabAdvRocketry).setRegistryName("sawBlade").setHardness(2f);
         //Singleblock machines
-        AdvancedRocketryBlocks.blockPlatePress = new BlockSmallPlatePress().setRegistryName("platepress").setCreativeTab(tabAdvRocketry).setHardness(2f);
-        AdvancedRocketryBlocks.blockForceFieldProjector = new BlockForceFieldProjector(Material.IRON).setRegistryName("forceFieldProjector").setCreativeTab(tabAdvRocketry).setHardness(3f);
+        AdvancedRocketryBlocks.blockPlatePress = new BlockSmallPlatePress().setRegistryName("platepress").setCreativeTab(CommonProxy.tabAdvRocketry).setHardness(2f);
+        AdvancedRocketryBlocks.blockForceFieldProjector = new BlockForceFieldProjector(Material.IRON).setRegistryName("forceFieldProjector").setCreativeTab(CommonProxy.tabAdvRocketry).setHardness(3f);
         AdvancedRocketryBlocks.blockForceField = new BlockForceField(Material.BARRIER).setBlockUnbreakable().setResistance(6000000.0F).setRegistryName("forceField");
-        AdvancedRocketryBlocks.blockVacuumLaser = new BlockFullyRotatable(Material.IRON).setRegistryName("vacuumLaser").setCreativeTab(tabAdvRocketry).setHardness(4f);
-        AdvancedRocketryBlocks.blockPump = new BlockTile(TilePump.class, GuiHandler.guiId.MODULAR.ordinal()).setRegistryName("blockPump").setCreativeTab(tabAdvRocketry).setHardness(3f);
-        AdvancedRocketryBlocks.blockSuitWorkStation = new BlockSuitWorkstation(TileSuitWorkStation.class, GuiHandler.guiId.MODULAR.ordinal()).setRegistryName("suitWorkStation").setCreativeTab(tabAdvRocketry).setHardness(3f);
-        AdvancedRocketryBlocks.blockPressureTank = new BlockPressurizedFluidTank(Material.IRON).setRegistryName("liquidTank").setCreativeTab(tabAdvRocketry).setHardness(3f);
-        AdvancedRocketryBlocks.blockSolarGenerator = new BlockSolarGenerator(TileSolarPanel.class, GuiHandler.guiId.MODULAR.ordinal()).setCreativeTab(tabAdvRocketry).setHardness(3f).setRegistryName("solarGenerator");
-        AdvancedRocketryBlocks.blockTransciever = new BlockTransciever(TileWirelessTransciever.class, GuiHandler.guiId.MODULAR.ordinal()).setRegistryName("wirelessTransciever").setCreativeTab(tabAdvRocketry).setHardness(3f);
+        AdvancedRocketryBlocks.blockVacuumLaser = new BlockFullyRotatable(Material.IRON).setRegistryName("vacuumLaser").setCreativeTab(CommonProxy.tabAdvRocketry).setHardness(4f);
+        AdvancedRocketryBlocks.blockPump = new BlockTile(TilePump.class, GuiHandler.guiId.MODULAR.ordinal()).setRegistryName("blockPump").setCreativeTab(CommonProxy.tabAdvRocketry).setHardness(3f);
+        AdvancedRocketryBlocks.blockSuitWorkStation = new BlockSuitWorkstation(TileSuitWorkStation.class, GuiHandler.guiId.MODULAR.ordinal()).setRegistryName("suitWorkStation").setCreativeTab(CommonProxy.tabAdvRocketry).setHardness(3f);
+        AdvancedRocketryBlocks.blockPressureTank = new BlockPressurizedFluidTank(Material.IRON).setRegistryName("liquidTank").setCreativeTab(CommonProxy.tabAdvRocketry).setHardness(3f);
+        AdvancedRocketryBlocks.blockSolarGenerator = new BlockSolarGenerator(TileSolarPanel.class, GuiHandler.guiId.MODULAR.ordinal()).setCreativeTab(CommonProxy.tabAdvRocketry).setHardness(3f).setRegistryName("solarGenerator");
+        AdvancedRocketryBlocks.blockTransciever = new BlockTransciever(TileWirelessTransciever.class, GuiHandler.guiId.MODULAR.ordinal()).setRegistryName("wirelessTransciever").setCreativeTab(CommonProxy.tabAdvRocketry).setHardness(3f);
         //Multiblock machines
         //T1 processing
-        AdvancedRocketryBlocks.blockArcFurnace = new BlockMultiblockMachine(TileElectricArcFurnace.class, GuiHandler.guiId.MODULAR.ordinal()).setRegistryName("arcfurnace").setCreativeTab(tabAdvRocketry).setHardness(3f);
-        AdvancedRocketryBlocks.blockRollingMachine = new BlockMultiblockMachine(TileRollingMachine.class, GuiHandler.guiId.MODULAR.ordinal()).setRegistryName("rollingMachine").setCreativeTab(tabAdvRocketry).setHardness(3f);
-        AdvancedRocketryBlocks.blockLathe = new BlockMultiblockMachine(TileLathe.class, GuiHandler.guiId.MODULAR.ordinal()).setRegistryName("lathe").setCreativeTab(tabAdvRocketry).setHardness(3f);
-        AdvancedRocketryBlocks.blockCrystallizer = new BlockMultiblockMachine(TileCrystallizer.class, GuiHandler.guiId.MODULAR.ordinal()).setRegistryName("Crystallizer").setCreativeTab(tabAdvRocketry).setHardness(3f);
-        AdvancedRocketryBlocks.blockCuttingMachine = new BlockMultiblockMachine(TileCuttingMachine.class, GuiHandler.guiId.MODULAR.ordinal()).setRegistryName("cuttingMachine").setCreativeTab(tabAdvRocketry).setHardness(3f);
-        AdvancedRocketryBlocks.blockPrecisionAssembler = new BlockMultiblockMachine(TilePrecisionAssembler.class, GuiHandler.guiId.MODULAR.ordinal()).setRegistryName("precisionAssemblingMachine").setCreativeTab(tabAdvRocketry).setHardness(3f);
-        AdvancedRocketryBlocks.blockElectrolyser = new BlockMultiblockMachine(TileElectrolyser.class, GuiHandler.guiId.MODULAR.ordinal()).setRegistryName("electrolyser").setCreativeTab(tabAdvRocketry).setHardness(3f);
-        AdvancedRocketryBlocks.blockChemicalReactor = new BlockMultiblockMachine(TileChemicalReactor.class, GuiHandler.guiId.MODULAR.ordinal()).setRegistryName("chemicalReactor").setCreativeTab(tabAdvRocketry).setHardness(3f);
+        AdvancedRocketryBlocks.blockArcFurnace = new BlockMultiblockMachine(TileElectricArcFurnace.class, GuiHandler.guiId.MODULAR.ordinal()).setRegistryName("arcfurnace").setCreativeTab(CommonProxy.tabAdvRocketry).setHardness(3f);
+        AdvancedRocketryBlocks.blockRollingMachine = new BlockMultiblockMachine(TileRollingMachine.class, GuiHandler.guiId.MODULAR.ordinal()).setRegistryName("rollingMachine").setCreativeTab(CommonProxy.tabAdvRocketry).setHardness(3f);
+        AdvancedRocketryBlocks.blockLathe = new BlockMultiblockMachine(TileLathe.class, GuiHandler.guiId.MODULAR.ordinal()).setRegistryName("lathe").setCreativeTab(CommonProxy.tabAdvRocketry).setHardness(3f);
+        AdvancedRocketryBlocks.blockCrystallizer = new BlockMultiblockMachine(TileCrystallizer.class, GuiHandler.guiId.MODULAR.ordinal()).setRegistryName("Crystallizer").setCreativeTab(CommonProxy.tabAdvRocketry).setHardness(3f);
+        AdvancedRocketryBlocks.blockCuttingMachine = new BlockMultiblockMachine(TileCuttingMachine.class, GuiHandler.guiId.MODULAR.ordinal()).setRegistryName("cuttingMachine").setCreativeTab(CommonProxy.tabAdvRocketry).setHardness(3f);
+        AdvancedRocketryBlocks.blockPrecisionAssembler = new BlockMultiblockMachine(TilePrecisionAssembler.class, GuiHandler.guiId.MODULAR.ordinal()).setRegistryName("precisionAssemblingMachine").setCreativeTab(CommonProxy.tabAdvRocketry).setHardness(3f);
+        AdvancedRocketryBlocks.blockElectrolyser = new BlockMultiblockMachine(TileElectrolyser.class, GuiHandler.guiId.MODULAR.ordinal()).setRegistryName("electrolyser").setCreativeTab(CommonProxy.tabAdvRocketry).setHardness(3f);
+        AdvancedRocketryBlocks.blockChemicalReactor = new BlockMultiblockMachine(TileChemicalReactor.class, GuiHandler.guiId.MODULAR.ordinal()).setRegistryName("chemicalReactor").setCreativeTab(CommonProxy.tabAdvRocketry).setHardness(3f);
         //T2 processing
-        AdvancedRocketryBlocks.blockPrecisionLaserEngraver = new BlockMultiblockMachine(TilePrecisionLaserEtcher.class, GuiHandler.guiId.MODULAR.ordinal()).setRegistryName("precisionlaseretcher").setCreativeTab(tabAdvRocketry).setHardness(3f);
-        AdvancedRocketryBlocks.blockObservatory = new BlockMultiblockMachine(TileObservatory.class, GuiHandler.guiId.MODULARNOINV.ordinal()).setRegistryName("observatory").setCreativeTab(tabAdvRocketry).setHardness(3f);
-        AdvancedRocketryBlocks.blockPlanetAnalyser = new BlockMultiblockMachine(TileAstrobodyDataProcessor.class, GuiHandler.guiId.MODULARNOINV.ordinal()).setRegistryName("planetanalyser").setCreativeTab(tabAdvRocketry).setHardness(3f);
-        AdvancedRocketryBlocks.blockCentrifuge = new BlockMultiblockMachine(TileCentrifuge.class, GuiHandler.guiId.MODULAR.ordinal()).setCreativeTab(tabAdvRocketry).setHardness(3f).setRegistryName("centrifuge");
-        AdvancedRocketryBlocks.blockSatelliteBuilder = new BlockMultiblockMachine(TileSatelliteBuilder.class, GuiHandler.guiId.MODULAR.ordinal()).setCreativeTab(tabAdvRocketry).setHardness(3f).setRegistryName("satelliteBuilder");
+        AdvancedRocketryBlocks.blockPrecisionLaserEngraver = new BlockMultiblockMachine(TilePrecisionLaserEtcher.class, GuiHandler.guiId.MODULAR.ordinal()).setRegistryName("precisionlaseretcher").setCreativeTab(CommonProxy.tabAdvRocketry).setHardness(3f);
+        AdvancedRocketryBlocks.blockObservatory = new BlockMultiblockMachine(TileObservatory.class, GuiHandler.guiId.MODULARNOINV.ordinal()).setRegistryName("observatory").setCreativeTab(CommonProxy.tabAdvRocketry).setHardness(3f);
+        AdvancedRocketryBlocks.blockPlanetAnalyser = new BlockMultiblockMachine(TileAstrobodyDataProcessor.class, GuiHandler.guiId.MODULARNOINV.ordinal()).setRegistryName("planetanalyser").setCreativeTab(CommonProxy.tabAdvRocketry).setHardness(3f);
+        AdvancedRocketryBlocks.blockCentrifuge = new BlockMultiblockMachine(TileCentrifuge.class, GuiHandler.guiId.MODULAR.ordinal()).setCreativeTab(CommonProxy.tabAdvRocketry).setHardness(3f).setRegistryName("centrifuge");
+        AdvancedRocketryBlocks.blockSatelliteBuilder = new BlockMultiblockMachine(TileSatelliteBuilder.class, GuiHandler.guiId.MODULAR.ordinal()).setCreativeTab(CommonProxy.tabAdvRocketry).setHardness(3f).setRegistryName("satelliteBuilder");
         //Energy
-        AdvancedRocketryBlocks.blockBlackHoleGenerator = new BlockMultiblockMachine(TileBlackHoleGenerator.class, GuiHandler.guiId.MODULAR.ordinal()).setRegistryName("blackholegenerator").setCreativeTab(tabAdvRocketry).setHardness(3f);
-        AdvancedRocketryBlocks.blockMicrowaveReciever = new BlockMultiblockMachine(TileMicrowaveReciever.class, GuiHandler.guiId.MODULAR.ordinal()).setCreativeTab(tabAdvRocketry).setHardness(3f).setRegistryName("microwaveReciever");
-        AdvancedRocketryBlocks.blockSolarArray = new BlockMultiblockMachine(TileSolarArray.class, GuiHandler.guiId.MODULAR.ordinal()).setRegistryName("solararray").setCreativeTab(tabAdvRocketry).setHardness(3f);
+        AdvancedRocketryBlocks.blockBlackHoleGenerator = new BlockMultiblockMachine(TileBlackHoleGenerator.class, GuiHandler.guiId.MODULAR.ordinal()).setRegistryName("blackholegenerator").setCreativeTab(CommonProxy.tabAdvRocketry).setHardness(3f);
+        AdvancedRocketryBlocks.blockMicrowaveReciever = new BlockMultiblockMachine(TileMicrowaveReciever.class, GuiHandler.guiId.MODULAR.ordinal()).setCreativeTab(CommonProxy.tabAdvRocketry).setHardness(3f).setRegistryName("microwaveReciever");
+        AdvancedRocketryBlocks.blockSolarArray = new BlockMultiblockMachine(TileSolarArray.class, GuiHandler.guiId.MODULAR.ordinal()).setRegistryName("solararray").setCreativeTab(CommonProxy.tabAdvRocketry).setHardness(3f);
         //Aux/huge
-        AdvancedRocketryBlocks.blockWarpCore = new BlockWarpCore(TileWarpCore.class, GuiHandler.guiId.MODULAR.ordinal()).setRegistryName("warpCore").setCreativeTab(tabAdvRocketry).setHardness(3f);
-        AdvancedRocketryBlocks.blockBeacon = new BlockBeacon(TileBeacon.class, GuiHandler.guiId.MODULAR.ordinal()).setCreativeTab(tabAdvRocketry).setRegistryName("beacon").setHardness(3f);
-        AdvancedRocketryBlocks.blockBiomeScanner = new BlockMultiblockMachine(TileBiomeScanner.class, GuiHandler.guiId.MODULARNOINV.ordinal()).setRegistryName("biomeScanner").setCreativeTab(tabAdvRocketry).setHardness(3f);
-        AdvancedRocketryBlocks.blockRailgun = new BlockMultiblockMachine(TileRailgun.class, GuiHandler.guiId.MODULAR.ordinal()).setRegistryName("railgun").setCreativeTab(tabAdvRocketry).setHardness(3f);
-        AdvancedRocketryBlocks.blockSpaceElevatorController = new BlockMultiblockMachine(TileSpaceElevator.class, GuiHandler.guiId.MODULAR.ordinal()).setCreativeTab(tabAdvRocketry).setRegistryName("spaceElevatorController").setHardness(3f);
+        AdvancedRocketryBlocks.blockWarpCore = new BlockWarpCore(TileWarpCore.class, GuiHandler.guiId.MODULAR.ordinal()).setRegistryName("warpCore").setCreativeTab(CommonProxy.tabAdvRocketry).setHardness(3f);
+        AdvancedRocketryBlocks.blockBeacon = new BlockBeacon(TileBeacon.class, GuiHandler.guiId.MODULAR.ordinal()).setCreativeTab(CommonProxy.tabAdvRocketry).setRegistryName("beacon").setHardness(3f);
+        AdvancedRocketryBlocks.blockBiomeScanner = new BlockMultiblockMachine(TileBiomeScanner.class, GuiHandler.guiId.MODULARNOINV.ordinal()).setRegistryName("biomeScanner").setCreativeTab(CommonProxy.tabAdvRocketry).setHardness(3f);
+        AdvancedRocketryBlocks.blockRailgun = new BlockMultiblockMachine(TileRailgun.class, GuiHandler.guiId.MODULAR.ordinal()).setRegistryName("railgun").setCreativeTab(CommonProxy.tabAdvRocketry).setHardness(3f);
+        AdvancedRocketryBlocks.blockSpaceElevatorController = new BlockMultiblockMachine(TileSpaceElevator.class, GuiHandler.guiId.MODULAR.ordinal()).setCreativeTab(CommonProxy.tabAdvRocketry).setRegistryName("spaceElevatorController").setHardness(3f);
         //Configurable stuff
         if (ARConfiguration.getCurrentConfig().enableTerraforming)
-            AdvancedRocketryBlocks.blockAtmosphereTerraformer = new BlockMultiblockMachine(TileAtmosphereTerraformer.class, GuiHandler.guiId.MODULARNOINV.ordinal()).setRegistryName("terraformer").setCreativeTab(tabAdvRocketry).setHardness(3f);
+            AdvancedRocketryBlocks.blockAtmosphereTerraformer = new BlockMultiblockMachine(TileAtmosphereTerraformer.class, GuiHandler.guiId.MODULARNOINV.ordinal()).setRegistryName("terraformer").setCreativeTab(CommonProxy.tabAdvRocketry).setHardness(3f);
         if (ARConfiguration.getCurrentConfig().enableGravityController)
-            AdvancedRocketryBlocks.blockGravityMachine = new BlockMultiblockMachine(TileAreaGravityController.class, GuiHandler.guiId.MODULARNOINV.ordinal()).setRegistryName("gravityMachine").setCreativeTab(tabAdvRocketry).setHardness(3f);
+            AdvancedRocketryBlocks.blockGravityMachine = new BlockMultiblockMachine(TileAreaGravityController.class, GuiHandler.guiId.MODULARNOINV.ordinal()).setRegistryName("gravityMachine").setCreativeTab(CommonProxy.tabAdvRocketry).setHardness(3f);
         if (ARConfiguration.getCurrentConfig().enableLaserDrill)
-            AdvancedRocketryBlocks.blockSpaceLaser = new BlockOrbitalLaserDrill().setHardness(2f).setCreativeTab(tabAdvRocketry);
+            AdvancedRocketryBlocks.blockSpaceLaser = new BlockOrbitalLaserDrill().setHardness(2f).setCreativeTab(CommonProxy.tabAdvRocketry);
         //Docking blocks
-        AdvancedRocketryBlocks.blockLaunchpad = new BlockLinkedHorizontalTexture(Material.ROCK).setRegistryName("launchPad").setCreativeTab(tabAdvRocketry).setHardness(2f).setResistance(10f);
-        AdvancedRocketryBlocks.blockLandingPad = new BlockLandingPad(Material.ROCK).setRegistryName("landingPad").setHardness(3f).setCreativeTab(tabAdvRocketry);
-        AdvancedRocketryBlocks.blockDockingPort = new BlockStationModuleDockingPort(Material.IRON).setRegistryName("stationMarker").setCreativeTab(tabAdvRocketry).setHardness(3f);
+        AdvancedRocketryBlocks.blockLaunchpad = new BlockLinkedHorizontalTexture(Material.ROCK).setRegistryName("launchPad").setCreativeTab(CommonProxy.tabAdvRocketry).setHardness(2f).setResistance(10f);
+        AdvancedRocketryBlocks.blockLandingPad = new BlockLandingPad(Material.ROCK).setRegistryName("landingPad").setHardness(3f).setCreativeTab(CommonProxy.tabAdvRocketry);
+        AdvancedRocketryBlocks.blockDockingPort = new BlockStationModuleDockingPort(Material.IRON).setRegistryName("stationMarker").setCreativeTab(CommonProxy.tabAdvRocketry).setHardness(3f);
         //Rocket blocks
-        AdvancedRocketryBlocks.blockGenericSeat = new BlockSeat(Material.CLOTH).setRegistryName("seat").setCreativeTab(tabAdvRocketry).setHardness(0.5f);
-        AdvancedRocketryBlocks.blockEngine = new BlockRocketMotor(Material.IRON).setRegistryName("rocketmotor").setCreativeTab(tabAdvRocketry).setHardness(2f);
-        AdvancedRocketryBlocks.blockBipropellantEngine = new BlockBipropellantRocketMotor(Material.IRON).setRegistryName("bipropellantrocketmotor").setCreativeTab(tabAdvRocketry).setHardness(2f);
-        AdvancedRocketryBlocks.blockAdvEngine = new BlockAdvancedRocketMotor(Material.IRON).setRegistryName("advRocketmotor").setCreativeTab(tabAdvRocketry).setHardness(2f);
-        AdvancedRocketryBlocks.blockAdvBipropellantEngine = new BlockAdvancedBipropellantRocketMotor(Material.IRON).setRegistryName("advbipropellantRocketmotor").setCreativeTab(tabAdvRocketry).setHardness(2f);
-        AdvancedRocketryBlocks.blockNuclearEngine = new BlockNuclearRocketMotor(Material.IRON).setRegistryName("nuclearrocketmotor").setCreativeTab(tabAdvRocketry).setHardness(2f);
-        AdvancedRocketryBlocks.blockFuelTank = new BlockFuelTank(Material.IRON).setRegistryName("fuelTank").setCreativeTab(tabAdvRocketry).setHardness(2f);
-        AdvancedRocketryBlocks.blockBipropellantFuelTank = new BlockBipropellantFuelTank(Material.IRON).setRegistryName("bipropellantfueltank").setCreativeTab(tabAdvRocketry).setHardness(2f);
-        AdvancedRocketryBlocks.blockOxidizerFuelTank = new BlockOxidizerFuelTank(Material.IRON).setRegistryName("oxidizerfueltank").setCreativeTab(tabAdvRocketry).setHardness(2f);
-        AdvancedRocketryBlocks.blockNuclearFuelTank = new BlockNuclearFuelTank(Material.IRON).setRegistryName("nuclearfueltank").setCreativeTab(tabAdvRocketry).setHardness(2f);
-        AdvancedRocketryBlocks.blockNuclearCore = new BlockNuclearCore(Material.IRON).setRegistryName("nuclearcore").setCreativeTab(tabAdvRocketry).setHardness(2f);
-        AdvancedRocketryBlocks.blockGuidanceComputer = new BlockTile(TileGuidanceComputer.class, GuiHandler.guiId.MODULAR.ordinal()).setRegistryName("guidanceComputer").setCreativeTab(tabAdvRocketry).setHardness(3f);
-        AdvancedRocketryBlocks.blockIntake = new BlockIntake(Material.IRON).setRegistryName("intake").setCreativeTab(tabAdvRocketry).setHardness(3f);
-        AdvancedRocketryBlocks.blockDrill = new BlockMiningDrill().setRegistryName("drill").setCreativeTab(tabAdvRocketry).setHardness(3f);
-        AdvancedRocketryBlocks.blockLandingFloat = new Block(Material.IRON).setRegistryName("landingfloat").setCreativeTab(tabAdvRocketry).setHardness(1).setResistance(1f);
+        AdvancedRocketryBlocks.blockGenericSeat = new BlockSeat(Material.CLOTH).setRegistryName("seat").setCreativeTab(CommonProxy.tabAdvRocketry).setHardness(0.5f);
+        AdvancedRocketryBlocks.blockEngine = new BlockRocketMotor(Material.IRON).setRegistryName("rocketmotor").setCreativeTab(CommonProxy.tabAdvRocketry).setHardness(2f);
+        AdvancedRocketryBlocks.blockBipropellantEngine = new BlockBipropellantRocketMotor(Material.IRON).setRegistryName("bipropellantrocketmotor").setCreativeTab(CommonProxy.tabAdvRocketry).setHardness(2f);
+        AdvancedRocketryBlocks.blockAdvEngine = new BlockAdvancedRocketMotor(Material.IRON).setRegistryName("advRocketmotor").setCreativeTab(CommonProxy.tabAdvRocketry).setHardness(2f);
+        AdvancedRocketryBlocks.blockAdvBipropellantEngine = new BlockAdvancedBipropellantRocketMotor(Material.IRON).setRegistryName("advbipropellantRocketmotor").setCreativeTab(CommonProxy.tabAdvRocketry).setHardness(2f);
+        AdvancedRocketryBlocks.blockNuclearEngine = new BlockNuclearRocketMotor(Material.IRON).setRegistryName("nuclearrocketmotor").setCreativeTab(CommonProxy.tabAdvRocketry).setHardness(2f);
+        AdvancedRocketryBlocks.blockFuelTank = new BlockFuelTank(Material.IRON).setRegistryName("fuelTank").setCreativeTab(CommonProxy.tabAdvRocketry).setHardness(2f);
+        AdvancedRocketryBlocks.blockBipropellantFuelTank = new BlockBipropellantFuelTank(Material.IRON).setRegistryName("bipropellantfueltank").setCreativeTab(CommonProxy.tabAdvRocketry).setHardness(2f);
+        AdvancedRocketryBlocks.blockOxidizerFuelTank = new BlockOxidizerFuelTank(Material.IRON).setRegistryName("oxidizerfueltank").setCreativeTab(CommonProxy.tabAdvRocketry).setHardness(2f);
+        AdvancedRocketryBlocks.blockNuclearFuelTank = new BlockNuclearFuelTank(Material.IRON).setRegistryName("nuclearfueltank").setCreativeTab(CommonProxy.tabAdvRocketry).setHardness(2f);
+        AdvancedRocketryBlocks.blockNuclearCore = new BlockNuclearCore(Material.IRON).setRegistryName("nuclearcore").setCreativeTab(CommonProxy.tabAdvRocketry).setHardness(2f);
+        AdvancedRocketryBlocks.blockGuidanceComputer = new BlockTile(TileGuidanceComputer.class, GuiHandler.guiId.MODULAR.ordinal()).setRegistryName("guidanceComputer").setCreativeTab(CommonProxy.tabAdvRocketry).setHardness(3f);
+        AdvancedRocketryBlocks.blockIntake = new BlockIntake(Material.IRON).setRegistryName("intake").setCreativeTab(CommonProxy.tabAdvRocketry).setHardness(3f);
+        AdvancedRocketryBlocks.blockDrill = new BlockMiningDrill().setRegistryName("drill").setCreativeTab(CommonProxy.tabAdvRocketry).setHardness(3f);
+        AdvancedRocketryBlocks.blockLandingFloat = new Block(Material.IRON).setRegistryName("landingfloat").setCreativeTab(CommonProxy.tabAdvRocketry).setHardness(1).setResistance(1f);
         //Assembly machines
-        AdvancedRocketryBlocks.blockRocketBuilder = new BlockTileWithMultitooltip(TileRocketAssemblingMachine.class, GuiHandler.guiId.MODULARNOINV.ordinal()).setRegistryName("rocketBuilder").setCreativeTab(tabAdvRocketry).setHardness(3f);
-        AdvancedRocketryBlocks.blockStationBuilder = new BlockTileWithMultitooltip(TileStationAssembler.class, GuiHandler.guiId.MODULAR.ordinal()).setRegistryName("stationBuilder").setCreativeTab(tabAdvRocketry).setHardness(3f);
-        AdvancedRocketryBlocks.blockDeployableRocketBuilder = new BlockTileWithMultitooltip(TileUnmannedVehicleAssembler.class, GuiHandler.guiId.MODULARNOINV.ordinal()).setRegistryName("deployableRocketBuilder").setCreativeTab(tabAdvRocketry).setHardness(3f);
+        AdvancedRocketryBlocks.blockRocketBuilder = new BlockTileWithMultitooltip(TileRocketAssemblingMachine.class, GuiHandler.guiId.MODULARNOINV.ordinal()).setRegistryName("rocketBuilder").setCreativeTab(CommonProxy.tabAdvRocketry).setHardness(3f);
+        AdvancedRocketryBlocks.blockStationBuilder = new BlockTileWithMultitooltip(TileStationAssembler.class, GuiHandler.guiId.MODULAR.ordinal()).setRegistryName("stationBuilder").setCreativeTab(CommonProxy.tabAdvRocketry).setHardness(3f);
+        AdvancedRocketryBlocks.blockDeployableRocketBuilder = new BlockTileWithMultitooltip(TileUnmannedVehicleAssembler.class, GuiHandler.guiId.MODULARNOINV.ordinal()).setRegistryName("deployableRocketBuilder").setCreativeTab(CommonProxy.tabAdvRocketry).setHardness(3f);
         //Infrastructure machines
-        AdvancedRocketryBlocks.blockLoader = new BlockARHatch(Material.IRON).setRegistryName("loader").setCreativeTab(tabAdvRocketry).setHardness(3f);
-        AdvancedRocketryBlocks.blockFuelingStation = new BlockTileRedstoneEmitter(TileFuelingStation.class, GuiHandler.guiId.MODULAR.ordinal()).setRegistryName("fuelingStation").setCreativeTab(tabAdvRocketry).setHardness(3f);
-        AdvancedRocketryBlocks.blockMonitoringStation = new BlockTileNeighborUpdate(TileRocketMonitoringStation.class, GuiHandler.guiId.MODULARNOINV.ordinal()).setCreativeTab(tabAdvRocketry).setHardness(3f).setRegistryName("monitoringstation");
-        AdvancedRocketryBlocks.blockSatelliteControlCenter = new BlockTile(TileSatelliteTerminal.class, GuiHandler.guiId.MODULAR.ordinal()).setCreativeTab(tabAdvRocketry).setHardness(3f).setRegistryName("satelliteControlCenter");
-        AdvancedRocketryBlocks.blockTerraformingTerminal = new BlockTileTerraformer(TileTerraformingTerminal.class, GuiHandler.guiId.MODULAR.ordinal()).setCreativeTab(tabAdvRocketry).setHardness(3f).setRegistryName("terraformingTerminal");
+        AdvancedRocketryBlocks.blockLoader = new BlockARHatch(Material.IRON).setRegistryName("loader").setCreativeTab(CommonProxy.tabAdvRocketry).setHardness(3f);
+        AdvancedRocketryBlocks.blockFuelingStation = new BlockTileRedstoneEmitter(TileFuelingStation.class, GuiHandler.guiId.MODULAR.ordinal()).setRegistryName("fuelingStation").setCreativeTab(CommonProxy.tabAdvRocketry).setHardness(3f);
+        AdvancedRocketryBlocks.blockMonitoringStation = new BlockTileNeighborUpdate(TileRocketMonitoringStation.class, GuiHandler.guiId.MODULARNOINV.ordinal()).setCreativeTab(CommonProxy.tabAdvRocketry).setHardness(3f).setRegistryName("monitoringstation");
+        AdvancedRocketryBlocks.blockSatelliteControlCenter = new BlockTile(TileSatelliteTerminal.class, GuiHandler.guiId.MODULAR.ordinal()).setCreativeTab(CommonProxy.tabAdvRocketry).setHardness(3f).setRegistryName("satelliteControlCenter");
+        AdvancedRocketryBlocks.blockTerraformingTerminal = new BlockTileTerraformer(TileTerraformingTerminal.class, GuiHandler.guiId.MODULAR.ordinal()).setCreativeTab(CommonProxy.tabAdvRocketry).setHardness(3f).setRegistryName("terraformingTerminal");
 
         //Station machines
-        AdvancedRocketryBlocks.blockWarpShipMonitor = new BlockWarpController(TileWarpController.class, GuiHandler.guiId.MODULARNOINV.ordinal()).setCreativeTab(tabAdvRocketry).setHardness(3f).setRegistryName("warpMonitor");
-        AdvancedRocketryBlocks.blockOrientationController = new BlockTile(TileStationOrientationController.class, GuiHandler.guiId.MODULAR.ordinal()).setCreativeTab(tabAdvRocketry).setRegistryName("orientationController").setHardness(3f);
-        AdvancedRocketryBlocks.blockGravityController = new BlockTileComparatorOverride(TileStationGravityController.class, GuiHandler.guiId.MODULAR.ordinal()).setCreativeTab(tabAdvRocketry).setRegistryName("gravityController").setHardness(3f);
-        AdvancedRocketryBlocks.blockAltitudeController = new BlockTileComparatorOverride(TileStationAltitudeController.class, GuiHandler.guiId.MODULAR.ordinal()).setCreativeTab(tabAdvRocketry).setRegistryName("altitudeController").setHardness(3f);
-        AdvancedRocketryBlocks.blockPlanetSelector = new BlockTile(TilePlanetSelector.class, GuiHandler.guiId.MODULARFULLSCREEN.ordinal()).setRegistryName("planetSelector").setCreativeTab(tabAdvRocketry).setHardness(3f);
-        AdvancedRocketryBlocks.blockPlanetHoloSelector = new BlockHalfTile(TileHolographicPlanetSelector.class, GuiHandler.guiId.MODULAR.ordinal()).setRegistryName("planetHoloSelector").setCreativeTab(tabAdvRocketry).setHardness(3f);
+        AdvancedRocketryBlocks.blockWarpShipMonitor = new BlockWarpController(TileWarpController.class, GuiHandler.guiId.MODULARNOINV.ordinal()).setCreativeTab(CommonProxy.tabAdvRocketry).setHardness(3f).setRegistryName("warpMonitor");
+        AdvancedRocketryBlocks.blockOrientationController = new BlockTile(TileStationOrientationController.class, GuiHandler.guiId.MODULAR.ordinal()).setCreativeTab(CommonProxy.tabAdvRocketry).setRegistryName("orientationController").setHardness(3f);
+        AdvancedRocketryBlocks.blockGravityController = new BlockTileComparatorOverride(TileStationGravityController.class, GuiHandler.guiId.MODULAR.ordinal()).setCreativeTab(CommonProxy.tabAdvRocketry).setRegistryName("gravityController").setHardness(3f);
+        AdvancedRocketryBlocks.blockAltitudeController = new BlockTileComparatorOverride(TileStationAltitudeController.class, GuiHandler.guiId.MODULAR.ordinal()).setCreativeTab(CommonProxy.tabAdvRocketry).setRegistryName("altitudeController").setHardness(3f);
+        AdvancedRocketryBlocks.blockPlanetSelector = new BlockTile(TilePlanetSelector.class, GuiHandler.guiId.MODULARFULLSCREEN.ordinal()).setRegistryName("planetSelector").setCreativeTab(CommonProxy.tabAdvRocketry).setHardness(3f);
+        AdvancedRocketryBlocks.blockPlanetHoloSelector = new BlockHalfTile(TileHolographicPlanetSelector.class, GuiHandler.guiId.MODULAR.ordinal()).setRegistryName("planetHoloSelector").setCreativeTab(CommonProxy.tabAdvRocketry).setHardness(3f);
         //Oxygen machines
-        AdvancedRocketryBlocks.blockCO2Scrubber = new BlockTileComparatorOverride(TileCO2Scrubber.class, GuiHandler.guiId.MODULAR.ordinal()).setCreativeTab(tabAdvRocketry).setRegistryName("oxygenScrubber").setHardness(3f);
-        AdvancedRocketryBlocks.blockOxygenVent = new BlockTile(TileOxygenVent.class, GuiHandler.guiId.MODULAR.ordinal()).setRegistryName("oxygenVent").setCreativeTab(tabAdvRocketry).setHardness(3f);
-        AdvancedRocketryBlocks.blockOxygenCharger = new BlockHalfTile(TileGasChargePad.class, GuiHandler.guiId.MODULAR.ordinal()).setRegistryName("oxygenCharger").setCreativeTab(tabAdvRocketry).setHardness(3f);
-        AdvancedRocketryBlocks.blockOxygenDetection = new BlockRedstoneEmitter(Material.IRON, "advancedrocketry:oxygenDetection_active").setRegistryName("oxygenDetection").setHardness(3f).setCreativeTab(tabAdvRocketry);
-        AdvancedRocketryBlocks.blockPipeSealer = new BlockSeal(Material.IRON).setRegistryName("pipeSealer").setCreativeTab(tabAdvRocketry).setHardness(0.5f);
+        AdvancedRocketryBlocks.blockCO2Scrubber = new BlockTileComparatorOverride(TileCO2Scrubber.class, GuiHandler.guiId.MODULAR.ordinal()).setCreativeTab(CommonProxy.tabAdvRocketry).setRegistryName("oxygenScrubber").setHardness(3f);
+        AdvancedRocketryBlocks.blockOxygenVent = new BlockTile(TileOxygenVent.class, GuiHandler.guiId.MODULAR.ordinal()).setRegistryName("oxygenVent").setCreativeTab(CommonProxy.tabAdvRocketry).setHardness(3f);
+        AdvancedRocketryBlocks.blockOxygenCharger = new BlockHalfTile(TileGasChargePad.class, GuiHandler.guiId.MODULAR.ordinal()).setRegistryName("oxygenCharger").setCreativeTab(CommonProxy.tabAdvRocketry).setHardness(3f);
+        AdvancedRocketryBlocks.blockOxygenDetection = new BlockRedstoneEmitter(Material.IRON, "advancedrocketry:oxygenDetection_active").setRegistryName("oxygenDetection").setHardness(3f).setCreativeTab(CommonProxy.tabAdvRocketry);
+        AdvancedRocketryBlocks.blockPipeSealer = new BlockSeal(Material.IRON).setRegistryName("pipeSealer").setCreativeTab(CommonProxy.tabAdvRocketry).setHardness(0.5f);
         AdvancedRocketryBlocks.blockAirLock = new BlockDoor2(Material.IRON).setRegistryName("smallAirlockDoor").setHardness(3f).setResistance(8f);
         //Light sources
         AdvancedRocketryBlocks.blockUnlitTorch = new BlockTorchUnlit().setHardness(0.0F).setRegistryName("unlittorch");
-        AdvancedRocketryBlocks.blockThermiteTorch = new BlockThermiteTorch().setRegistryName("thermiteTorch").setCreativeTab(tabAdvRocketry).setHardness(0.1f).setLightLevel(1f);
-        AdvancedRocketryBlocks.blockCircleLight = new Block(Material.IRON).setRegistryName("circleLight").setCreativeTab(tabAdvRocketry).setHardness(2f).setLightLevel(1f);
+        AdvancedRocketryBlocks.blockThermiteTorch = new BlockThermiteTorch().setRegistryName("thermiteTorch").setCreativeTab(CommonProxy.tabAdvRocketry).setHardness(0.1f).setLightLevel(1f);
+        AdvancedRocketryBlocks.blockCircleLight = new Block(Material.IRON).setRegistryName("circleLight").setCreativeTab(CommonProxy.tabAdvRocketry).setHardness(2f).setLightLevel(1f);
         AdvancedRocketryBlocks.blockLightSource = new BlockLightSource();
         AdvancedRocketryBlocks.blockRocketFire = new BlockRocketFire();
         //Worldgen
-        AdvancedRocketryBlocks.blockMoonTurf = new BlockRegolith().setMapColor(MapColor.SNOW).setHardness(0.5F).setRegistryName("moonturf").setCreativeTab(tabAdvRocketry);
-        AdvancedRocketryBlocks.blockMoonTurfDark = new BlockRegolith().setMapColor(MapColor.CLAY).setHardness(0.5F).setRegistryName("moonturf_dark").setCreativeTab(tabAdvRocketry);
-        AdvancedRocketryBlocks.blockHotTurf = new BlockRegolith().setMapColor(MapColor.NETHERRACK).setHardness(0.5F).setRegistryName("hotTurf").setCreativeTab(tabAdvRocketry);
-        AdvancedRocketryBlocks.blockBasalt = new Block(Material.ROCK).setRegistryName("basalt").setCreativeTab(tabAdvRocketry).setHardness(5f).setResistance(15f);
-        AdvancedRocketryBlocks.blocksGeode = new Block(MaterialGeode.geode).setRegistryName("geode").setCreativeTab(tabAdvRocketry).setHardness(6f).setResistance(2000F);
+        AdvancedRocketryBlocks.blockMoonTurf = new BlockRegolith().setMapColor(MapColor.SNOW).setHardness(0.5F).setRegistryName("moonturf").setCreativeTab(CommonProxy.tabAdvRocketry);
+        AdvancedRocketryBlocks.blockMoonTurfDark = new BlockRegolith().setMapColor(MapColor.CLAY).setHardness(0.5F).setRegistryName("moonturf_dark").setCreativeTab(CommonProxy.tabAdvRocketry);
+        AdvancedRocketryBlocks.blockHotTurf = new BlockRegolith().setMapColor(MapColor.NETHERRACK).setHardness(0.5F).setRegistryName("hotTurf").setCreativeTab(CommonProxy.tabAdvRocketry);
+        AdvancedRocketryBlocks.blockBasalt = new Block(Material.ROCK).setRegistryName("basalt").setCreativeTab(CommonProxy.tabAdvRocketry).setHardness(5f).setResistance(15f);
+        AdvancedRocketryBlocks.blocksGeode = new Block(MaterialGeode.geode).setRegistryName("geode").setCreativeTab(CommonProxy.tabAdvRocketry).setHardness(6f).setResistance(2000F);
         AdvancedRocketryBlocks.blocksGeode.setHarvestLevel("jackhammer", 2);
-        AdvancedRocketryBlocks.blockCrystal = new BlockCrystal().setRegistryName("crystal").setCreativeTab(tabAdvRocketry).setHardness(2f);
-        AdvancedRocketryBlocks.blockVitrifiedSand = new Block(Material.SAND).setRegistryName("vitrifiedSand").setCreativeTab(tabAdvRocketry).setHardness(0.5F);
-        AdvancedRocketryBlocks.blockCharcoalLog = new BlockCharcoalLog().setRegistryName("charcoallog").setCreativeTab(tabAdvRocketry);
-        AdvancedRocketryBlocks.blockElectricMushroom = new BlockElectricMushroom().setRegistryName("electricMushroom").setCreativeTab(tabAdvRocketry).setHardness(0.0F);
-        AdvancedRocketryBlocks.blockLightwoodWood = new BlockLightwoodWood().setRegistryName("alienwood").setCreativeTab(tabAdvRocketry).setHardness(3f);
-        AdvancedRocketryBlocks.sblockLightwoodLeaves = new BlockLightwoodLeaves().setRegistryName("alienleaves").setCreativeTab(tabAdvRocketry).setHardness(3f);
-        AdvancedRocketryBlocks.blockLightwoodSapling = new BlockLightwoodSapling().setRegistryName("alienSapling").setCreativeTab(tabAdvRocketry).setHardness(3f);
-        AdvancedRocketryBlocks.blockLightwoodPlanks = new BlockLightwoodPlanks().setRegistryName("alienPlanks").setCreativeTab(tabAdvRocketry).setHardness(3f);
+        AdvancedRocketryBlocks.blockCrystal = new BlockCrystal().setRegistryName("crystal").setCreativeTab(CommonProxy.tabAdvRocketry).setHardness(2f);
+        AdvancedRocketryBlocks.blockVitrifiedSand = new Block(Material.SAND).setRegistryName("vitrifiedSand").setCreativeTab(CommonProxy.tabAdvRocketry).setHardness(0.5F);
+        AdvancedRocketryBlocks.blockCharcoalLog = new BlockCharcoalLog().setRegistryName("charcoallog").setCreativeTab(CommonProxy.tabAdvRocketry);
+        AdvancedRocketryBlocks.blockElectricMushroom = new BlockElectricMushroom().setRegistryName("electricMushroom").setCreativeTab(CommonProxy.tabAdvRocketry).setHardness(0.0F);
+        AdvancedRocketryBlocks.blockLightwoodWood = new BlockLightwoodWood().setRegistryName("alienwood").setCreativeTab(CommonProxy.tabAdvRocketry).setHardness(3f);
+        AdvancedRocketryBlocks.sblockLightwoodLeaves = new BlockLightwoodLeaves().setRegistryName("alienleaves").setCreativeTab(CommonProxy.tabAdvRocketry).setHardness(3f);
+        AdvancedRocketryBlocks.blockLightwoodSapling = new BlockLightwoodSapling().setRegistryName("alienSapling").setCreativeTab(CommonProxy.tabAdvRocketry).setHardness(3f);
+        AdvancedRocketryBlocks.blockLightwoodPlanks = new BlockLightwoodPlanks().setRegistryName("alienPlanks").setCreativeTab(CommonProxy.tabAdvRocketry).setHardness(3f);
 
 
         //Fluid definitions
@@ -1112,99 +998,6 @@ public class AdvancedRocketry {
 
         //Regenerate Chemical Reactor armor recipes
         TileChemicalReactor.reloadRecipesSpecial();
-
-
-        //Open ore files
-
-
-        //Load Asteroids from XML
-        File file = new File("./config/" + zmaster587.advancedRocketry.api.ARConfiguration.configFolder + "/asteroidConfig.xml");
-        logger.info("Checking for asteroid config at " + file.getAbsolutePath());
-        if (!file.exists()) {
-            logger.info(file.getAbsolutePath() + " not found, generating");
-            try {
-                file.createNewFile();
-                BufferedWriter stream;
-                stream = new BufferedWriter(new FileWriter(file));
-                stream.write("<Asteroids>"
-                        + "\n\t<asteroid name=\"Small Asteroid\" distance=\"10\" mass=\"200\" massVariability=\"0.5\" minLevel=\"0\" probability=\"20\" richness=\"0.3\" richnessVariability=\"0.5\">"
-                        + "\n\t\t<ore itemStack=\"minecraft:iron_ore\" chance=\"15\" />"
-                        + "\n\t\t<ore itemStack=\"minecraft:gold_ore\" chance=\"10\" />"
-                        + "\n\t\t<ore itemStack=\"minecraft:redstone_ore\" chance=\"10\" />"
-                        + "\n\t</asteroid>"
-                        + "\n\t<asteroid name=\"Light Asteroid\" distance=\"60\" mass=\"200\" massVariability=\"0.5\" minLevel=\"0\" probability=\"15\" richness=\"0.2\" richnessVariability=\"0.5\">"
-                        + "\n\t\t<ore itemStack=\"libvulpes:ore0;9\" chance=\"20\" />"
-                        + "\n\t\t<ore itemStack=\"libvulpes:ore0;8\" chance=\"10\" />"
-                        + "\n\t\t<ore itemStack=\"minecraft:quartz_block\" chance=\"5\" />"
-                        + "\n\t</asteroid>"
-                        + "\n\t<asteroid name=\"Iridium Enriched asteroid\" distance=\"100\" mass=\"75\" massVariability=\"0.5\" minLevel=\"0\" probability=\"2\" richness=\"0.2\" richnessVariability=\"0.3\">"
-                        + "\n\t\t<ore itemStack=\"minecraft:iron_ore\" chance=\"25\" />"
-                        + "\n\t\t<ore itemStack=\"libvulpes:ore0 10\" chance=\"5\" />"
-                        + "\n\t</asteroid>"
-                        + "\n\t<asteroid name=\"Strange Asteroid\" distance=\"120\" mass=\"50\" massVariability=\"0.5\" minLevel=\"0\" probability=\"1\" richness=\"0.2\" richnessVariability=\"0.5\">"
-                        + "\n\t\t<ore itemStack=\"libvulpes:ore0;0\" chance=\"20\" />"
-                        + "\n\t\t<ore itemStack=\"minecraft:emerald_ore\" chance=\"5\" />"
-                        + "\n\t</asteroid>"
-                        + "\n</Asteroids>");
-                stream.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-        XMLAsteroidLoader load = new XMLAsteroidLoader();
-        try {
-            if (load.loadFile(file)) {
-                for (Asteroid asteroid : load.loadPropertyFile()) {
-                    zmaster587.advancedRocketry.api.ARConfiguration.getCurrentConfig().asteroidTypes.put(asteroid.ID, asteroid);
-                }
-            }
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        // End load asteroids from XML
-
-
-        file = new File("./config/" + zmaster587.advancedRocketry.api.ARConfiguration.configFolder + "/oreConfig.xml");
-        logger.info("Checking for ore config at " + file.getAbsolutePath());
-        if (!file.exists()) {
-            logger.info(file.getAbsolutePath() + " not found, generating");
-            try {
-
-                file.createNewFile();
-                BufferedWriter stream;
-                stream = new BufferedWriter(new FileWriter(file));
-                stream.write("<OreConfig>\n</OreConfig>");
-                stream.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        } else {
-            XMLOreLoader oreLoader = new XMLOreLoader();
-            try {
-                if (oreLoader.loadFile(file)) {
-                    List<SingleEntry<HashedBlockPosition, OreGenProperties>> mapping = oreLoader.loadPropertyFile();
-
-                    for (Entry<HashedBlockPosition, OreGenProperties> entry : mapping) {
-                        int pressure = entry.getKey().x;
-                        int temp = entry.getKey().y;
-
-                        if (pressure == -1) {
-                            if (temp != -1) {
-                                OreGenProperties.setOresForTemperature(Temps.values()[temp], entry.getValue());
-                            }
-                        } else if (temp == -1) {
-                            OreGenProperties.setOresForPressure(AtmosphereTypes.values()[pressure], entry.getValue());
-                        } else {
-                            OreGenProperties.setOresForPressureAndTemp(AtmosphereTypes.values()[pressure], Temps.values()[temp], entry.getValue());
-                        }
-                    }
-                }
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-        //End open and load ore files
 
         DimensionManager.getInstance().createAndLoadDimensions();
     }

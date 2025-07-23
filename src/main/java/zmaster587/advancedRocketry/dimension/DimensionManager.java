@@ -769,6 +769,7 @@ public class DimensionManager implements IGalaxy {
         dimensionProperties.averageTemperature = 20;
         dimensionProperties.rotationalPeriod = 128000;
         dimensionProperties.gravitationalMultiplier = 0.166f; // 月球重力为地球的1/6
+        dimensionProperties.setGravitationalMultiplier(0.166f);
         dimensionProperties.setName("Moon");
         dimensionProperties.orbitalDist = 150;
         dimensionProperties.setStoneBlock(GTQTSMetaBlocks.GTQTS_STONE_BLOCKS.get(GTQTSStoneVariantBlock.StoneVariant.SMOOTH).getState(GTQTSStoneVariantBlock.StoneType.MOON_STONE));

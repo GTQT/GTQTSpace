@@ -499,7 +499,10 @@ public class ARConfiguration {
         ARConfiguration arConfig = getCurrentConfig();
 
         //Register fuels
+
         logger.info("Start registering liquid rocket fuels");
+
+        /*
         for (String str : liquidMonopropellant) {
             String[] splitStr = str.split(";");
             Fluid fluid = FluidRegistry.getFluid(splitStr[0]);
@@ -560,6 +563,8 @@ public class ARConfiguration {
                 logger.warn("Fluid name" + str + " is not a registered fluid!");
         }
         liquidNuclearWorkingFluid = null; //clean up
+
+         */
         logger.info("Finished registering liquid rocket fuels");
 
         //Register Whitelisted Sealable Blocks

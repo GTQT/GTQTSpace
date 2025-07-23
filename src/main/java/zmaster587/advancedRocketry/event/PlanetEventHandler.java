@@ -68,6 +68,7 @@ import zmaster587.advancedRocketry.network.PacketStellarInfo;
 import zmaster587.advancedRocketry.stations.SpaceObjectManager;
 import zmaster587.advancedRocketry.stations.SpaceStationObject;
 import zmaster587.advancedRocketry.util.BiomeHandler;
+import zmaster587.advancedRocketry.util.GravityHandler;
 import zmaster587.advancedRocketry.util.SpawnListEntryNBT;
 import zmaster587.advancedRocketry.util.TransitionEntity;
 import zmaster587.advancedRocketry.world.ChunkManagerPlanet;
@@ -211,7 +212,7 @@ public class PlanetEventHandler {
 
         }
 
-        //GravityHandler.applyGravity(event.getEntity());
+        GravityHandler.applyGravity(event.getEntity());
     }
 
     @SubscribeEvent
