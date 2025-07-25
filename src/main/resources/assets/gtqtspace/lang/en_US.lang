@@ -1,6 +1,9 @@
 gtqtspace.material.meteoric_iron=Meteoric Iron
 gtqtspace.material.desh=Desh
 gtqtspace.material.columbite=Columbite
+gtqtspace.material.gallite=Gallite
+gtqtspace.material.dilithium=Dilithium
+gtqtspace.material.sbvox=锑钒氧化物
 gtqtspace.material.moon_stone=月岩
 gtqtspace.material.mars_stone=火星岩石
 gtqtspace.material.venus_stone=金星岩石
@@ -26,6 +29,9 @@ metaitem.heavy_alloy_plateb.name=Heavy Alloy Plate B
 metaitem.heavy_alloy_platec.name=Heavy Alloy Plate C
 metaitem.heavy_alloy_plated.name=Heavy Alloy Plate D
 metaitem.heavy_alloy_platee.name=Heavy Alloy Plate E
+
+metaitem.shielding_plate.name=Shielding Plate
+metaitem.heat_shielding_plate.name=Heat Shielding Plate
 
 metaitem.mining_drone.lv.name=Ore Collector (§7LV§r)
 metaitem.mining_drone.mv.name=Ore Collector (§bMV§r)
@@ -267,6 +273,11 @@ tile.field_gen_casing.uiv.name=力场发生器方块（§2UIV§r）
 tile.field_gen_casing.uxv.name=力场发生器方块（§eUXV§r）
 tile.field_gen_casing.opv.name=力场发生器方块（§9OpV§r）
 tile.field_gen_casing.max.name=力场发生器方块（§c§lMAX§r）
+
+tile.machine_wire_coil.coil_silicon.name=硅热线圈
+tile.machine_wire_coil.coil_tin.name=锡热线圈
+tile.machine_wire_coil.coil_copper.name=铜热线圈
+tile.machine_wire_coil.coil_steel.name=钢热线圈
 #Machines
 recipemap.space_elevator_mining_module.name=Space Ore Deposit Extraction
 recipemap.space_elevator_drilling_module.name=Space Geyser Extraction
@@ -535,8 +546,28 @@ gtqtspace.machine.dock.name=太空船坞单元
 item.material.oreprefix.oreMoon=月球%s矿石
 item.material.oreprefix.oreMars=火星%s矿石
 item.material.oreprefix.oreVenus=金星%s矿石
+
+gtqtspace.veins.fluid.helium=氦矿藏
+gtqtspace.veins.fluid.helium_3=氦-3矿藏
+
+gtqtspace.veins.fluid.carbon_dioxide=二氧化碳矿藏
+gtqtspace.veins.fluid.sulfur_dioxide=二氧化硫矿藏
+
+gtqtspace.veins.ore.gallite=灰镓矿脉
+gtqtspace.veins.ore.columbite=铌钽铁矿脉
+gtqtspace.veins.ore.meteoric_iron=陨铁矿脉
+gtqtspace.veins.ore.radioactive=放射性矿脉
+gtqtspace.veins.ore.desh=戴斯矿脉
+gtqtspace.veins.ore.fluorite=氟石矿脉
+gtqtspace.veins.ore.naquadah=氧化硅岩矿脉
+gtqtspace.veins.ore.rutile=金红石矿脉
+
+gregtech.veins.ore.sulfuric_acid_sphere=硫酸球
+
+item.material.oreprefix.densePlate=超致密%s板
 #
 itemGroup.gtqtspace_core=GTQT | 太空系统
 itemGroup.gtqtspace_core_ship=GTQT | 航天器设计
 itemGroup.gtqtspace_space_elevator=GTQT | 太空电梯
 itemGroup.gtqtspace_part=GTQT | 机器部件
+itemGroup.gtqtspace_planet=GTQT | 星球

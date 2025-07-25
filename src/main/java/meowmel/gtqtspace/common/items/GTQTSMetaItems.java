@@ -27,6 +27,8 @@ public class GTQTSMetaItems {
 	public static MetaItem<?>.MetaValueItem HEAVY_ALLOY_PLATEC;
 	public static MetaItem<?>.MetaValueItem HEAVY_ALLOY_PLATED;
 	public static MetaItem<?>.MetaValueItem HEAVY_ALLOY_PLATEE;
+	public static MetaItem<?>.MetaValueItem SHIELDING_PLATE;
+	public static MetaItem<?>.MetaValueItem HEAT_SHIELDING_PLATE;
 	public static MetaItem<?>.MetaValueItem MINING_DRONE_LV;
 	public static MetaItem<?>.MetaValueItem MINING_DRONE_MV;
 	public static MetaItem<?>.MetaValueItem MINING_DRONE_HV;
@@ -44,19 +46,7 @@ public class GTQTSMetaItems {
 	public static MetaItem<?>.MetaValueItem TELESCOPE;
 	public static MetaItem<?>.MetaValueItem BASIC_SATELLITE;
 	public static MetaItem<?>.MetaValueItem SATELLITE_ROCKET;
-	public static MetaItem<?>.MetaValueItem PLANETIDCHIP;
-	public static MetaItem<?>.MetaValueItem SATELLITEIDCHIP;
-	public static MetaItem<?>.MetaValueItem STATIONIDCHIP;
-	public static MetaItem<?>.MetaValueItem TRACKINGCIRCUIT;
-	public static MetaItem<?>.MetaValueItem ASTEROIDIDCHIP;
-	public static MetaItem<?>.MetaValueItem ELEVATORCHIP;
-	public static MetaItem<?>.MetaValueItem COMBUSTIONENGINE;
-	public static MetaItem<?>.MetaValueItem ADVCOMBUSTIONENGINE;
-	public static MetaItem<?>.MetaValueItem SATELLITEPRIMARYFUNCTION1;
-	public static MetaItem<?>.MetaValueItem SATELLITEPRIMARYFUNCTION2;
-	public static MetaItem<?>.MetaValueItem SATELLITEPRIMARYFUNCTION3;
-	public static MetaItem<?>.MetaValueItem SATELLITEPRIMARYFUNCTION4;
-	public static MetaItem<?>.MetaValueItem SATELLITEPRIMARYFUNCTION5;
+
 	public static MetaItem<?>.MetaValueItem SOLAR_PLATE_MKI;
 	public static MetaItem<?>.MetaValueItem SOLAR_PLATE_MKII;
 	public static MetaItem<?>.MetaValueItem SOLAR_PLATE_MKIII;

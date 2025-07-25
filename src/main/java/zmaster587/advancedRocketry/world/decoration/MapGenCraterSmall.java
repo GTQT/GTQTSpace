@@ -118,13 +118,18 @@ public class MapGenCraterSmall extends MapGenBase {
                             if (baseRadius > 6) {
                                 double ridgeSize = Math.max(1, (12 * (radius) / 64.0));
                                 if (inversePartialSquareRadius <= radius / 4 && inversePartialSquareRadius > -3 * radius) {
-                                    //The graph of this function and the old one can be found here https://www.desmos.com/calculator/x02rgy2wlf
                                     for (int dist = -1; dist < 9 * ridgeSize * ((1 - inversePartialSquareRadius) / (0.8 * radius + (inversePartialSquareRadius - 1) * (inversePartialSquareRadius - 1))) - 1.06; dist++) {
-                                        //Place the bank thrown up by the impact, and have some of the farthest be dispersed
-                                        if (y + dist < 255 && inversePartialSquareRadius > -0.875 * radius)
-                                            chunkPrimerIn.setBlockState(x, y + dist, z, this.getBlockToPlace(world, chunkX, chunkZ, ores));
-                                        else if (y + dist < 255 && inversePartialSquareRadius > -1.125 * radius && rand.nextInt(Math.abs(inversePartialSquareRadius / (radius > 48 ? 4 : 2)) + 1) == 0)
-                                            chunkPrimerIn.setBlockState(x, y + dist, z, this.getBlockToPlace(world, chunkX, chunkZ, ores));
+                                        int currentY = y + dist;
+                                        // Skip invalid Y coordinates (must be 0-254)
+                                        if (currentY < 0 || currentY > 254) {
+                                            continue;
+                                        }
+
+                                        if (inversePartialSquareRadius > -0.875 * radius) {
+                                            chunkPrimerIn.setBlockState(x, currentY, z, this.getBlockToPlace(world, chunkX, chunkZ, ores));
+                                        } else if (inversePartialSquareRadius > -1.125 * radius && rand.nextInt(Math.abs(inversePartialSquareRadius / (radius > 48 ? 4 : 2)) + 1) == 0) {
+                                            chunkPrimerIn.setBlockState(x, currentY, z, this.getBlockToPlace(world, chunkX, chunkZ, ores));
+                                        }
                                     }
                                 }
                             }

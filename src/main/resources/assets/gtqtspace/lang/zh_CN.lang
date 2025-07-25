@@ -2,6 +2,8 @@ gtqtspace.material.meteoric_iron=陨铁
 gtqtspace.material.desh=戴斯
 gtqtspace.material.columbite=铌钽铁
 gtqtspace.material.gallite=灰镓矿
+gtqtspace.material.dilithium=双锂
+gtqtspace.material.sbvox=锑钒氧化物
 gtqtspace.material.moon_stone=月岩
 gtqtspace.material.mars_stone=火星岩石
 gtqtspace.material.venus_stone=金星岩石
@@ -27,6 +29,9 @@ metaitem.heavy_alloy_plateb.name=合金复合板B
 metaitem.heavy_alloy_platec.name=合金复合板C
 metaitem.heavy_alloy_plated.name=合金复合板D
 metaitem.heavy_alloy_platee.name=合金复合板E
+
+metaitem.shielding_plate.name=抗辐射夹板
+metaitem.heat_shielding_plate.name=防高温夹板
 
 metaitem.mining_drone.lv.name=轨道采集器（§7LV§r）
 metaitem.mining_drone.mv.name=轨道采集器（§bMV§r）
@@ -265,6 +270,11 @@ tile.field_gen_casing.uiv.name=力场发生器方块（§2UIV§r）
 tile.field_gen_casing.uxv.name=力场发生器方块（§eUXV§r）
 tile.field_gen_casing.opv.name=力场发生器方块（§9OpV§r）
 tile.field_gen_casing.max.name=力场发生器方块（§c§lMAX§r）
+
+tile.machine_wire_coil.coil_silicon.name=硅热线圈
+tile.machine_wire_coil.coil_tin.name=锡热线圈
+tile.machine_wire_coil.coil_copper.name=铜热线圈
+tile.machine_wire_coil.coil_steel.name=钢热线圈
 #机器
 recipemap.space_elevator_mining_module.name=太空矿床采集
 recipemap.space_elevator_drilling_module.name=太空气泉采集
@@ -555,3 +565,4 @@ itemGroup.gtqtspace_core=GTQT | 太空系统
 itemGroup.gtqtspace_core_ship=GTQT | 航天器设计
 itemGroup.gtqtspace_space_elevator=GTQT | 太空电梯
 itemGroup.gtqtspace_part=GTQT | 机器部件
+itemGroup.gtqtspace_planet=GTQT | 星球

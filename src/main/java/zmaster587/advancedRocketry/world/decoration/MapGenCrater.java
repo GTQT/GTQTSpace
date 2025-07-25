@@ -125,21 +125,26 @@ public class MapGenCrater extends MapGenBase {
                             if (inverseRadius <= radius / 4 && inverseRadius > -2 * radius) {
                                 //The graph of this function and the old one can be found here https://www.desmos.com/calculator/x02rgy2wlf
                                 for (int dist = -1; dist < 9 * ridgeSize * ((1 - inverseRadius) / (0.8 * radius + (inverseRadius - 1) * (inverseRadius - 1))) - 1.06; dist++) {
+                                    int currentY = y + dist;
+                                    // Skip invalid Y coordinates (must be 0-254)
+                                    if (currentY < 0 || currentY > 254) {
+                                        continue;
+                                    }
                                     //Place the bank thrown up by the impact, and have some of the farthest be dispersed
-                                    if (y + dist < 255 && inverseRadius > -0.5 * radius)
-                                        chunkPrimerIn.setBlockState(x, y + dist, z, this.getBlockToPlace(world, chunkX, chunkZ, ores));
-                                    else if (y + dist < 255 && inverseRadius >= -0.625 * radius)
-                                        chunkPrimerIn.setBlockState(x, y + dist, z, this.getBlockToPlace(world, chunkX, chunkZ, ores));
-                                    else if (y + dist < 255 && inverseRadius < -0.625 * radius && rand.nextInt(Math.abs(inverseRadius + (int) (radius * 0.625)) + 1) == 0)
-                                        chunkPrimerIn.setBlockState(x, y + dist, z, this.getBlockToPlace(world, chunkX, chunkZ, ores));
+                                    if (inverseRadius > -0.5 * radius)
+                                        chunkPrimerIn.setBlockState(x, currentY, z, this.getBlockToPlace(world, chunkX, chunkZ, ores));
+                                    else if (inverseRadius >= -0.625 * radius)
+                                        chunkPrimerIn.setBlockState(x, currentY, z, this.getBlockToPlace(world, chunkX, chunkZ, ores));
+                                    else if (inverseRadius < -0.625 * radius && rand.nextInt(Math.abs(inverseRadius + (int) (radius * 0.625)) + 1) == 0)
+                                        chunkPrimerIn.setBlockState(x, currentY, z, this.getBlockToPlace(world, chunkX, chunkZ, ores));
 
                                     //Ejecta blocks on top, then ejecta blocks below farther out
                                     if (rand.nextInt(Math.abs(inverseRadius) + 1) == 0 && baseRadius > 40) {
                                         double ejectaRadius = -(1.0 + Math.max((baseRadius - 20) / 20f, 0.5));
                                         if (inverseRadius < -0.375 * radius && inverseRadius >= ejectaRadius * radius)
-                                            chunkPrimerIn.setBlockState(x, y + dist + 1, z, this.getBlockToPlace(world, chunkX, chunkZ, ores));
+                                            chunkPrimerIn.setBlockState(x, currentY + 1, z, this.getBlockToPlace(world, chunkX, chunkZ, ores));
                                         else if (inverseRadius < ejectaRadius * radius)
-                                            chunkPrimerIn.setBlockState(x, y + dist + 1 + rand.nextInt(2), z, this.getBlockToPlace(world, chunkX, chunkZ, ores));
+                                            chunkPrimerIn.setBlockState(x, currentY + 1 + rand.nextInt(2), z, this.getBlockToPlace(world, chunkX, chunkZ, ores));
                                     }
                                 }
                             }

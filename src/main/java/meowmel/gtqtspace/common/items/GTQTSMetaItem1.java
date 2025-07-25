@@ -46,6 +46,13 @@ public class GTQTSMetaItem1 extends StandardMetaItem {
 		GTQTSMetaItems.HEAVY_ALLOY_PLATEC = this.addItem(23, "heavy_alloy_platec").setMaxStackSize(64).setCreativeTabs(CommonProxy.GTQTSpace_TAB);
 		GTQTSMetaItems.HEAVY_ALLOY_PLATED = this.addItem(24, "heavy_alloy_plated").setMaxStackSize(64).setCreativeTabs(CommonProxy.GTQTSpace_TAB);
 		GTQTSMetaItems.HEAVY_ALLOY_PLATEE = this.addItem(25, "heavy_alloy_platee").setMaxStackSize(64).setCreativeTabs(CommonProxy.GTQTSpace_TAB);
+
+		//宇航服
+		//抗辐射夹板
+		GTQTSMetaItems.SHIELDING_PLATE = this.addItem(30, "shielding_plate").setMaxStackSize(64).setCreativeTabs(CommonProxy.GTQTSpace_TAB);
+		//防高温夹板
+		GTQTSMetaItems.HEAT_SHIELDING_PLATE = this.addItem(31, "heat_shielding_plate").setMaxStackSize(64).setCreativeTabs(CommonProxy.GTQTSpace_TAB);
+
 		//炸弹小飞机
 		GTQTSMetaItems.MINING_DRONE_LV = this.addItem(50, "mining_drone.lv").setMaxStackSize(1).setCreativeTabs(CommonProxy.GTQTSpace_TAB);
 		GTQTSMetaItems.MINING_DRONE_MV = this.addItem(51, "mining_drone.mv").setMaxStackSize(1).setCreativeTabs(CommonProxy.GTQTSpace_TAB);
@@ -63,33 +70,17 @@ public class GTQTSMetaItem1 extends StandardMetaItem {
 		GTQTSMetaItems.MINING_DRONE_MAX = this.addItem(63, "mining_drone.max").setMaxStackSize(1).setCreativeTabs(CommonProxy.GTQTSpace_TAB);
 
 		//卫星 包括卫星升级构建
-		GTQTSMetaItems.TELESCOPE = this.addItem(98, "telescope").setMaxStackSize(1).setCreativeTabs(CommonProxy.GTQTSpace_TAB);
-		GTQTSMetaItems.SATELLITE_ROCKET = this.addItem(99, "satellite_rocket").setMaxStackSize(1).setCreativeTabs(CommonProxy.GTQTSpace_TAB);
+		GTQTSMetaItems.TELESCOPE = this.addItem(95, "telescope").setMaxStackSize(1).setCreativeTabs(CommonProxy.GTQTSpace_TAB);
+		GTQTSMetaItems.SATELLITE_ROCKET = this.addItem(96, "satellite_rocket").setMaxStackSize(1).setCreativeTabs(CommonProxy.GTQTSpace_TAB);
 		//卫星本体
-		GTQTSMetaItems.BASIC_SATELLITE = this.addItem(100, "basic_satellite").setMaxStackSize(1).setCreativeTabs(CommonProxy.GTQTSpace_TAB);
+		GTQTSMetaItems.BASIC_SATELLITE = this.addItem(97, "basic_satellite").setMaxStackSize(1).setCreativeTabs(CommonProxy.GTQTSpace_TAB);
 
-		//注册专业电路
-		GTQTSMetaItems.PLANETIDCHIP = this.addItem(101, "planetidchip").setMaxStackSize(1).setCreativeTabs(CommonProxy.GTQTSpace_TAB);
-		GTQTSMetaItems.SATELLITEIDCHIP = this.addItem(102, "satelliteidchip").setMaxStackSize(1).setCreativeTabs(CommonProxy.GTQTSpace_TAB);
-		GTQTSMetaItems.STATIONIDCHIP = this.addItem(103, "stationidchip").setMaxStackSize(1).setCreativeTabs(CommonProxy.GTQTSpace_TAB);
-		GTQTSMetaItems.TRACKINGCIRCUIT = this.addItem(104, "trackingcircuit").setMaxStackSize(1).setCreativeTabs(CommonProxy.GTQTSpace_TAB);
-		GTQTSMetaItems.ASTEROIDIDCHIP = this.addItem(105, "asteroididchip").setMaxStackSize(1).setCreativeTabs(CommonProxy.GTQTSpace_TAB);
-		GTQTSMetaItems.ELEVATORCHIP = this.addItem(106, "elevatorchip").setMaxStackSize(1).setCreativeTabs(CommonProxy.GTQTSpace_TAB);
-		//注册推进器
-		GTQTSMetaItems.COMBUSTIONENGINE = this.addItem(107, "combustionengine").setMaxStackSize(1).setCreativeTabs(CommonProxy.GTQTSpace_TAB);
-		GTQTSMetaItems.ADVCOMBUSTIONENGINE = this.addItem(108, "advcombustionengine").setMaxStackSize(1).setCreativeTabs(CommonProxy.GTQTSpace_TAB);
-		//注册传感器
-		GTQTSMetaItems.SATELLITEPRIMARYFUNCTION1 = this.addItem(109, "satelliteprimaryfunction1").setMaxStackSize(1).setCreativeTabs(CommonProxy.GTQTSpace_TAB);
-		GTQTSMetaItems.SATELLITEPRIMARYFUNCTION2 = this.addItem(110, "satelliteprimaryfunction2").setMaxStackSize(1).setCreativeTabs(CommonProxy.GTQTSpace_TAB);
-		GTQTSMetaItems.SATELLITEPRIMARYFUNCTION3 = this.addItem(111, "satelliteprimaryfunction3").setMaxStackSize(1).setCreativeTabs(CommonProxy.GTQTSpace_TAB);
-		GTQTSMetaItems.SATELLITEPRIMARYFUNCTION4 = this.addItem(112, "satelliteprimaryfunction4").setMaxStackSize(1).setCreativeTabs(CommonProxy.GTQTSpace_TAB);
-		GTQTSMetaItems.SATELLITEPRIMARYFUNCTION5 = this.addItem(113, "satelliteprimaryfunction5").setMaxStackSize(1).setCreativeTabs(CommonProxy.GTQTSpace_TAB);
 		//注册太阳能电池板
-		GTQTSMetaItems.SOLAR_PLATE_MKI = this.addItem(114, "solar_plate_i").setMaxStackSize(1).setCreativeTabs(CommonProxy.GTQTSpace_TAB);
-		GTQTSMetaItems.SOLAR_PLATE_MKII = this.addItem(115, "solar_plate_ii").setMaxStackSize(1).setCreativeTabs(CommonProxy.GTQTSpace_TAB);
-		GTQTSMetaItems.SOLAR_PLATE_MKIII = this.addItem(116, "solar_plate_iii").setMaxStackSize(1).setCreativeTabs(CommonProxy.GTQTSpace_TAB);
-		GTQTSMetaItems.SOLAR_PLATE_MKIV = this.addItem(117, "solar_plate_iv").setMaxStackSize(1).setCreativeTabs(CommonProxy.GTQTSpace_TAB);
-		GTQTSMetaItems.SOLAR_PLATE_MKV = this.addItem(118, "solar_plate_v").setMaxStackSize(1).setCreativeTabs(CommonProxy.GTQTSpace_TAB);
+		GTQTSMetaItems.SOLAR_PLATE_MKI = this.addItem(100, "solar_plate_i").setMaxStackSize(1).setCreativeTabs(CommonProxy.GTQTSpace_TAB);
+		GTQTSMetaItems.SOLAR_PLATE_MKII = this.addItem(101, "solar_plate_ii").setMaxStackSize(1).setCreativeTabs(CommonProxy.GTQTSpace_TAB);
+		GTQTSMetaItems.SOLAR_PLATE_MKIII = this.addItem(102, "solar_plate_iii").setMaxStackSize(1).setCreativeTabs(CommonProxy.GTQTSpace_TAB);
+		GTQTSMetaItems.SOLAR_PLATE_MKIV = this.addItem(103, "solar_plate_iv").setMaxStackSize(1).setCreativeTabs(CommonProxy.GTQTSpace_TAB);
+		GTQTSMetaItems.SOLAR_PLATE_MKV = this.addItem(104, "solar_plate_v").setMaxStackSize(1).setCreativeTabs(CommonProxy.GTQTSpace_TAB);
 
 		//舰船
 		//采矿船模板200
@@ -121,50 +112,5 @@ public class GTQTSMetaItem1 extends StandardMetaItem {
 		GTQTSMetaItems.SENER_MODEL_III = this.addItem(242, "sener_model.iii").setMaxStackSize(16).addComponents(new ShipPart(80,3,false)).setCreativeTabs(CommonProxy.Ship_TAB);
 		GTQTSMetaItems.SENER_MODEL_IV = this.addItem(243, "sener_model.iv").setMaxStackSize(16).addComponents(new ShipPart(160,4,false)).setCreativeTabs(CommonProxy.Ship_TAB);
 		//GTQTSMetaItems.SENER_MODEL_V = this.addItem(244, "sener_model.v").setMaxStackSize(16).addComponents(new ShipPart(320,false)).setCreativeTabs(CommonProxy.Ship_TAB);
-	}
-
-	@Override
-	public void addInformation(ItemStack stack, World worldIn, List<String> tooltip, ITooltipFlag tooltipFlag) {
-		super.addInformation(stack, worldIn, tooltip, tooltipFlag);
-		if (stack.getTagCompound() != null && stack.getMetadata() == 100 || stack.getMetadata() == 99) { // 检查物品是否有NBT数据，以及物品是不是灵气节点
-			tooltip.add(TextFormatting.GRAY + "组件信息:"); // 添加一个标题
-			NBTTagCompound compound = stack.getTagCompound();
-			if (compound != null) {
-				compound.getKeySet().forEach(key -> { // 遍历NBT数据的键
-					if (Objects.equals(key, "SolarTier")) {
-						int value = compound.getInteger(key); // 获取键对应的值的字符串表示
-						tooltip.add(TextFormatting.GRAY + key + ": " + value);
-					} else if (Objects.equals(key, "SeniorTier")) {
-						String value = compound.getString(key); // 获取键对应的值的字符串表示
-						tooltip.add(TextFormatting.GRAY + key + ": " + value);
-					} else if (Objects.equals(key, "GeneratorTier")) {
-						String value = compound.getString(key); // 获取键对应的值的字符串表示
-						tooltip.add(TextFormatting.GRAY + key + ": " + value);
-					}
-				});
-			}
-		}
-		if (stack.getTagCompound() != null && stack.getMetadata() == 97) {
-			tooltip.add(I18n.format("右键下蹲获取对应方块坐标，右键清空物品缓存坐标"));
-			tooltip.add(I18n.format("-------------------"));
-			NBTTagCompound compound = stack.getTagCompound();
-			if (!stack.hasTagCompound() || !stack.getTagCompound().getBoolean("hasPos")) {
-				tooltip.add(I18n.format("item.info.pos_binding.no_data"));
-			} else {
-				tooltip.add(I18n.format("item.info.pos_binding.stored_pos"));
-				compound.getKeySet().forEach(key -> { // 遍历NBT数据的键
-					if (Objects.equals(key, "x")) {
-						int value = compound.getInteger(key); // 获取键对应的值的字符串表示
-						tooltip.add(TextFormatting.GRAY + key + ": " + value);
-					} else if (Objects.equals(key, "y")) {
-						int value = compound.getInteger(key); // 获取键对应的值的字符串表示
-						tooltip.add(TextFormatting.GRAY + key + ": " + value);
-					} else if (Objects.equals(key, "z")) {
-						int value = compound.getInteger(key); // 获取键对应的值的字符串表示
-						tooltip.add(TextFormatting.GRAY + key + ": " + value);
-					}
-				});
-			}
-		}
 	}
 }

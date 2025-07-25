@@ -2,6 +2,7 @@ package meowmel.gtqtspace.loaders.recipes;
 
 import meowmel.gtqtspace.loaders.OreDictionaryLoader;
 import meowmel.gtqtspace.loaders.recipes.advancedRocket.ADRocketRecipesManager;
+import meowmel.gtqtspace.loaders.recipes.chain.DilithiumChain;
 import meowmel.gtqtspace.loaders.recipes.hanlder.*;
 import meowmel.gtqtspace.loaders.recipes.machine.GTQTSSatelliteAssembler;
 import meowmel.gtqtspace.loaders.recipes.machine.StarSuvery;
@@ -26,5 +27,6 @@ public class GTQTSRecipesManager {
 		ComponentCasingsRecipes.init();
 		CasingHandler.init();
 		ADRocketRecipesManager.init();
+		DilithiumChain.init();
 	}
 }

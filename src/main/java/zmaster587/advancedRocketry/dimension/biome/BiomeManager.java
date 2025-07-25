@@ -24,6 +24,7 @@ public class BiomeManager {
         AdvancedRocketryBiomes.moonBiomeDark = new BiomeGenMoonDark(new Biome.BiomeProperties("Regolith Lowlands").setRainDisabled().setBaseHeight(0.5f).setHeightVariation(0.01f).setRainfall(0).setTemperature(0.3f));
         AdvancedRocketryBiomes.volcanic = new BiomeGenVolcanic(new Biome.BiomeProperties("Volcanic").setRainDisabled().setBaseHeight(0f).setHeightVariation(0.9f).setRainfall(0).setTemperature(1.0f));
         AdvancedRocketryBiomes.volcanicBarren = new BiomeGenBarrenVolcanic(new Biome.BiomeProperties("Volcanic Lowlands").setRainDisabled().setBaseHeight(0f).setHeightVariation(0.9f).setRainfall(0).setTemperature(1.0f));
+        AdvancedRocketryBiomes.iceBiome = new BiomeGenIce(new Biome.BiomeProperties("Ice Biome").setRainDisabled().setBaseHeight(0.5f).setHeightVariation(0.01f).setRainfall(0).setTemperature(0.0f));
 
         //Biome registry names outside of constructor
         AdvancedRocketryBiomes.moonBiome.setRegistryName(Constants.modId, "moon");
@@ -40,6 +41,7 @@ public class BiomeManager {
         AdvancedRocketryBiomes.moonBiomeDark.setRegistryName(Constants.modId, "moondark");
         AdvancedRocketryBiomes.volcanic.setRegistryName(Constants.modId, "volcanic");
         AdvancedRocketryBiomes.volcanicBarren.setRegistryName(Constants.modId, "volcanicbarren");
+        AdvancedRocketryBiomes.iceBiome.setRegistryName(Constants.modId, "ice");
 
         //Actual registry
         AdvancedRocketryBiomes.instance.registerBiome(AdvancedRocketryBiomes.moonBiome, evt.getRegistry());
@@ -56,6 +58,7 @@ public class BiomeManager {
         AdvancedRocketryBiomes.instance.registerBiome(AdvancedRocketryBiomes.moonBiomeDark, evt.getRegistry());
         AdvancedRocketryBiomes.instance.registerBiome(AdvancedRocketryBiomes.volcanic, evt.getRegistry());
         AdvancedRocketryBiomes.instance.registerBiome(AdvancedRocketryBiomes.volcanicBarren, evt.getRegistry());
+        AdvancedRocketryBiomes.instance.registerBiome(AdvancedRocketryBiomes.iceBiome, evt.getRegistry());
 
         BiomeDictionary.addTypes(AdvancedRocketryBiomes.moonBiome,
                 BiomeDictionary.Type.WASTELAND,
@@ -97,6 +100,10 @@ public class BiomeManager {
                 BiomeDictionary.Type.DRY,
                 BiomeDictionary.Type.HOT,
                 BiomeDictionary.Type.MOUNTAIN
+        );
+        BiomeDictionary.addTypes(AdvancedRocketryBiomes.iceBiome,
+                BiomeDictionary.Type.DRY,
+                BiomeDictionary.Type.COLD
         );
         BiomeDictionary.addTypes(AdvancedRocketryBiomes.spaceBiome, BiomeDictionary.Type.VOID);
         BiomeDictionary.addTypes(AdvancedRocketryBiomes.stormLandsBiome,

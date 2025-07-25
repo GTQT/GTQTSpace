@@ -487,8 +487,11 @@ public class DimensionProperties implements Cloneable, IDimensionProperties {
         if (isStar() && getStarData().isBlackHole())
             return TextureResources.locationBlackHole_icon;
 
-        if (isGasGiant())
+        if (isGasGiant()) {
+            if (getAverageTemp() >= 150)return PlanetIcons.GASGIANTBROWN.resource;
+            if (getAverageTemp() >= 100)return PlanetIcons.GASGIANTRED.resource;
             return PlanetIcons.GASGIANTBLUE.resource;
+        }
 
         if (isAsteroid())
             return PlanetIcons.ASTEROID.resource;
@@ -536,8 +539,11 @@ public class DimensionProperties implements Cloneable, IDimensionProperties {
         Temps tempType = Temps.getTempFromValue(getAverageTemp());
 
 
-        if (isGasGiant())
+        if (isGasGiant()) {
+            if (getAverageTemp() >= 150)return PlanetIcons.GASGIANTBROWN.resourceLEO;
+            if (getAverageTemp() >= 100)return PlanetIcons.GASGIANTRED.resourceLEO;
             return PlanetIcons.GASGIANTBLUE.resourceLEO;
+        }
 
         if (tempType == Temps.TOOHOT)
             return PlanetIcons.MARSLIKE.resourceLEO;

@@ -10,12 +10,13 @@ import static gregtech.api.unification.material.info.MaterialIconSet.METALLIC;
 import static gregtech.api.unification.material.info.MaterialIconSet.ROUGH;
 import static gregtech.api.util.GTUtility.gregtechId;
 import static meowmel.gtqtspace.api.GTQTSValue.gtqtspaceId;
+import static meowmel.gtqtspace.api.unifications.GTQTSElements.Dilithium;
 
 public class FirstDegreeMaterials {
 	public FirstDegreeMaterials() {
 	}
 
-	private static int startId = 0;
+	private static int startId = 200;
 	private static final int END_ID = startId + 300;
 
 	private static int getMaterialsId() {
@@ -55,6 +56,18 @@ public class FirstDegreeMaterials {
 				.color(0xFF7256)
 				.iconSet(METALLIC)
 				.build();
+
+
+
+		//双锂前驱 SbVOx
+		GTQTSpaceMaterials.SbVOx = new Material.Builder(getMaterialsId(), gtqtspaceId("sbvox"))
+				.dust()
+				.components(Antimony, 1, Selenium, 1, Oxygen, 3)
+				.flags(DISABLE_DECOMPOSITION)
+				.color(0xFF7256)
+				.iconSet(METALLIC)
+				.build();
+
 
 		startId=100;
 		//月球岩石

@@ -1,7 +1,10 @@
 package zmaster587.advancedRocketry.dimension;
 
+import gregtech.api.fluids.store.FluidStorageKeys;
+import gregtech.api.unification.material.Materials;
 import meowmel.gtqtspace.common.block.GTQTSMetaBlocks;
 import meowmel.gtqtspace.common.block.blocks.GTQTSStoneVariantBlock;
+import net.minecraft.init.Blocks;
 import net.minecraft.nbt.CompressedStreamTools;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
@@ -764,33 +767,32 @@ public class DimensionManager implements IGalaxy {
 
 
         // 注册月球 T1
-        DimensionProperties dimensionProperties = new DimensionProperties(51);
-        dimensionProperties.setAtmosphereDensityDirect(0);
-        dimensionProperties.averageTemperature = 20;
-        dimensionProperties.rotationalPeriod = 128000;
-        dimensionProperties.gravitationalMultiplier = 0.166f; // 月球重力为地球的1/6
-        dimensionProperties.setGravitationalMultiplier(0.166f);
-        dimensionProperties.setName("Moon");
-        dimensionProperties.orbitalDist = 150;
-        dimensionProperties.setStoneBlock(GTQTSMetaBlocks.GTQTS_STONE_BLOCKS.get(GTQTSStoneVariantBlock.StoneVariant.SMOOTH).getState(GTQTSStoneVariantBlock.StoneType.MOON_STONE));
-        dimensionProperties.addBiome(AdvancedRocketryBiomes.moonBiome);
-        dimensionProperties.addBiome(AdvancedRocketryBiomes.moonBiomeDark);
-        dimensionProperties.setParentPlanet(DimensionManager.overworldProperties);
-        dimensionProperties.setStar(sol);
-        dimensionProperties.isNativeDimension = true;
-        dimensionProperties.initDefaultAttributes();
-        DimensionManager.getInstance().registerDimNoUpdate(dimensionProperties, true);
+        DimensionProperties moonProperties = new DimensionProperties(51);
+        moonProperties.setAtmosphereDensityDirect(0);//大气0
+        moonProperties.averageTemperature = 20;//温度20k
+        moonProperties.rotationalPeriod = 128000;//自传周期 128000tick
+        moonProperties.setGravitationalMultiplier(0.166f);
+        moonProperties.setName("Moon");
+        moonProperties.orbitalDist = 150;//卫星算法 假设月球到地球为150
+        moonProperties.setStoneBlock(GTQTSMetaBlocks.GTQTS_STONE_BLOCKS.get(GTQTSStoneVariantBlock.StoneVariant.SMOOTH).getState(GTQTSStoneVariantBlock.StoneType.MOON_STONE));
+        moonProperties.addBiome(AdvancedRocketryBiomes.moonBiome);
+        moonProperties.addBiome(AdvancedRocketryBiomes.moonBiomeDark);
+        moonProperties.setParentPlanet(DimensionManager.overworldProperties);
+        moonProperties.setStar(sol);//恒星是太阳
+        moonProperties.isNativeDimension = true;
+        moonProperties.initDefaultAttributes();
+        DimensionManager.getInstance().registerDimNoUpdate(moonProperties, true);
 
         //注册火星 T2
         DimensionProperties marsProperties = new DimensionProperties(52);
         marsProperties.setAtmosphereDensityDirect(6);
-        marsProperties.averageTemperature = -63;
+        marsProperties.averageTemperature = 220;
         marsProperties.rotationalPeriod = 24660;
-        marsProperties.gravitationalMultiplier = 0.38f;
+        marsProperties.setGravitationalMultiplier(0.38f);
         marsProperties.fogColor = new float[]{1.0f, 0.4f, 0.3f};
         marsProperties.skyColor = new float[]{0.8f, 0.5f, 0.3f};
         marsProperties.setName("Mars");
-        marsProperties.orbitalDist = 152;
+        marsProperties.orbitalDist = 152;//100为一个地日距离
         marsProperties.setStoneBlock(GTQTSMetaBlocks.GTQTS_STONE_BLOCKS.get(GTQTSStoneVariantBlock.StoneVariant.SMOOTH).getState(GTQTSStoneVariantBlock.StoneType.MARS_STONE)); // 替换为火星石头
         marsProperties.addBiome(AdvancedRocketryBiomes.marsBiome);
         //marsProperties.setParentPlanet(null); // 火星是行星，无父行星
@@ -804,7 +806,7 @@ public class DimensionManager implements IGalaxy {
         venusProperties.setAtmosphereDensityDirect(920);
         venusProperties.averageTemperature = 464;
         venusProperties.rotationalPeriod = 20995200;
-        venusProperties.gravitationalMultiplier = 0.904f;
+        venusProperties.setGravitationalMultiplier(0.904f);
         venusProperties.fogColor = new float[]{0.9f, 0.8f, 0.6f};
         venusProperties.skyColor = new float[]{0.8f, 0.7f, 0.5f};
         venusProperties.setName("Venus");
@@ -817,6 +819,135 @@ public class DimensionManager implements IGalaxy {
         venusProperties.isNativeDimension = true;
         venusProperties.initDefaultAttributes();
         DimensionManager.getInstance().registerDimNoUpdate(venusProperties, true);
+
+        //注册小行星带
+        DimensionProperties asteroidProperties = new DimensionProperties(54);
+        asteroidProperties.setAtmosphereDensityDirect(0);
+        asteroidProperties.averageTemperature = 30;
+        asteroidProperties.rotationalPeriod = 0;
+        asteroidProperties.gravitationalMultiplier = 0;
+        asteroidProperties.skyColor = new float[]{0.0f, 0.0f, 0.0f};
+        asteroidProperties.setName("Asteroid");
+        asteroidProperties.orbitalDist = 300;
+        asteroidProperties.setGenType(Constants.GENTYPE_ASTEROID);
+        asteroidProperties.setStar(sol);
+        asteroidProperties.isNativeDimension = true;
+        asteroidProperties.initDefaultAttributes();
+        DimensionManager.getInstance().registerDimNoUpdate(asteroidProperties, true);
+
+        // 注册木星 T3 (气态巨行星)
+        DimensionProperties jupiterProperties = new DimensionProperties(55);
+        jupiterProperties.setAtmosphereDensityDirect(220);
+        jupiterProperties.averageTemperature = 165;
+        jupiterProperties.setHasRings(true);
+        jupiterProperties.ringColor = new float[]{0.9f, 0.8f, 0.7f};
+        jupiterProperties.rotationalPeriod = 35000;
+        jupiterProperties.setGravitationalMultiplier(2.5f);
+        jupiterProperties.fogColor = new float[]{0.9f, 0.8f, 0.7f};
+        jupiterProperties.skyColor = new float[]{0.8f, 0.7f, 0.6f};
+        jupiterProperties.setName("Jupiter");
+        jupiterProperties.orbitalDist = 520;
+        jupiterProperties.setStar(sol);
+        jupiterProperties.setGasGiant(true);
+        jupiterProperties.isNativeDimension = true;
+        // 添加木星特有气体
+
+        jupiterProperties.getHarvestableGasses().add(Materials.Hydrogen.getFluid());
+        jupiterProperties.getHarvestableGasses().add(Materials.Helium.getFluid());
+        jupiterProperties.getHarvestableGasses().add(Materials.Helium3.getFluid());
+
+        jupiterProperties.initDefaultAttributes();
+        DimensionManager.getInstance().registerDimNoUpdate(jupiterProperties, true);
+
+        // 木卫一 (Io)
+        DimensionProperties ioProperties = new DimensionProperties(56);
+        ioProperties.setAtmosphereDensityDirect(0);
+        ioProperties.averageTemperature = 130;
+        ioProperties.rotationalPeriod = 152853;
+        ioProperties.setGravitationalMultiplier(0.18f);
+        ioProperties.setName("Io");
+        ioProperties.orbitalDist = 25;
+        ioProperties.setStoneBlock(AdvancedRocketryBlocks.blockBasalt.getDefaultState());
+        ioProperties.addBiome(AdvancedRocketryBiomes.hotDryBiome);
+        ioProperties.addBiome(AdvancedRocketryBiomes.stormLandsBiome);
+        ioProperties.setParentPlanet(jupiterProperties);
+        ioProperties.setStar(sol);
+        ioProperties.isNativeDimension = true;
+        ioProperties.initDefaultAttributes();
+        DimensionManager.getInstance().registerDimNoUpdate(ioProperties, true);
+
+        // 木卫二 (Europa)
+        DimensionProperties europaProperties = new DimensionProperties(57);
+        europaProperties.setAtmosphereDensityDirect(1);
+        europaProperties.averageTemperature = 102;
+        europaProperties.rotationalPeriod = 306000;
+        europaProperties.setGravitationalMultiplier(0.13f);
+        europaProperties.setName("Europa");
+        europaProperties.orbitalDist = 35;
+        europaProperties.setStoneBlock(Blocks.PACKED_ICE.getDefaultState());
+        europaProperties.addBiome(AdvancedRocketryBiomes.iceBiome);
+        europaProperties.addBiome(AdvancedRocketryBiomes.crystalChasms);
+        europaProperties.setParentPlanet(jupiterProperties);
+        europaProperties.setStar(sol);
+        europaProperties.isNativeDimension = true;
+        europaProperties.initDefaultAttributes();
+        DimensionManager.getInstance().registerDimNoUpdate(europaProperties, true);
+
+        // 注册土星 T4 (气态巨行星)
+        DimensionProperties saturnProperties = new DimensionProperties(58);
+        saturnProperties.setAtmosphereDensityDirect(180);
+        saturnProperties.averageTemperature = 134;
+        saturnProperties.rotationalPeriod = 38500;
+        saturnProperties.setGravitationalMultiplier(1.1f);
+        saturnProperties.fogColor = new float[]{0.95f, 0.9f, 0.8f};
+        saturnProperties.skyColor = new float[]{0.9f, 0.85f, 0.75f};
+        saturnProperties.setName("Saturn");
+        saturnProperties.orbitalDist = 950;
+        saturnProperties.setStar(sol);
+        saturnProperties.setGasGiant(true);
+        saturnProperties.isNativeDimension = true;
+
+        saturnProperties.getHarvestableGasses().add(Materials.Hydrogen.getFluid());
+        saturnProperties.getHarvestableGasses().add(Materials.Methane.getFluid());
+
+        saturnProperties.initDefaultAttributes();
+        DimensionManager.getInstance().registerDimNoUpdate(saturnProperties, true);
+
+        // 土卫六 (Titan)
+        DimensionProperties titanProperties = new DimensionProperties(59);
+        titanProperties.setAtmosphereDensityDirect(146);
+        titanProperties.averageTemperature = 94;
+        titanProperties.rotationalPeriod = 1370000;
+        titanProperties.setGravitationalMultiplier(0.14f);
+        titanProperties.fogColor = new float[]{0.9f, 0.85f, 0.8f};
+        titanProperties.setName("Titan");
+        titanProperties.orbitalDist = 30;
+        titanProperties.setSeaLevel(50);
+        titanProperties.setStoneBlock(GTQTSMetaBlocks.GTQTS_STONE_BLOCKS.get(GTQTSStoneVariantBlock.StoneVariant.SMOOTH)
+                .getState(GTQTSStoneVariantBlock.StoneType.METHANE_ICE));
+        titanProperties.setOceanBlock(Materials.Methane.getFluid(FluidStorageKeys.LIQUID).getBlock().getDefaultState());
+        titanProperties.setParentPlanet(saturnProperties);
+        titanProperties.setStar(sol);
+        titanProperties.isNativeDimension = true;
+        titanProperties.initDefaultAttributes();
+        DimensionManager.getInstance().registerDimNoUpdate(titanProperties, true);
+
+        // 土卫二 (Enceladus)
+        DimensionProperties enceladusProperties = new DimensionProperties(60);
+        enceladusProperties.setAtmosphereDensityDirect(0);
+        enceladusProperties.averageTemperature = 75;
+        enceladusProperties.rotationalPeriod = 118000;
+        enceladusProperties.setGravitationalMultiplier(0.01f);
+        enceladusProperties.setName("Enceladus");
+        enceladusProperties.orbitalDist = 40;
+        enceladusProperties.setStoneBlock(Blocks.PACKED_ICE.getDefaultState());
+        enceladusProperties.addBiome(AdvancedRocketryBiomes.iceBiome);
+        enceladusProperties.addBiome(AdvancedRocketryBiomes.alienForest);
+        enceladusProperties.setParentPlanet(saturnProperties);
+        enceladusProperties.setStar(sol);
+        enceladusProperties.isNativeDimension = true;
+        enceladusProperties.initDefaultAttributes();
+        DimensionManager.getInstance().registerDimNoUpdate(enceladusProperties, true);
 
         // 为太阳生成随机行星
         //generateRandomPlanets(sol, numRandomGeneratedPlanets, numRandomGeneratedGasGiants);

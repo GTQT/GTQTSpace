@@ -61,8 +61,8 @@ material.Aluminum.name=铝
 material.Iridium.name=铱
 material.Dilithium.name=Dilithium
 
-item.battery.0.name=Battery
-item.battery.1.name=Battery Pack
+item.battery.0.name=电池
+item.battery.1.name=电池组
 
-machine.tooltip.multiblock=(Multiblock Machine)
+machine.tooltip.multiblock=(多方块设备)
 

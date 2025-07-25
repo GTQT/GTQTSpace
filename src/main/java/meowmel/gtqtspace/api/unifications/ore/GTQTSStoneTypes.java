@@ -16,6 +16,7 @@ public class GTQTSStoneTypes {
     public static StoneType MOON_STONE;
     public static StoneType MARS_STONE;
     public static StoneType VENUS_STONE;
+    public static StoneType MERCURY_STONE;
 
     public GTQTSStoneTypes(){
     }
@@ -29,6 +30,9 @@ public class GTQTSStoneTypes {
         VENUS_STONE = new StoneType(23, "venus_stone", SoundType.STONE, OrePrefix.ore, GTQTSpaceMaterials.VenusStone,
                 () -> gtStoneState(GTQTSStoneVariantBlock.StoneType.VENUS_STONE),
                 state -> gtStonePredicate(state, GTQTSStoneVariantBlock.StoneType.VENUS_STONE), false);
+        MERCURY_STONE= new StoneType(24, "mercury_stone", SoundType.GLASS, OrePrefix.ore, Materials.Ice,
+                () -> gtStoneState(GTQTSStoneVariantBlock.StoneType.METHANE_ICE),
+                state -> gtStonePredicate(state, GTQTSStoneVariantBlock.StoneType.METHANE_ICE), false);
     }
     private static IBlockState gtStoneState(GTQTSStoneVariantBlock.StoneType stoneType) {
         return GTQTSMetaBlocks.GTQTS_STONE_BLOCKS.get(GTQTSStoneVariantBlock.StoneVariant.SMOOTH).getState(stoneType);

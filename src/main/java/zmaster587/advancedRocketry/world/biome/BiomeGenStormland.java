@@ -27,6 +27,7 @@ public class BiomeGenStormland extends Biome {
         this.decorator.flowersPerChunk = 0;
         this.decorator.grassPerChunk = 0;
         this.decorator.treesPerChunk = 6;
+        this.fillerBlock = this.topBlock = AdvancedRocketryBlocks.blockHotTurf.getDefaultState();
     }
 
     @Override

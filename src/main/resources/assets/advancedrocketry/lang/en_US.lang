@@ -188,7 +188,7 @@ item.basicLaserGun.name=Basic Laser Gun
 item.beaconFinder.name=Beacon Finder
 item.thermite.name=Thermite
 item.hoverCraft.name=Hovercraft
-item.hoverCraft.tooltip=Long lasting dilithium power source.  It'll probably outlive you.
+item.hovercraft.tooltip=Long lasting dilithium power source.  It'll probably outlive you.
 
 item.jetPack.name=Suit Jetpack
 item.pressureTank.0.name=Low Pressure Tank

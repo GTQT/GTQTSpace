@@ -19,6 +19,11 @@
         "textures" : {
           "all" : "gregtech:blocks/gtqts_stones/venus_bricks"
         }
+      },
+      "methane_ice": {
+        "textures" : {
+          "all" : "gregtech:blocks/gtqts_stones/methane_ice_bricks"
+        }
       }
     }
   }

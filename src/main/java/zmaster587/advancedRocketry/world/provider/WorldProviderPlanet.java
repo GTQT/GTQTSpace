@@ -1,11 +1,15 @@
 package zmaster587.advancedRocketry.world.provider;
 
 
+import gregtech.api.items.armor.ArmorMetaItem;
+import gregtech.common.items.MetaItems;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
@@ -42,6 +46,8 @@ import zmaster587.advancedRocketry.world.ChunkProviderPlanet;
 import javax.annotation.Nonnull;
 import javax.annotation.Nullable;
 import java.util.Set;
+
+import static gregtech.common.items.MetaItems.QUANTUM_HELMET;
 
 public class WorldProviderPlanet extends WorldProvider implements IPlanetaryProvider {
 
@@ -448,9 +454,28 @@ public class WorldProviderPlanet extends WorldProvider implements IPlanetaryProv
 
     private boolean shouldOverrideDistanceBrightness(EntityPlayer player) {
         for (ItemStack stack : player.getArmorInventoryList()) {
-            if (stack.getItem() == AdvancedRocketryItems.itemSpaceSuit_Helmet) {
-                for (ItemStack stack1 : ((ItemSpaceArmor) stack.getItem()).getComponents(stack)) {
-                    return (stack1.getItem() == AdvancedRocketryItems.itemUpgrade && stack1.getItemDamage() == 5);
+            Item item = stack.getItem();
+
+            // 1. 处理空间头盔
+            if (item == AdvancedRocketryItems.itemSpaceSuit_Helmet) {
+                for (ItemStack component : ((ItemSpaceArmor) item).getComponents(stack)) {
+                    if (component.getItem() == AdvancedRocketryItems.itemUpgrade &&
+                            component.getItemDamage() == 5) {
+                        return true;
+                    }
+                }
+            }
+            // 2. 处理量子头盔
+            else if (item instanceof ArmorMetaItem) {
+                ArmorMetaItem<?>.ArmorMetaValueItem metaValue =
+                        ((ArmorMetaItem<?>) item).getItem(stack);
+
+                if (metaValue == MetaItems.QUANTUM_HELMET) {
+                    // 检查量子头盔的夜视状态
+                    NBTTagCompound nbt = stack.getTagCompound();
+                    if (nbt != null && nbt.getBoolean("Nightvision")) {
+                        return true;
+                    }
                 }
             }
         }

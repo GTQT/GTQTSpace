@@ -15,6 +15,12 @@ public class MaterialPropertyAddition {
 
         OreProperty oreProp;
 
+        oreProp = MeteoricIron.getProperty(PropertyKey.ORE);
+        oreProp.addOreByProducts(Iron, Bauxite, Silver);
+
+        oreProp = Desh.getProperty(PropertyKey.ORE);
+        oreProp.addOreByProducts(Uranium, Monazite, Thorium);
+
         oreProp = Columbite.getProperty(PropertyKey.ORE);
         oreProp.addOreByProducts(Iron, Manganese, Niobium);
 

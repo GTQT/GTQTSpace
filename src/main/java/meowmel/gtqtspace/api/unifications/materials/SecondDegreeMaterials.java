@@ -11,8 +11,8 @@ import static gregtech.api.unification.material.info.MaterialIconSet.*;
 import static meowmel.gtqtspace.api.GTQTSValue.gtqtspaceId;
 
 public class SecondDegreeMaterials {
-    private static int startId = 300;
-    private static final int END_ID = startId + 700;
+    private static int startId = 500;
+    private static final int END_ID = startId + 500;
     public SecondDegreeMaterials() {
     }
 

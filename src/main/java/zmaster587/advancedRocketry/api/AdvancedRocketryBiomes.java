@@ -30,6 +30,7 @@ public class AdvancedRocketryBiomes {
     public static Biome moonBiomeDark;
     public static Biome volcanic;
     public static Biome volcanicBarren;
+    public static Biome iceBiome;
     private static List<Integer> blackListedBiomeIds;
     private List<Biome> registeredBiomes;
     private List<Biome> registeredHighPressureBiomes;
