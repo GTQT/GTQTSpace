@@ -24,6 +24,11 @@
         "textures" : {
           "all" : "gregtech:blocks/gtqts_stones/methane_ice"
         }
+      },
+      "io": {
+        "textures" : {
+          "all" : "gregtech:blocks/gtqts_stones/io"
+        }
       }
     }
   }

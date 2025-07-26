@@ -57,7 +57,7 @@ public class GTQTSStoneVariantBlock extends VariantBlock<GTQTSStoneVariantBlock.
     }
 
     public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-        return Item.getItemFromBlock(this.stoneVariant == StoneVariant.SMOOTH ? (Block) GTQTMetaBlocks.GTQT_STONE_BLOCKS.get(keqing.gtqtcore.common.block.blocks.GTQTStoneVariantBlock.StoneVariant.COBBLE) : this);
+        return Item.getItemFromBlock(this.stoneVariant == StoneVariant.SMOOTH ? GTQTMetaBlocks.GTQT_STONE_BLOCKS.get(keqing.gtqtcore.common.block.blocks.GTQTStoneVariantBlock.StoneVariant.COBBLE) : this);
     }
 
     public enum StoneVariant {
@@ -94,7 +94,9 @@ public class GTQTSStoneVariantBlock extends VariantBlock<GTQTSStoneVariantBlock.
         MOON_STONE("moon", MapColor.GRAY),
         MARS_STONE("mars", MapColor.RED_STAINED_HARDENED_CLAY),
         VENUS_STONE("venus", MapColor.ORANGE_STAINED_HARDENED_CLAY),
-        METHANE_ICE("methane_ice", MapColor.ICE);
+        METHANE_ICE("methane_ice", MapColor.ICE),
+        IO_STONE("io", MapColor.PURPLE_STAINED_HARDENED_CLAY),
+        ;
 
         public final MapColor mapColor;
         private final String name;
@@ -115,6 +117,7 @@ public class GTQTSStoneVariantBlock extends VariantBlock<GTQTSStoneVariantBlock.
                 case MARS_STONE:
                 case VENUS_STONE:
                 case METHANE_ICE:
+                case IO_STONE:
                     return OrePrefix.stone;
                 default:
                     throw new IllegalStateException("Unreachable");
@@ -131,6 +134,8 @@ public class GTQTSStoneVariantBlock extends VariantBlock<GTQTSStoneVariantBlock.
                     return GTQTSpaceMaterials.VenusStone;
                 case METHANE_ICE:
                     return Materials.Methane;
+                case IO_STONE:
+                    return GTQTSpaceMaterials.IoStone;
                 default:
                     throw new IllegalStateException("Unreachable");
             }

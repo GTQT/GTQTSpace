@@ -18,6 +18,7 @@ import static zmaster587.advancedRocketry.api.AdvancedRocketryBlocks.*;
 import static zmaster587.advancedRocketry.api.AdvancedRocketryItems.itemPressureTank;
 import static zmaster587.libVulpes.api.LibVulpesBlocks.blockAdvStructureBlock;
 import static zmaster587.libVulpes.api.LibVulpesBlocks.blockStructureBlock;
+import static zmaster587.libVulpes.api.LibVulpesItems.itemHoloProjector;
 import static zmaster587.libVulpes.api.LibVulpesItems.itemLinker;
 
 public class rocketRecipes {
@@ -112,8 +113,14 @@ public class rocketRecipes {
                 .EUt(VA[HV])
                 .duration(100)
                 .buildAndRegister();
-
-
+        RecipeMaps.ASSEMBLER_RECIPES.recipeBuilder()
+                .input(OrePrefix.plate,StainlessSteel,6)
+                .input(MULTIBLOCK_BUILDER,1)
+                .input(OrePrefix.circuit, MarkerMaterials.Tier.HV, 4)
+                .output(itemHoloProjector)
+                .EUt(VA[HV])
+                .duration(100)
+                .buildAndRegister();
         //座位
         RecipeMaps.ASSEMBLER_RECIPES.recipeBuilder()
                 .input(OrePrefix.frameGt,Aluminium)
@@ -208,6 +215,65 @@ public class rocketRecipes {
                 .duration(100)
                 .buildAndRegister();
 
+        RecipeMaps.ASSEMBLER_RECIPES.recipeBuilder()
+                .input(MetaTileEntities.HULL[4])
+                .input(MetaItems.COVER_SCREEN)
+                .input(blockAdvStructureBlock,4)
+                .input(ELECTRIC_PISTON_EV,4)
+                .input(OrePrefix.circuit, MarkerMaterials.Tier.EV, 4)
+                .circuitMeta(5)
+                .output(blockOrientationController)
+                .EUt(VA[HV])
+                .duration(400)
+                .buildAndRegister();
+
+        RecipeMaps.ASSEMBLER_RECIPES.recipeBuilder()
+                .input(MetaTileEntities.HULL[4])
+                .input(MetaItems.COVER_SCREEN)
+                .input(blockAdvStructureBlock,4)
+                .input(FIELD_GENERATOR_EV,4)
+                .input(OrePrefix.circuit, MarkerMaterials.Tier.EV, 4)
+                .circuitMeta(5)
+                .output(blockGravityController)
+                .EUt(VA[HV])
+                .duration(400)
+                .buildAndRegister();
+
+        RecipeMaps.ASSEMBLER_RECIPES.recipeBuilder()
+                .input(MetaTileEntities.HULL[4])
+                .input(MetaItems.COVER_SCREEN)
+                .input(blockAdvStructureBlock,4)
+                .input(SENSOR_EV,4)
+                .input(OrePrefix.circuit, MarkerMaterials.Tier.EV, 4)
+                .circuitMeta(5)
+                .output(blockAltitudeController)
+                .EUt(VA[HV])
+                .duration(400)
+                .buildAndRegister();
+
+        RecipeMaps.ASSEMBLER_RECIPES.recipeBuilder()
+                .input(MetaTileEntities.HULL[4])
+                .input(MetaItems.COVER_SCREEN)
+                .input(blockAdvStructureBlock,4)
+                .input(ELECTRIC_MOTOR_EV,4)
+                .input(OrePrefix.circuit, MarkerMaterials.Tier.EV, 4)
+                .circuitMeta(5)
+                .output(blockPlanetSelector)
+                .EUt(VA[HV])
+                .duration(400)
+                .buildAndRegister();
+
+        RecipeMaps.ASSEMBLER_RECIPES.recipeBuilder()
+                .input(MetaTileEntities.HULL[4])
+                .input(MetaItems.COVER_SCREEN)
+                .input(blockAdvStructureBlock,4)
+                .input(CONVEYOR_MODULE_EV,4)
+                .input(OrePrefix.circuit, MarkerMaterials.Tier.EV, 4)
+                .circuitMeta(5)
+                .output(blockPlanetHoloSelector)
+                .EUt(VA[HV])
+                .duration(400)
+                .buildAndRegister();
         //跃迁
         RecipeMaps.ASSEMBLER_RECIPES.recipeBuilder()
                 .input(MetaTileEntities.HULL[4])
@@ -215,6 +281,7 @@ public class rocketRecipes {
                 .input(blockAdvStructureBlock,4)
                 .input(EMITTER_EV,4)
                 .input(OrePrefix.circuit, MarkerMaterials.Tier.EV, 4)
+                .circuitMeta(5)
                 .output(blockWarpShipMonitor)
                 .EUt(VA[HV])
                 .duration(400)
@@ -225,6 +292,7 @@ public class rocketRecipes {
                 .input(blockAdvStructureBlock,4)
                 .input(FIELD_GENERATOR_EV,16)
                 .input(OrePrefix.circuit, MarkerMaterials.Tier.EV, 16)
+                .circuitMeta(5)
                 .output(blockWarpCore)
                 .EUt(VA[HV])
                 .duration(400)

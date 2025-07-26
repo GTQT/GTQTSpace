@@ -15,6 +15,7 @@ import zmaster587.advancedRocketry.world.gen.WorldGenCharredTree;
 
 import java.util.Random;
 
+import static meowmel.gtqtspace.common.block.blocks.GTQTSDirtVariantBlock.DirtType.IO_DIRT;
 import static meowmel.gtqtspace.common.block.blocks.GTQTSDirtVariantBlock.DirtType.VENUS_DIRT;
 
 public class BiomeGenVolcanic extends CustomBiome {
@@ -34,9 +35,9 @@ public class BiomeGenVolcanic extends CustomBiome {
         this.decorator.grassPerChunk = 0;
         this.decorator.treesPerChunk = 0;
         this.decorator.mushroomsPerChunk = 0;
-        this.topBlock = GTQTSMetaBlocks.GTQTS_DIRT_BLOCKS.get(GTQTSDirtVariantBlock.DirtVariant.TURF).getState(VENUS_DIRT);
-        this.fillerBlock= GTQTSMetaBlocks.GTQTS_DIRT_BLOCKS.get(GTQTSDirtVariantBlock.DirtVariant.DIRT).getState(VENUS_DIRT);
-        this.STONE = GTQTSMetaBlocks.GTQTS_STONE_BLOCKS.get(GTQTSStoneVariantBlock.StoneVariant.SMOOTH).getState(GTQTSStoneVariantBlock.StoneType.VENUS_STONE);
+        this.topBlock = GTQTSMetaBlocks.GTQTS_DIRT_BLOCKS.get(GTQTSDirtVariantBlock.DirtVariant.TURF).getState(IO_DIRT);
+        this.fillerBlock= GTQTSMetaBlocks.GTQTS_DIRT_BLOCKS.get(GTQTSDirtVariantBlock.DirtVariant.DIRT).getState(IO_DIRT);
+        this.STONE = GTQTSMetaBlocks.GTQTS_STONE_BLOCKS.get(GTQTSStoneVariantBlock.StoneVariant.SMOOTH).getState(GTQTSStoneVariantBlock.StoneType.IO_STONE);
         volcano = new MapGenVolcano(800);
     }
 

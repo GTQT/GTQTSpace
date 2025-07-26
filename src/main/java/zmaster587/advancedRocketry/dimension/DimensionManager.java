@@ -745,15 +745,6 @@ public class DimensionManager implements IGalaxy {
     }
 
     public void createAndLoadDimensions() {
-        // 移除所有XML配置文件相关的读取逻辑
-        int dimOffset = DimensionManager.dimOffset;
-
-        // 注册硬编码维度
-
-        int numRandomGeneratedPlanets = 9;
-        int numRandomGeneratedGasGiants = 1;
-
-        // 直接使用硬编码生成维度
         // 创建太阳系
         StellarBody sol = new StellarBody();
         sol.setTemperature(100);
@@ -813,7 +804,6 @@ public class DimensionManager implements IGalaxy {
         venusProperties.orbitalDist = 72;
         venusProperties.setStoneBlock(GTQTSMetaBlocks.GTQTS_STONE_BLOCKS.get(GTQTSStoneVariantBlock.StoneVariant.SMOOTH).getState(GTQTSStoneVariantBlock.StoneType.VENUS_STONE));
         venusProperties.addBiome(AdvancedRocketryBiomes.venusBiome);
-        venusProperties.addBiome(AdvancedRocketryBiomes.volcanic);
         venusProperties.addBiome(AdvancedRocketryBiomes.volcanicBarren);
         venusProperties.setStar(sol);
         venusProperties.isNativeDimension = true;
@@ -867,9 +857,10 @@ public class DimensionManager implements IGalaxy {
         ioProperties.setGravitationalMultiplier(0.18f);
         ioProperties.setName("Io");
         ioProperties.orbitalDist = 25;
-        ioProperties.setStoneBlock(AdvancedRocketryBlocks.blockBasalt.getDefaultState());
+        ioProperties.setStoneBlock(GTQTSMetaBlocks.GTQTS_STONE_BLOCKS.get(GTQTSStoneVariantBlock.StoneVariant.SMOOTH).getState(GTQTSStoneVariantBlock.StoneType.IO_STONE));
         ioProperties.addBiome(AdvancedRocketryBiomes.hotDryBiome);
         ioProperties.addBiome(AdvancedRocketryBiomes.stormLandsBiome);
+        ioProperties.addBiome(AdvancedRocketryBiomes.volcanic);
         ioProperties.setParentPlanet(jupiterProperties);
         ioProperties.setStar(sol);
         ioProperties.isNativeDimension = true;

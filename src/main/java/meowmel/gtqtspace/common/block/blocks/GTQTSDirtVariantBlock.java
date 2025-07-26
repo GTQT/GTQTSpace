@@ -44,7 +44,7 @@ public class GTQTSDirtVariantBlock extends VariantBlock<GTQTSDirtVariantBlock.Di
     }
 
 
-    public static enum DirtVariant {
+    public enum DirtVariant {
         DIRT("gtqts_dirt"),
         TURF("gtqts_turf");
 
@@ -53,19 +53,19 @@ public class GTQTSDirtVariantBlock extends VariantBlock<GTQTSDirtVariantBlock.Di
         public final float hardness;
         public final float resistance;
 
-        private DirtVariant(@Nonnull String id) {
+        DirtVariant(@Nonnull String id) {
             this(id, id);
         }
 
-        private DirtVariant(@Nonnull String id, @Nonnull String translationKey) {
+        DirtVariant(@Nonnull String id, @Nonnull String translationKey) {
             this(id, translationKey, 1.5F, 10.0F);
         }
 
-        private DirtVariant(@Nonnull String id, float hardness, float resistance) {
+        DirtVariant(@Nonnull String id, float hardness, float resistance) {
             this(id, id, hardness, resistance);
         }
 
-        private DirtVariant(@Nonnull String id, @Nonnull String translationKey, float hardness, float resistance) {
+        DirtVariant(@Nonnull String id, @Nonnull String translationKey, float hardness, float resistance) {
             this.id = id;
             this.translationKey = translationKey;
             this.hardness = hardness;
@@ -73,15 +73,17 @@ public class GTQTSDirtVariantBlock extends VariantBlock<GTQTSDirtVariantBlock.Di
         }
     }
 
-    public static enum DirtType implements IStringSerializable {
+    public enum DirtType implements IStringSerializable {
         MOON_DIRT("moon", MapColor.GRAY),
         MARS_DIRT("mars", MapColor.RED_STAINED_HARDENED_CLAY),
-        VENUS_DIRT("venus", MapColor.ORANGE_STAINED_HARDENED_CLAY),;
+        VENUS_DIRT("venus", MapColor.ORANGE_STAINED_HARDENED_CLAY),
+        IO_DIRT("io", MapColor.PURPLE_STAINED_HARDENED_CLAY),
+        ;
 
-        private final String name;
         public final MapColor mapColor;
+        private final String name;
 
-        private DirtType(@Nonnull String name, @Nonnull MapColor mapColor) {
+        DirtType(@Nonnull String name, @Nonnull MapColor mapColor) {
             this.name = name;
             this.mapColor = mapColor;
         }
@@ -96,6 +98,7 @@ public class GTQTSDirtVariantBlock extends VariantBlock<GTQTSDirtVariantBlock.Di
                 case MOON_DIRT:
                 case MARS_DIRT:
                 case VENUS_DIRT:
+                case IO_DIRT:
                     return OrePrefix.stone;
                 default:
                     throw new IllegalStateException("Unreachable");
@@ -110,6 +113,8 @@ public class GTQTSDirtVariantBlock extends VariantBlock<GTQTSDirtVariantBlock.Di
                     return GTQTSpaceMaterials.MarsStone;
                 case VENUS_DIRT:
                     return GTQTSpaceMaterials.VenusStone;
+                case IO_DIRT:
+                    return GTQTSpaceMaterials.IoStone;
                 default:
                     throw new IllegalStateException("Unreachable");
             }

@@ -83,7 +83,7 @@ public class satelliteRecipes {
         //item.circuitIC.2.name=高级电路
         //item.circuitIC.3.name=控制电路板
         RecipeMaps.PACKER_RECIPES.recipeBuilder()
-                .input(itemIC, 1, 0)
+                .input(itemIC, 1, 3)
                 .input(MetaTileEntities.ENERGY_INPUT_HATCH[2])
                 .output(blockForgeInputPlug)
                 .EUt(VA[MV])
@@ -91,7 +91,7 @@ public class satelliteRecipes {
                 .buildAndRegister();
 
         RecipeMaps.PACKER_RECIPES.recipeBuilder()
-                .input(itemIC, 1, 0)
+                .input(itemIC, 1, 3)
                 .input(MetaTileEntities.ENERGY_OUTPUT_HATCH[2])
                 .output(blockForgeOutputPlug)
                 .EUt(VA[MV])

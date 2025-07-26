@@ -87,5 +87,11 @@ public class FirstDegreeMaterials {
 				.dust()
 				.color(0xE0E0E0).iconSet(ROUGH)
 				.build();
+
+		//IoStone
+		GTQTSpaceMaterials.IoStone = new Material.Builder(getMaterialsId(), gtqtspaceId("io_stone"))
+				.dust()
+				.color(0xE0E0E0).iconSet(ROUGH)
+				.build();
 	}
 }

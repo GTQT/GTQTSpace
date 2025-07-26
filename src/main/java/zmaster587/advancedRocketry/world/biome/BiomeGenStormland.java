@@ -1,5 +1,8 @@
 package zmaster587.advancedRocketry.world.biome;
 
+import meowmel.gtqtspace.common.block.GTQTSMetaBlocks;
+import meowmel.gtqtspace.common.block.blocks.GTQTSDirtVariantBlock;
+import meowmel.gtqtspace.common.block.blocks.GTQTSStoneVariantBlock;
 import net.minecraft.entity.monster.EntityCreeper;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -8,12 +11,16 @@ import net.minecraft.world.gen.feature.WorldGenAbstractTree;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 import zmaster587.advancedRocketry.api.AdvancedRocketryBlocks;
+import zmaster587.advancedRocketry.dimension.biome.CustomBiome;
 import zmaster587.advancedRocketry.world.gen.WorldGenCharredTree;
 import zmaster587.advancedRocketry.world.gen.WorldGenElectricMushroom;
 
 import java.util.Random;
 
-public class BiomeGenStormland extends Biome {
+import static meowmel.gtqtspace.common.block.blocks.GTQTSDirtVariantBlock.DirtType.IO_DIRT;
+import static meowmel.gtqtspace.common.block.blocks.GTQTSDirtVariantBlock.DirtType.VENUS_DIRT;
+
+public class BiomeGenStormland extends CustomBiome {
 
     WorldGenAbstractTree charTree = new WorldGenCharredTree(false, 6);
 
@@ -27,7 +34,9 @@ public class BiomeGenStormland extends Biome {
         this.decorator.flowersPerChunk = 0;
         this.decorator.grassPerChunk = 0;
         this.decorator.treesPerChunk = 6;
-        this.fillerBlock = this.topBlock = AdvancedRocketryBlocks.blockHotTurf.getDefaultState();
+        this.topBlock = GTQTSMetaBlocks.GTQTS_DIRT_BLOCKS.get(GTQTSDirtVariantBlock.DirtVariant.TURF).getState(IO_DIRT);
+        this.fillerBlock= GTQTSMetaBlocks.GTQTS_DIRT_BLOCKS.get(GTQTSDirtVariantBlock.DirtVariant.DIRT).getState(IO_DIRT);
+        this.STONE = GTQTSMetaBlocks.GTQTS_STONE_BLOCKS.get(GTQTSStoneVariantBlock.StoneVariant.SMOOTH).getState(GTQTSStoneVariantBlock.StoneType.IO_STONE);
     }
 
     @Override

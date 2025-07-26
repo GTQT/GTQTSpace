@@ -19,6 +19,11 @@
         "textures" : {
           "all" : "gregtech:blocks/gtqts_stones/venus_turf"
         }
+      },
+      "io": {
+        "textures" : {
+          "all" : "gregtech:blocks/gtqts_stones/io_turf"
+        }
       }
     }
   }
