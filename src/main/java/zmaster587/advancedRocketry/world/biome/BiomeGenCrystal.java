@@ -1,5 +1,6 @@
 package zmaster587.advancedRocketry.world.biome;
 
+import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Blocks;
 import net.minecraft.world.World;
 import net.minecraft.world.biome.Biome;
@@ -11,6 +12,8 @@ import zmaster587.advancedRocketry.world.decoration.MapGenLargeCrystal;
 import zmaster587.advancedRocketry.world.gen.WorldGenLargeCrystal;
 
 import javax.annotation.Nonnull;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Random;
 
 public class BiomeGenCrystal extends Biome {
@@ -34,7 +37,11 @@ public class BiomeGenCrystal extends Biome {
         crystalGenerator = new WorldGenLargeCrystal();
         crystalGenBase = new MapGenLargeCrystal(fillerBlock, AdvancedRocketryBlocks.blockCrystal.getDefaultState());
     }
-
+    @Override
+    @Nonnull
+    public List<SpawnListEntry> getSpawnableList(EnumCreatureType p_76747_1_) {
+        return new LinkedList<>();
+    }
     @Override
     public void genTerrainBlocks(World worldIn, Random rand,
                                  @Nonnull ChunkPrimer chunkPrimerIn, int x, int z, double noiseVal) {

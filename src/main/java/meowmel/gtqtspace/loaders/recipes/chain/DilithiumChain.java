@@ -17,7 +17,6 @@ public class DilithiumChain {
         RecipeMaps.BLAST_RECIPES.recipeBuilder()
                 .input(OrePrefix.dust, Materials.Stibnite,1)
                 .input(OrePrefix.dust, GTQTMaterials.VanadiumOxide,1)
-                .fluidInputs(Materials.Indium.getFluid(288))
                 .output(OrePrefix.dust,SbVOx)
                 .blastFurnaceTemp(3600)
                 .EUt(VA[HV])

@@ -1,5 +1,6 @@
 package zmaster587.advancedRocketry.world.biome;
 
+import net.minecraft.entity.EnumCreatureType;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
@@ -10,6 +11,8 @@ import zmaster587.advancedRocketry.world.gen.WorldGenNoTree;
 
 import javax.annotation.Nonnull;
 import javax.annotation.ParametersAreNonnullByDefault;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Random;
 
 public class BiomeGenAlienForest extends Biome {
@@ -19,12 +22,17 @@ public class BiomeGenAlienForest extends Biome {
 
     public BiomeGenAlienForest(BiomeProperties properties) {
         super(properties);
-
+        spawnableMonsterList.clear();
+        this.spawnableCreatureList.clear();
         this.fillerBlock = Blocks.GRASS.getDefaultState();
         this.decorator.grassPerChunk = 50;
         this.decorator.flowersPerChunk = 0;
     }
-
+    @Override
+    @Nonnull
+    public List<SpawnListEntry> getSpawnableList(EnumCreatureType p_76747_1_) {
+        return new LinkedList<>();
+    }
     @Override
     @ParametersAreNonnullByDefault
     public void decorate(World worldIn, Random rand, BlockPos pos) {
