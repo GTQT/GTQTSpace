@@ -2,18 +2,14 @@ package zmaster587.advancedRocketry.dimension;
 
 import net.minecraft.block.Block;
 import net.minecraft.block.state.IBlockState;
-import net.minecraft.init.Biomes;
 import net.minecraft.init.Blocks;
-import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.*;
-import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
-import net.minecraft.world.WorldServer;
 import net.minecraft.world.biome.Biome;
 import net.minecraft.world.biome.Biome.TempCategory;
 import net.minecraft.world.biome.BiomeProvider;
@@ -33,20 +29,14 @@ import zmaster587.advancedRocketry.api.dimension.solar.StellarBody;
 import zmaster587.advancedRocketry.api.satellite.SatelliteBase;
 import zmaster587.advancedRocketry.atmosphere.AtmosphereType;
 import zmaster587.advancedRocketry.inventory.TextureResources;
-import zmaster587.advancedRocketry.item.ItemBiomeChanger;
-import zmaster587.advancedRocketry.item.ItemSatelliteIdentificationChip;
 import zmaster587.advancedRocketry.network.PacketDimInfo;
 import zmaster587.advancedRocketry.network.PacketSatellite;
-import zmaster587.advancedRocketry.satellite.SatelliteBiomeChanger;
-import zmaster587.advancedRocketry.satellite.SatelliteWeatherController;
 import zmaster587.advancedRocketry.stations.SpaceObjectManager;
 import zmaster587.advancedRocketry.util.AstronomicalBodyHelper;
 import zmaster587.advancedRocketry.util.OreGenProperties;
 import zmaster587.advancedRocketry.util.SpacePosition;
 import zmaster587.advancedRocketry.util.SpawnListEntryNBT;
 import zmaster587.advancedRocketry.world.ChunkManagerPlanet;
-import zmaster587.advancedRocketry.world.provider.WorldProviderPlanet;
-import zmaster587.libVulpes.api.IUniversalEnergy;
 import zmaster587.libVulpes.network.PacketHandler;
 import zmaster587.libVulpes.util.HashedBlockPosition;
 import zmaster587.libVulpes.util.VulpineMath;
@@ -113,6 +103,11 @@ public class DimensionProperties implements Cloneable, IDimensionProperties {
     public int ringAngle;
     public boolean hasRivers;
     public List<ItemStack> requiredArtifacts;
+    //public int target_sea_level;
+    public List<HashedBlockPosition> terraformingChangeList;
+    public List<Chunk> terraformingChunkListCurrentCycle;
+    public BiomeProvider chunkMgrTerraformed;
+    public List<watersourcelocked> water_source_locked_positions;
     IAtmosphere atmosphereType;
     StellarBody star;
     int starId;
@@ -120,10 +115,10 @@ public class DimensionProperties implements Cloneable, IDimensionProperties {
     private int atmosphereDensity;
     private String name;
     //public ExtendedBiomeProperties biomeProperties;
-    private LinkedList<BiomeEntry> allowedBiomes;
+    private final LinkedList<BiomeEntry> allowedBiomes;
     private LinkedList<BiomeEntry> terraformedBiomes;
-    private LinkedList<BiomeEntry> craterBiomeWeights;
-    private boolean isRegistered = false;
+    private final LinkedList<BiomeEntry> craterBiomeWeights;
+    private final boolean isRegistered = false;
     //private boolean isTerraformed = false;
     //Planet Heirachy
     private HashSet<Integer> childPlanets;
@@ -151,12 +146,7 @@ public class DimensionProperties implements Cloneable, IDimensionProperties {
     private IBlockState fillerBlock;
     private int seaLevel;
     private int generatorType;
-    //public int target_sea_level;
-    public List<HashedBlockPosition> terraformingChangeList;
-    public List<Chunk> terraformingChunkListCurrentCycle;
-    public BiomeProvider chunkMgrTerraformed;
 
-    public List<watersourcelocked> water_source_locked_positions;
     //public boolean water_can_exist;
     public DimensionProperties(int id) {
         name = "Temp";
@@ -220,59 +210,11 @@ public class DimensionProperties implements Cloneable, IDimensionProperties {
         //this.chunkMgrTerraformed = new ChunkManagerPlanet(net.minecraftforge.common.DimensionManager.getWorld(id), net.minecraftforge.common.DimensionManager.getWorld(getId()).getWorldInfo().getGeneratorOptions(), getTerraformedBiomes());
     }
 
-    public void reset_chunkmgr(){
-        World world = net.minecraftforge.common.DimensionManager.getWorld(getId());
-        getAverageTemp();
-        setTerraformedBiomes(DimensionManager.getInstance().getDimensionProperties(world.provider.getDimension()).getViableBiomes(false));
-        chunkMgrTerraformed = new ChunkManagerPlanet(world, world.getWorldInfo().getGeneratorOptions(), getTerraformedBiomes());
-    }
-
-    public void add_chunk_to_terraforming_list(Chunk chunk) {
-        boolean is_there = false;
-        for (Chunk i : terraformingChunkListCurrentCycle) {
-            if (i.x == chunk.x && i.z == chunk.z) {
-                is_there = true;
-            }
-        }
-        if (!is_there) {
-            terraformingChunkListCurrentCycle.add(chunk);
-            for (int i = 0; i < 256; i++) {
-                int coord = i;
-                int x = (coord & 0xF) + chunk.x * 16;
-                int z = (coord >> 4) + chunk.z * 16;
-                terraformingChangeList.add(new HashedBlockPosition(x, 0, z));
-            }
-        }
-    }
-    private void reset_terraforming_chunk_positions(){
-        terraformingChangeList.clear();
-        terraformingChunkListCurrentCycle.clear();
-        Collection<Chunk> list = (net.minecraftforge.common.DimensionManager.getWorld(getId())).getChunkProvider().getLoadedChunks();
-        if (list.size() > 0) {
-            for (Chunk chunk:list){
-                add_chunk_to_terraforming_list(chunk);
-            }
-        }
-    }
-    public HashedBlockPosition get_next_terraforming_block() {
-        if (terraformingChangeList.size() == 0) {
-            //long startTime = System.currentTimeMillis();
-            reset_terraforming_chunk_positions();
-            //long endTime = System.currentTimeMillis();
-            //long executionTime = endTime - startTime;  // Time in milliseconds
-            //System.out.println("reset chunklist: "+executionTime+"ms");
-        }
-        if (terraformingChangeList.size() == 0) {
-            System.out.println("List is 0 - this should never happen!!");
-            return null; // this should never happen. Yes it would crash the game, but if it does, my code is wrong and needs to be fixed anyway
-        }
-        return terraformingChangeList.remove(nextInt(0,terraformingChangeList.size()));
-        //return terraformingChangeList.remove(0);
-    }
     public DimensionProperties(int id, String name) {
         this(id);
         this.name = name;
     }
+
     public DimensionProperties(int id, boolean shouldRegister) {
         this(id);
         isStation = !shouldRegister;
@@ -299,6 +241,59 @@ public class DimensionProperties implements Cloneable, IDimensionProperties {
         properties.planetId = id;
 
         return properties;
+    }
+
+    public void reset_chunkmgr() {
+        World world = net.minecraftforge.common.DimensionManager.getWorld(getId());
+        getAverageTemp();
+        setTerraformedBiomes(DimensionManager.getInstance().getDimensionProperties(world.provider.getDimension()).getViableBiomes(false));
+        chunkMgrTerraformed = new ChunkManagerPlanet(world, world.getWorldInfo().getGeneratorOptions(), getTerraformedBiomes());
+    }
+
+    public void add_chunk_to_terraforming_list(Chunk chunk) {
+        boolean is_there = false;
+        for (Chunk i : terraformingChunkListCurrentCycle) {
+            if (i.x == chunk.x && i.z == chunk.z) {
+                is_there = true;
+                break;
+            }
+        }
+        if (!is_there) {
+            terraformingChunkListCurrentCycle.add(chunk);
+            for (int i = 0; i < 256; i++) {
+                int coord = i;
+                int x = (coord & 0xF) + chunk.x * 16;
+                int z = (coord >> 4) + chunk.z * 16;
+                terraformingChangeList.add(new HashedBlockPosition(x, 0, z));
+            }
+        }
+    }
+
+    private void reset_terraforming_chunk_positions() {
+        terraformingChangeList.clear();
+        terraformingChunkListCurrentCycle.clear();
+        Collection<Chunk> list = (net.minecraftforge.common.DimensionManager.getWorld(getId())).getChunkProvider().getLoadedChunks();
+        if (list.size() > 0) {
+            for (Chunk chunk : list) {
+                add_chunk_to_terraforming_list(chunk);
+            }
+        }
+    }
+
+    public HashedBlockPosition get_next_terraforming_block() {
+        if (terraformingChangeList.size() == 0) {
+            //long startTime = System.currentTimeMillis();
+            reset_terraforming_chunk_positions();
+            //long endTime = System.currentTimeMillis();
+            //long executionTime = endTime - startTime;  // Time in milliseconds
+            //System.out.println("reset chunklist: "+executionTime+"ms");
+        }
+        if (terraformingChangeList.size() == 0) {
+            System.out.println("List is 0 - this should never happen!!");
+            return null; // this should never happen. Yes it would crash the game, but if it does, my code is wrong and needs to be fixed anyway
+        }
+        return terraformingChangeList.remove(nextInt(0, terraformingChangeList.size()));
+        //return terraformingChangeList.remove(0);
     }
 
     public void copySatellites(DimensionProperties props) {
@@ -353,6 +348,14 @@ public class DimensionProperties implements Cloneable, IDimensionProperties {
 
     public List<ItemStack> getRequiredArtifacts() {
         return requiredArtifacts;
+    }
+
+    public void setRequiredArtifacts(List<ItemStack> artifacts) {
+        requiredArtifacts = artifacts;
+    }
+
+    public void setRequiredArtifacts(ItemStack artifacts) {
+        requiredArtifacts.add(artifacts);
     }
 
     @Override
@@ -488,8 +491,8 @@ public class DimensionProperties implements Cloneable, IDimensionProperties {
             return TextureResources.locationBlackHole_icon;
 
         if (isGasGiant()) {
-            if (getAverageTemp() >= 150)return PlanetIcons.GASGIANTBROWN.resource;
-            if (getAverageTemp() >= 100)return PlanetIcons.GASGIANTRED.resource;
+            if (getAverageTemp() >= 150) return PlanetIcons.GASGIANTBROWN.resource;
+            if (getAverageTemp() >= 100) return PlanetIcons.GASGIANTRED.resource;
             return PlanetIcons.GASGIANTBLUE.resource;
         }
 
@@ -540,8 +543,8 @@ public class DimensionProperties implements Cloneable, IDimensionProperties {
 
 
         if (isGasGiant()) {
-            if (getAverageTemp() >= 150)return PlanetIcons.GASGIANTBROWN.resourceLEO;
-            if (getAverageTemp() >= 100)return PlanetIcons.GASGIANTRED.resourceLEO;
+            if (getAverageTemp() >= 150) return PlanetIcons.GASGIANTBROWN.resourceLEO;
+            if (getAverageTemp() >= 100) return PlanetIcons.GASGIANTRED.resourceLEO;
             return PlanetIcons.GASGIANTBLUE.resourceLEO;
         }
 
@@ -640,7 +643,7 @@ public class DimensionProperties implements Cloneable, IDimensionProperties {
      * @return if a planet, the same as getParentOrbitalDistance(), if a moon, the moon's distance from the host star
      */
     public int getSolarOrbitalDistance() {
-        if (this.isStar()){
+        if (this.isStar()) {
             return 1;
         }
         if (parentPlanet != Constants.INVALID_PLANET)
@@ -716,7 +719,6 @@ public class DimensionProperties implements Cloneable, IDimensionProperties {
         this.atmosphereDensity = atmosphereDensity;
 
         reset_chunkmgr();
-
 
 
         PacketHandler.sendToAll(new PacketDimInfo(getId(), this));
@@ -990,14 +992,15 @@ public class DimensionProperties implements Cloneable, IDimensionProperties {
                 BlockPos p = i.pos.getBlockPos();
                 iterator_2.remove(); // Safe removal during iteration
                 World world = (net.minecraftforge.common.DimensionManager.getWorld(getId()));
-                world.notifyNeighborsOfStateChange(p,world.getBlockState(p).getBlock(),false);
+                world.notifyNeighborsOfStateChange(p, world.getBlockState(p).getBlock(), false);
             }
         }
 
     }
-    public void add_water_locked_pos(HashedBlockPosition pos){
-        for (watersourcelocked i : water_source_locked_positions){
-            if (i.pos.equals(pos)){
+
+    public void add_water_locked_pos(HashedBlockPosition pos) {
+        for (watersourcelocked i : water_source_locked_positions) {
+            if (i.pos.equals(pos)) {
                 i.reset_timer();
                 return;
             }
@@ -2048,6 +2051,7 @@ public class DimensionProperties implements Cloneable, IDimensionProperties {
         public boolean hotterThan(Temps type) {
             return this.compareTo(type) < 0;
         }
+
         public boolean hotterOrEquals(Temps type) {
             return this.compareTo(type) <= 0;
         }
@@ -2121,8 +2125,8 @@ public class DimensionProperties implements Cloneable, IDimensionProperties {
         UNKNOWN(new ResourceLocation("advancedrocketry:textures/planets/Unknown.png"));
 
 
-        private ResourceLocation resource;
-        private ResourceLocation resourceLEO;
+        private final ResourceLocation resource;
+        private final ResourceLocation resourceLEO;
 
         PlanetIcons(ResourceLocation resource) {
             this.resource = resource;

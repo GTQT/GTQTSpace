@@ -43,6 +43,7 @@ import java.util.Map.Entry;
 import java.util.zip.GZIPOutputStream;
 
 import static java.nio.file.StandardCopyOption.REPLACE_EXISTING;
+import static meowmel.gtqtspace.common.items.GTQTSMetaItems.*;
 
 
 public class DimensionManager implements IGalaxy {
@@ -776,6 +777,7 @@ public class DimensionManager implements IGalaxy {
 
         //注册火星 T2
         DimensionProperties marsProperties = new DimensionProperties(52);
+        marsProperties.setRequiredArtifacts(COMPUTERTIER1.getStackForm());
         marsProperties.setAtmosphereDensityDirect(6);
         marsProperties.averageTemperature = 220;
         marsProperties.rotationalPeriod = 24660;
@@ -794,6 +796,7 @@ public class DimensionManager implements IGalaxy {
 
         //注册金星 T3
         DimensionProperties venusProperties = new DimensionProperties(53);
+        marsProperties.setRequiredArtifacts(COMPUTERTIER2.getStackForm());
         venusProperties.setAtmosphereDensityDirect(920);
         venusProperties.averageTemperature = 464;
         venusProperties.rotationalPeriod = 20995200;
@@ -810,8 +813,9 @@ public class DimensionManager implements IGalaxy {
         venusProperties.initDefaultAttributes();
         DimensionManager.getInstance().registerDimNoUpdate(venusProperties, true);
 
-        //注册小行星带
+        //注册小行星带 T3
         DimensionProperties asteroidProperties = new DimensionProperties(54);
+        marsProperties.setRequiredArtifacts(COMPUTERTIER2.getStackForm());
         asteroidProperties.setAtmosphereDensityDirect(0);
         asteroidProperties.averageTemperature = 30;
         asteroidProperties.rotationalPeriod = 0;
@@ -825,7 +829,7 @@ public class DimensionManager implements IGalaxy {
         asteroidProperties.initDefaultAttributes();
         DimensionManager.getInstance().registerDimNoUpdate(asteroidProperties, true);
 
-        // 注册木星 T3 (气态巨行星)
+        // 注册木星 T4 (气态巨行星)
         DimensionProperties jupiterProperties = new DimensionProperties(55);
         jupiterProperties.setAtmosphereDensityDirect(220);
         jupiterProperties.averageTemperature = 165;
@@ -851,6 +855,7 @@ public class DimensionManager implements IGalaxy {
 
         // 木卫一 (Io)
         DimensionProperties ioProperties = new DimensionProperties(56);
+        marsProperties.setRequiredArtifacts(COMPUTERTIER3.getStackForm());
         ioProperties.setAtmosphereDensityDirect(0);
         ioProperties.averageTemperature = 130;
         ioProperties.rotationalPeriod = 152853;
@@ -869,6 +874,7 @@ public class DimensionManager implements IGalaxy {
 
         // 木卫二 (Europa)
         DimensionProperties europaProperties = new DimensionProperties(57);
+        marsProperties.setRequiredArtifacts(COMPUTERTIER3.getStackForm());
         europaProperties.setAtmosphereDensityDirect(1);
         europaProperties.averageTemperature = 102;
         europaProperties.rotationalPeriod = 306000;
@@ -906,6 +912,7 @@ public class DimensionManager implements IGalaxy {
 
         // 土卫六 (Titan)
         DimensionProperties titanProperties = new DimensionProperties(59);
+        marsProperties.setRequiredArtifacts(COMPUTERTIER3.getStackForm());
         titanProperties.setAtmosphereDensityDirect(146);
         titanProperties.averageTemperature = 94;
         titanProperties.rotationalPeriod = 1370000;
@@ -925,6 +932,7 @@ public class DimensionManager implements IGalaxy {
 
         // 土卫二 (Enceladus)
         DimensionProperties enceladusProperties = new DimensionProperties(60);
+        marsProperties.setRequiredArtifacts(COMPUTERTIER3.getStackForm());
         enceladusProperties.setAtmosphereDensityDirect(0);
         enceladusProperties.averageTemperature = 75;
         enceladusProperties.rotationalPeriod = 118000;
@@ -939,6 +947,14 @@ public class DimensionManager implements IGalaxy {
         enceladusProperties.isNativeDimension = true;
         enceladusProperties.initDefaultAttributes();
         DimensionManager.getInstance().registerDimNoUpdate(enceladusProperties, true);
+
+        //水星 T5
+
+        //天王星 T6
+
+        //海王星 T6
+
+        //其他统一 T7
 
         // 为太阳生成随机行星
         //generateRandomPlanets(sol, numRandomGeneratedPlanets, numRandomGeneratedGasGiants);

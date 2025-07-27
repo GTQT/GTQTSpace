@@ -27,7 +27,7 @@ public class GTQTSDirtVariantBlock extends VariantBlock<GTQTSDirtVariantBlock.Di
         this.setResistance(dirtVariant.resistance);
 
         if (dirtVariant == DirtVariant.DIRT) {
-            this.setSoundType(SoundType.GROUND);
+            this.setSoundType(SoundType.SNOW);
         } else if (dirtVariant == DirtVariant.TURF) {
             this.setSoundType(SoundType.SAND);
         }

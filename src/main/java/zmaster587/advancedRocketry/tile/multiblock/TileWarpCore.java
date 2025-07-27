@@ -20,17 +20,17 @@ import javax.annotation.Nonnull;
 
 public class TileWarpCore extends TileMultiBlock {
     public static final Object[][][] structure = {
-            {{"blockWarpCoreRim", "blockWarpCoreRim", "blockWarpCoreRim"},
-                    {"blockWarpCoreRim", 'I', "blockWarpCoreRim"},
-                    {"blockWarpCoreRim", "blockWarpCoreRim", "blockWarpCoreRim"}},
+            {{"blockTitanium", "blockTitanium", "blockTitanium"},
+                    {"blockTitanium", 'I', "blockTitanium"},
+                    {"blockTitanium", "blockTitanium", "blockTitanium"}},
 
             {{null, new BlockMeta(LibVulpesBlocks.blockStructureBlock), null},
                     {new BlockMeta(LibVulpesBlocks.blockStructureBlock), "blockWarpCoreCore", new BlockMeta(LibVulpesBlocks.blockStructureBlock)},
                     {null, new BlockMeta(LibVulpesBlocks.blockStructureBlock), null}},
 
-            {{"blockWarpCoreRim", 'c', "blockWarpCoreRim"},
-                    {"blockWarpCoreRim", "blockWarpCoreCore", "blockWarpCoreRim"},
-                    {"blockWarpCoreRim", "blockWarpCoreRim", "blockWarpCoreRim"}},
+            {{"blockTitanium", 'c', "blockTitanium"},
+                    {"blockTitanium", "blockWarpCoreCore", "blockTitanium"},
+                    {"blockTitanium", "blockTitanium", "blockTitanium"}},
 
     };
     private SpaceStationObject station;

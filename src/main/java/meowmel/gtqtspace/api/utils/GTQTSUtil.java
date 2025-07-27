@@ -205,7 +205,7 @@ public class GTQTSUtil {
 	};
 
 
-	static List<Integer> spaceDime = new ArrayList<>(Arrays.asList(1, 2));
+	static List<Integer> spaceDime = new ArrayList<>(Arrays.asList(50, -2));
 	public static boolean checkDimension(GTQTSpaceMultiblockController gtqtSpaceMultiblockController) {
 		return spaceDime.contains(gtqtSpaceMultiblockController.getWorld().provider.getDimension());
 	}
