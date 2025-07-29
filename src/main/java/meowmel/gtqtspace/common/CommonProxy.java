@@ -144,7 +144,6 @@ public class CommonProxy {
 
     }
     public void preLoad() {
-        GTQTSStoneTypes.init();
         GTQTSRecipes.registerOrePrefix();
     }
 }

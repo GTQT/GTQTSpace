@@ -591,6 +591,13 @@ gtqtspace.veins.ore.water_sphere=水泉
 gtqtspace.veins.ore.sulfuric_acid_sphere=硫酸球
 gtqtspace.veins.ore.methane=甲烷泉
 
+# Ore Prefixes (%s is the localised material name)
+item.material.oreprefix.oreMoonStone=月球%s矿石
+item.material.oreprefix.oreMarsStone=火星%s矿石
+item.material.oreprefix.oreVenusStone=金星%s矿石
+item.material.oreprefix.oreMethaneStone=甲烷冰%s矿石
+item.material.oreprefix.oreIoStone=木卫一%s矿石
+
 item.material.oreprefix.densePlate=超致密%s板
 #
 itemGroup.gtqtspace_core=GTQT | 太空系统

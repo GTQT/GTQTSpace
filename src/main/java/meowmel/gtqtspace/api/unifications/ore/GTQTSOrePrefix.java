@@ -16,6 +16,10 @@ public class GTQTSOrePrefix {
             ENABLE_UNIFICATION, hasOreProperty);
     public static final OrePrefix oreVenus = new OrePrefix("oreVenus", -1, null, MaterialIconType.ore,
             ENABLE_UNIFICATION, hasOreProperty);
+    public static final OrePrefix oreMethane = new OrePrefix("oreMethane", -1, null, MaterialIconType.ore,
+            ENABLE_UNIFICATION, hasOreProperty);
+    public static final OrePrefix oreIo = new OrePrefix("oreIo", -1, null, MaterialIconType.ore,
+            ENABLE_UNIFICATION, hasOreProperty);
 
     //超致密板
     public static final OrePrefix densePlate = new OrePrefix("densePlate", M * 36, null, GTQTSMaterialIconType.densePlate, ENABLE_UNIFICATION, mat -> mat.hasFlag(GENERATE_DENSE_PLATE));
