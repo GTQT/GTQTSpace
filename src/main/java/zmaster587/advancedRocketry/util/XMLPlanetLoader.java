@@ -316,7 +316,7 @@ public class XMLPlanetLoader {
                     AdvancedRocketry.logger.warn("Error saving biomes for world, biomes list saved may be incomplete.  World: " + properties.getId());
                 }
             }
-            if (!biomeIds.isEmpty())
+            if (biomeIds.length() > 0)
                 biomeIds = new StringBuilder(biomeIds.substring(1));
             nodePlanet.appendChild(createTextNode(doc, ELEMENT_BIOMEIDS, biomeIds.toString()));
         }

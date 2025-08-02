@@ -250,32 +250,49 @@ public class DimensionProperties implements Cloneable, IDimensionProperties {
         chunkMgrTerraformed = new ChunkManagerPlanet(world, world.getWorldInfo().getGeneratorOptions(), getTerraformedBiomes());
     }
 
+    // 在类中定义锁对象
+    private final Object terraformingLock = new Object();
+
     public void add_chunk_to_terraforming_list(Chunk chunk) {
-        boolean is_there = false;
-        for (Chunk i : terraformingChunkListCurrentCycle) {
-            if (i.x == chunk.x && i.z == chunk.z) {
-                is_there = true;
-                break;
+        synchronized (terraformingLock) {
+            boolean is_there = false;
+            for (Chunk i : terraformingChunkListCurrentCycle) {
+                if (i.x == chunk.x && i.z == chunk.z) {
+                    is_there = true;
+                    break;
+                }
             }
-        }
-        if (!is_there) {
-            terraformingChunkListCurrentCycle.add(chunk);
-            for (int i = 0; i < 256; i++) {
-                int coord = i;
-                int x = (coord & 0xF) + chunk.x * 16;
-                int z = (coord >> 4) + chunk.z * 16;
-                terraformingChangeList.add(new HashedBlockPosition(x, 0, z));
+            if (!is_there) {
+                terraformingChunkListCurrentCycle.add(chunk);
+                for (int i = 0; i < 256; i++) {
+                    int coord = i;
+                    int x = (coord & 0xF) + chunk.x * 16;
+                    int z = (coord >> 4) + chunk.z * 16;
+                    terraformingChangeList.add(new HashedBlockPosition(x, 0, z));
+                }
             }
         }
     }
 
     private void reset_terraforming_chunk_positions() {
-        terraformingChangeList.clear();
-        terraformingChunkListCurrentCycle.clear();
-        Collection<Chunk> list = (net.minecraftforge.common.DimensionManager.getWorld(getId())).getChunkProvider().getLoadedChunks();
-        if (list.size() > 0) {
-            for (Chunk chunk : list) {
-                add_chunk_to_terraforming_list(chunk);
+        World world = net.minecraftforge.common.DimensionManager.getWorld(getId());
+        if (world == null) return;
+
+        Collection<Chunk> list =  (net.minecraftforge.common.DimensionManager.getWorld(getId())).getChunkProvider().getLoadedChunks();
+        synchronized (terraformingLock) {
+            terraformingChangeList.clear();
+            terraformingChunkListCurrentCycle.clear();
+            if (!list.isEmpty()) {
+                for (Chunk chunk : list) {
+                    // 直接操作列表避免重复检查
+                    terraformingChunkListCurrentCycle.add(chunk);
+                    for (int i = 0; i < 256; i++) {
+                        int coord = i;
+                        int x = (coord & 0xF) + chunk.x * 16;
+                        int z = (coord >> 4) + chunk.z * 16;
+                        terraformingChangeList.add(new HashedBlockPosition(x, 0, z));
+                    }
+                }
             }
         }
     }
