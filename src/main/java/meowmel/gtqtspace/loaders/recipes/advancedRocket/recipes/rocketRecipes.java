@@ -132,6 +132,17 @@ public class rocketRecipes {
                 .duration(100)
                 .buildAndRegister();
 
+        //导航计算机
+        RecipeMaps.ASSEMBLER_RECIPES.recipeBuilder()
+                .input(blockStructureBlock,4)
+                .input(MetaItems.COVER_SCREEN)
+                .input(FIELD_GENERATOR_HV,4)
+                .input(SENSOR_HV,4)
+                .input(OrePrefix.circuit, MarkerMaterials.Tier.HV, 16)
+                .output(blockGuidanceComputer)
+                .EUt(VA[HV])
+                .duration(400)
+                .buildAndRegister();
         //火箭发动机
 
         //单推+单腿单推燃料 blockFuelTank

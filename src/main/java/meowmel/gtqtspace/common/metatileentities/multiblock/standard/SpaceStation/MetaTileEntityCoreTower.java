@@ -20,13 +20,10 @@ import gregtech.common.blocks.BlockMetalCasing;
 import gregtech.common.blocks.MetaBlocks;
 import keqing.gtqtcore.api.metatileentity.MetaTileEntityBaseWithControl;
 import meowmel.gtqtspace.client.textures.GTQTSGuiTextures;
-import meowmel.gtqtspace.world.Teleporter.SpaceStationTeleporter;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -49,6 +46,7 @@ public class MetaTileEntityCoreTower extends MetaTileEntityBaseWithControl {
     protected void updateFormedValid() {
 
     }
+
     @SideOnly(Side.CLIENT)
     @Override
     public void renderMetaTileEntity(CCRenderState renderState, Matrix4 translation, IVertexOperation[] pipeline) {
@@ -56,6 +54,7 @@ public class MetaTileEntityCoreTower extends MetaTileEntityBaseWithControl {
         this.getFrontOverlay().renderOrientedState(renderState, translation, pipeline, getFrontFacing(), true,
                 isStructureFormed());
     }
+
     protected ModularUI.Builder createUITemplate(EntityPlayer entityPlayer) {
         ModularUI.Builder builder = ModularUI.builder(GuiTextures.BACKGROUND, 198, 238);
         // Display
@@ -73,17 +72,16 @@ public class MetaTileEntityCoreTower extends MetaTileEntityBaseWithControl {
     }
 
     private void transport(EntityPlayer entityPlayer) {
-        if(isStructureFormed()&&getWorld().provider.getDimension()== 50)
-            FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().transferPlayerToDimension((EntityPlayerMP) entityPlayer, 0, new SpaceStationTeleporter(entityPlayer.getServer().getWorld(0),getPos()));
+
     }
 
     @Nonnull
     @Override
     protected BlockPattern createStructurePattern() {
         return FactoryBlockPattern.start()
-                .aisle("XXX", "XXX","XXX","XXX","XXX","XXX", "AAA", "AAA")
-                .aisle("XXX", "XAX","XAX","XAX","XAX","XAX", "AAA", "AAA")
-                .aisle("XXX", "XSX","XXX","XXX","XXX","XXX", "AAA", "AAA")
+                .aisle("XXX", "XXX", "XXX", "XXX", "XXX", "XXX", "AAA", "AAA")
+                .aisle("XXX", "XAX", "XAX", "XAX", "XAX", "XAX", "AAA", "AAA")
+                .aisle("XXX", "XSX", "XXX", "XXX", "XXX", "XXX", "AAA", "AAA")
                 .where('S', selfPredicate())
                 .where('A', states(getIntakeState()))
                 .where('X', states(getCasingAState()).setMinGlobalLimited(15)
@@ -97,9 +95,11 @@ public class MetaTileEntityCoreTower extends MetaTileEntityBaseWithControl {
     public IBlockState getIntakeState() {
         return MetaBlocks.BOILER_CASING.getState(BlockBoilerCasing.BoilerCasingType.STEEL_PIPE);
     }
+
     private IBlockState getCasingAState() {
         return MetaBlocks.METAL_CASING.getState(BlockMetalCasing.MetalCasingType.STEEL_SOLID);
     }
+
     public boolean hasMaintenanceMechanics() {
         return false;
     }
@@ -107,6 +107,7 @@ public class MetaTileEntityCoreTower extends MetaTileEntityBaseWithControl {
     public boolean hasMufflerMechanics() {
         return false;
     }
+
     @SideOnly(Side.CLIENT)
     public ICubeRenderer getBaseTexture(IMultiblockPart iMultiblockPart) {
         return Textures.SOLID_STEEL_CASING;

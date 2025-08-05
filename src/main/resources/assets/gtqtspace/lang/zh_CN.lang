@@ -91,6 +91,8 @@ metaitem.solar_plate_v.name=终极卫星太阳能板
 
 item.pos_binding_card.name=坐标绑定卡
 #方块
+tile.teleporter_spacestation.name=空间站传送门
+
 tile.gtqts_stone_smooth.moon.name=月球石头
 tile.gtqts_stone_smooth.mars.name=火星石头
 tile.gtqts_stone_smooth.venus.name=金星石头

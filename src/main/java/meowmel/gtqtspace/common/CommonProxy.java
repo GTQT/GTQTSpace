@@ -1,7 +1,6 @@
 package meowmel.gtqtspace.common;
 
 import gregtech.api.block.VariantItemBlock;
-import meowmel.gtqtspace.api.unifications.ore.GTQTSStoneTypes;
 import meowmel.gtqtspace.api.utils.GTQTSLog;
 import meowmel.gtqtspace.common.block.GTQTSMetaBlocks;
 import meowmel.gtqtspace.common.block.blocks.GTQTSDirtVariantBlock;
@@ -11,19 +10,21 @@ import meowmel.gtqtspace.loaders.recipes.GTQTSRecipes;
 import meowmel.gtqtspace.loaders.recipes.GTQTSRecipesManager;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBlock;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraft.util.IThreadListener;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+import net.minecraftforge.fml.common.network.simpleimpl.MessageContext;
 import net.minecraftforge.registries.IForgeRegistry;
 
 import java.io.IOException;
 import java.util.Objects;
 import java.util.function.Function;
-
 import static meowmel.gtqtspace.common.block.GTQTSMetaBlocks.*;
 import static meowmel.gtqtspace.common.block.blocks.BlockMotorCasing.MotorCasingTier.LV;
 import static meowmel.gtqtspace.common.block.blocks.GTQTSpaceElevatorCasing.ElevatorCasingType.BASIC_CASING;
@@ -64,6 +65,7 @@ public class CommonProxy {
                     .getItemVariant(GTQTSStoneVariantBlock.StoneType.MOON_STONE);
         }
     };
+
     @SubscribeEvent
     public static void registerBlocks(RegistryEvent.Register<Block> event) {
         GTQTSLog.logger.info("Registering blocks...");
@@ -91,7 +93,6 @@ public class CommonProxy {
 
         for (GTQTSStoneVariantBlock block : GTQTSMetaBlocks.GTQTS_STONE_BLOCKS.values()) registry.register(block);
         for (GTQTSDirtVariantBlock block : GTQTS_DIRT_BLOCKS.values()) registry.register(block);
-
     }
 
     @SubscribeEvent
@@ -145,5 +146,20 @@ public class CommonProxy {
     }
     public void preLoad() {
         GTQTSRecipes.registerOrePrefix();
+    }
+
+    /**
+     * Returns a side-appropriate EntityPlayer for use during message handling
+     */
+    public static EntityPlayer getPlayerEntity(MessageContext ctx) {
+        return ctx.getServerHandler().player;
+    }
+
+    /**
+     * Returns the current thread based on side during message handling,
+     * used for ensuring that the message is being handled by the main thread
+     */
+    public static IThreadListener getThreadFromContext(MessageContext ctx) {
+        return ctx.getServerHandler().player.getServer();
     }
 }

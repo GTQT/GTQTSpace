@@ -37,10 +37,10 @@ import meowmel.gtqtspace.client.textures.GTQTSTextures;
 import meowmel.gtqtspace.common.block.GTQTSMetaBlocks;
 import meowmel.gtqtspace.common.block.blocks.GTQTSpaceElevatorCasing;
 import meowmel.gtqtspace.common.metatileentities.GTQTSMetaTileEntities;
-import meowmel.gtqtspace.world.Teleporter.WorldTeleporter;
+import meowmel.gtqtspace.common.network.PacketDispatcher;
+import meowmel.gtqtspace.common.network.TeleportMessage;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
@@ -48,7 +48,6 @@ import net.minecraft.util.ResourceLocation;
 import net.minecraft.util.text.ITextComponent;
 import net.minecraft.util.text.TextFormatting;
 import net.minecraft.world.World;
-import net.minecraftforge.fml.common.FMLCommonHandler;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
@@ -312,9 +311,12 @@ public class MetaTileEntitySpaceElevator extends MultiblockWithDisplayBase {
                 .setClickHandler(this::handleDisplayClick));
 
 
+
         builder.widget(new ClickButtonWidget(173, 155, 18, 18, "", data -> transport(entityPlayer))
                 .setButtonTexture(GTQTSGuiTextures.BUTTON_DISABLE_STATIC)
                 .setTooltipText("空间站折跃"));
+
+
 
         // Extend Button
         builder.widget(new ImageCycleButtonWidget(173, 213, 18, 18, GTQTSGuiTextures.BUTTON_ELEVATOR_EXTENSION,
@@ -337,7 +339,7 @@ public class MetaTileEntitySpaceElevator extends MultiblockWithDisplayBase {
 
     private void transport(EntityPlayer entityPlayer) {
 
-        FMLCommonHandler.instance().getMinecraftServerInstance().getPlayerList().transferPlayerToDimension((EntityPlayerMP) entityPlayer, 50, new WorldTeleporter(entityPlayer.getServer().getWorld(50), getPos()));
+        PacketDispatcher.sendToServer(new TeleportMessage(entityPlayer.getPosition()));
     }
 
     @Override

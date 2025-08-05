@@ -6,7 +6,6 @@ import meowmel.gtqtspace.client.textures.GTQTSTextures;
 import meowmel.gtqtspace.common.CommonProxy;
 import meowmel.gtqtspace.common.block.GTQTSMetaBlocks;
 import meowmel.gtqtspace.common.items.GTQTSMetaItems;
-import net.minecraft.client.Minecraft;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.obj.OBJLoader;
 import net.minecraftforge.common.MinecraftForge;

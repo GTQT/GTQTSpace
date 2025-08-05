@@ -4,9 +4,12 @@ import meowmel.gtqtspace.api.GTQTSAPI;
 import meowmel.gtqtspace.api.utils.GTQTSLog;
 import meowmel.gtqtspace.client.ClientProxy;
 import meowmel.gtqtspace.common.CommonProxy;
+import meowmel.gtqtspace.common.block.BlockTeleporterDeepDank;
 import meowmel.gtqtspace.common.block.GTQTSMetaBlocks;
+import meowmel.gtqtspace.common.block.TileEntityTeleporterDeepDank;
 import meowmel.gtqtspace.common.items.GTQTSMetaItems;
 import meowmel.gtqtspace.common.metatileentities.GTQTSMetaTileEntities;
+import meowmel.gtqtspace.common.network.PacketDispatcher;
 import meowmel.gtqtspace.integration.GTQTSIntegration;
 import meowmel.gtqtspace.world.worldgen.GTQTSDimensionManager;
 import meowmel.gtqtspace.world.worldgen.GTQTSDimensionType;
@@ -15,6 +18,7 @@ import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.registry.GameRegistry;
 
 import java.io.IOException;
 
@@ -64,6 +68,10 @@ public class GTQTSpace {
         GTQTSAPI.init();
         GTQTSDimensionType.init();
         GTQTSDimensionManager.init();
+
+        PacketDispatcher.registerPackets();
     }
+
+
 
 }

@@ -94,6 +94,7 @@ metaitem.solar_plate_v.name=Ultimate Satellite Solar Panel
 
 item.pos_binding_card.name=Position Binding Card
 #方块
+tile.teleporter_spacestation.name=Space Station Transporter
 tile.gtqts_stone_smooth.moon.name=月球石头
 tile.gtqts_stone_smooth.mars.name=火星石头
 tile.gtqts_stone_smooth.venus.name=金星石头
