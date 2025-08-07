@@ -7,9 +7,11 @@ import net.minecraft.world.biome.Biome;
 import net.minecraft.world.chunk.Chunk;
 import net.minecraft.world.chunk.ChunkPrimer;
 import net.minecraft.world.gen.IChunkGenerator;
+import zmaster587.advancedRocketry.api.AdvancedRocketryBiomes;
 
 import javax.annotation.Nullable;
 
+import java.util.Arrays;
 import java.util.List;
 
 public class SpaceStationdGenerator implements IChunkGenerator {
@@ -25,11 +27,8 @@ public class SpaceStationdGenerator implements IChunkGenerator {
         ChunkPrimer chunkprimer = new ChunkPrimer();
         Chunk chunk = new Chunk(this.world, chunkprimer, x, z);
         chunk.generateSkylightMap();
-        byte[] abyte = chunk.getBiomeArray();
-        for (int i1 = 0; i1 < abyte.length; ++i1) {
-            abyte[i1] = (byte) Biome.getIdForBiome(Biome.getBiome(1)); //Plains
-        }
-        chunk.generateSkylightMap();
+        byte[] abyte1 = chunk.getBiomeArray();
+        Arrays.fill(abyte1, (byte) Biome.getIdForBiome(AdvancedRocketryBiomes.spaceBiome));
         return chunk;
     }
 

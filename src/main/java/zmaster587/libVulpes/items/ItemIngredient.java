@@ -36,7 +36,8 @@ public class ItemIngredient extends Item
     @Override
     public String getTranslationKey()
     {
-        return super.getTranslationKey().split(":")[1];
+        String[] parts = super.getTranslationKey().split(":", 2);
+        return parts.length > 1 ? parts[1] : parts[0];
     }
 
     @Override

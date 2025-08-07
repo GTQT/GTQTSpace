@@ -60,7 +60,7 @@ public class CasingHandler {
             builder.input(dust, component.material, (int) component.amount);
         }
 
-        builder.circuitMeta(amount)
+        builder.circuitMeta(amount%10)
                 .output(dust, material, amount)
                 .EUt(VA[tier])
                 .duration(10*amount*tier)
