@@ -96,6 +96,8 @@ public class GTQTSStoneVariantBlock extends VariantBlock<GTQTSStoneVariantBlock.
         VENUS_STONE("venus", MapColor.ORANGE_STAINED_HARDENED_CLAY),
         METHANE_ICE("methane_ice", MapColor.ICE),
         IO_STONE("io", MapColor.PURPLE_STAINED_HARDENED_CLAY),
+        //水星 Mercury
+        MERCURY_STONE("mercury", MapColor.GRAY_STAINED_HARDENED_CLAY),
         ;
 
         public final MapColor mapColor;
@@ -118,6 +120,7 @@ public class GTQTSStoneVariantBlock extends VariantBlock<GTQTSStoneVariantBlock.
                 case VENUS_STONE:
                 case METHANE_ICE:
                 case IO_STONE:
+                case MERCURY_STONE:
                     return OrePrefix.stone;
                 default:
                     throw new IllegalStateException("Unreachable");
@@ -136,6 +139,8 @@ public class GTQTSStoneVariantBlock extends VariantBlock<GTQTSStoneVariantBlock.
                     return Materials.Methane;
                 case IO_STONE:
                     return GTQTSpaceMaterials.IoStone;
+                case MERCURY_STONE:
+                    return GTQTSpaceMaterials.MercuryStone;
                 default:
                     throw new IllegalStateException("Unreachable");
             }

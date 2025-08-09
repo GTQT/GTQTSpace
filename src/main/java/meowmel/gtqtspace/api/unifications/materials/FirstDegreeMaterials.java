@@ -93,5 +93,11 @@ public class FirstDegreeMaterials {
 				.dust()
 				.color(0xE0E0E0).iconSet(ROUGH)
 				.build();
+
+        //MercuryStone
+        GTQTSpaceMaterials.MercuryStone = new Material.Builder(getMaterialsId(), gtqtspaceId("mercury_stone"))
+                .dust()
+                .color(0xE0E0E0).iconSet(ROUGH)
+                .build();
 	}
 }

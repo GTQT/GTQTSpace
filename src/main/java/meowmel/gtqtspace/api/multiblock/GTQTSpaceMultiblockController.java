@@ -73,6 +73,10 @@ public abstract class GTQTSpaceMultiblockController extends MultiMapMultiblockCo
      * tooltips优化
      * ui设计？
      */
+    @Override
+    public boolean isBatchAllowed() {
+        return false;
+    }
 
     protected class SpaceMultiblockRecipeLogic extends MultiblockRecipeLogic {
 

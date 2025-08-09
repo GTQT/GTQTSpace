@@ -18,6 +18,7 @@ public class GTQTSpaceMaterials {
 	public static Material MarsStone;
 	public static Material VenusStone;
 	public static Material IoStone;
+    public static Material MercuryStone;
 
 	public static Material TAZAlloy;
 	public static Material SAZAlloy;

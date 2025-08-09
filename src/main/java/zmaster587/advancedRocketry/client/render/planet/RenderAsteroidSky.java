@@ -1,5 +1,6 @@
 package zmaster587.advancedRocketry.client.render.planet;
 
+import meowmel.gtqtspace.api.utils.SkyRenderUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.renderer.*;
@@ -30,8 +31,6 @@ import java.util.List;
 import java.util.Random;
 
 public class RenderAsteroidSky extends IRenderHandler {
-
-
     public static final ResourceLocation asteroid1 = new ResourceLocation("advancedRocketry:textures/planets/asteroid_a.png");
     public static final ResourceLocation asteroid2 = new ResourceLocation("advancedRocketry:textures/planets/asteroid_b.png");
     public static final ResourceLocation asteroid3 = new ResourceLocation("advancedRocketry:textures/planets/asteroid_c.png");
@@ -656,6 +655,8 @@ public class RenderAsteroidSky extends IRenderHandler {
     }
 
     protected void drawStarAndSubStars(BufferBuilder buffer, StellarBody sun, DimensionProperties properties, int solarOrbitalDistance, float sunSize, Vec3d sunColor, float multiplier) {
+        SkyRenderUtil.GalaxyRender();
+
         drawStar(buffer, sun, properties, solarOrbitalDistance, sunSize, sunColor, multiplier);
 
         List<StellarBody> subStars = sun.getSubStars();

@@ -2,6 +2,7 @@ package meowmel.gtqtspace.client.skyRender;
 
 import meowmel.gtqtspace.GTQTSConfig;
 import meowmel.gtqtspace.GTQTSpace;
+import meowmel.gtqtspace.api.utils.SkyRenderUtil;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.multiplayer.WorldClient;
 import net.minecraft.client.renderer.*;
@@ -20,16 +21,6 @@ public class SkyProviderOrbit extends IRenderHandler
 
     private static final ResourceLocation moonTexture = new ResourceLocation(GTQTSpace.MODID, "textures/gui/planets/moon.png");
     private static final ResourceLocation sunTexture = new ResourceLocation(GTQTSpace.MODID, "textures/gui/planets/sun.png");
-
-    private static final ResourceLocation barnardaloopTexture = new ResourceLocation(GTQTSpace.MODID, "textures/environment/background/barnardaloop.png");
-    private static final ResourceLocation lmcTexture = new ResourceLocation(GTQTSpace.MODID, "textures/environment/background/lmc.png");
-    private static final ResourceLocation smcTexture = new ResourceLocation(GTQTSpace.MODID, "textures/environment/background/smc.png");
-    private static final ResourceLocation andromedaTexture = new ResourceLocation(GTQTSpace.MODID, "textures/environment/background/andromeda.png");
-    private static final ResourceLocation eta_carinaeTexture = new ResourceLocation(GTQTSpace.MODID, "textures/environment/background/eta_carinae.png");
-    private static final ResourceLocation pleiadesTexture = new ResourceLocation(GTQTSpace.MODID, "textures/environment/background/pleiades.png");
-    private static final ResourceLocation triangulumTexture = new ResourceLocation(GTQTSpace.MODID, "textures/environment/background/triangulum.png");
-
-    protected static final ResourceLocation[] galaxyTextures = new ResourceLocation[6];
 
     public static boolean displayListsInitialized = false;
     public static int starGLCallList;
@@ -110,16 +101,6 @@ public class SkyProviderOrbit extends IRenderHandler
     @Override
     public void render(float partialTicks, WorldClient world, Minecraft mc)
     {
-
-        if (!this.displayGalaxyImg) {
-            for(int i = 0; i < 6; ++i) {
-                galaxyTextures[i] = new ResourceLocation(GTQTSpace.MODID, "textures/environment/background/" + "milky_way" + "/" + "milky_way" + "_" + (i + 1) + ".png");
-            }
-
-            this.displayGalaxyImg = true;
-        }
-
-
         final float var20 = 400.0F + (float) this.minecraft.player.posY / 2F;
 
         GL11.glDisable(GL11.GL_TEXTURE_2D);
@@ -242,24 +223,8 @@ public class SkyProviderOrbit extends IRenderHandler
         ///////////////////////////////星星生成///////////////////////////////
 
         ///////////////////////////////银河系背景生成///////////////////////////////
-        if (GTQTSConfig.Render.BackgroundRender) {
-            float x = 50.0F;
-            float y = -90.0F;
-            this.renderImage(galaxyTextures[0], (-4.0F + x) % 360.0F, y, 0.0F, 60.0F);
-            this.renderImage(galaxyTextures[1], (58.0F + x) % 360.0F, y, 0.0F, 60.0F);
-            this.renderImage(galaxyTextures[2], (120.0F + x) % 360.0F, y, 0.0F, 60.2F);
-            this.renderImage(galaxyTextures[3], (182.0F + x) % 360.0F, y, 0.0F, 60.0F);
-            this.renderImage(galaxyTextures[4], (244.0F + x) % 360.0F, y, 0.0F, 60.2F);
-            this.renderImage(galaxyTextures[5], (306.0F + x) % 360.0F, y, 0.0F, 60.0F);
+        SkyRenderUtil.GalaxyRender();
 
-            this.renderImage(smcTexture, -70.0F, -140.0F, 20.0F, 5.0F);
-            this.renderImage(andromedaTexture, -70.0F, -150.0F, 20.0F, 4.0F);
-            this.renderImage(eta_carinaeTexture, 35.0F, 120.0F, 0.0F, 20.0F);
-            this.renderImage(pleiadesTexture, -75.0F, 120.0F, 0.0F, 6.0F);
-            this.renderImage(barnardaloopTexture, -25.0F, 160.0F, 0.0F, 6.0F);
-            this.renderImage(lmcTexture, 80.0F, -120.0F, -55.0F, 3.0F);
-            this.renderImage(triangulumTexture, 50.0F, -160.0F, -55.0F, 3.0F);
-        }
         ///////////////////////////////太阳生成///////////////////////////////
         // 如果渲染太阳的标志位为真，则执行以下渲染逻辑
         if (this.renderSun)
@@ -378,42 +343,6 @@ public class SkyProviderOrbit extends IRenderHandler
     }
 
 
-    /**
-     * 渲染图像方法
-     * 该方法用于在指定位置和大小下渲染一个图像，可以添加阴影效果
-     *
-     * @param image 图像资源位置
-     * @param x     X轴旋转角度
-     * @param y     Y轴旋转角度
-     * @param z     Z轴旋转角度
-     * @param size  图像的大小
-     */
-    protected void renderImage(ResourceLocation image, float x, float y, float z, float size) {
-        // 保存当前的GL状态
-        GL11.glPushMatrix();
-        // 获取Tessellator实例，用于绘制几何图形
-        Tessellator tessellator = Tessellator.getInstance();
-        BufferBuilder worldRenderer = tessellator.getBuffer();
-        // 围绕X轴旋转
-        GL11.glRotatef(x, 0.0F, 1.0F, 0.0F);
-        // 围绕Y轴旋转
-        GL11.glRotatef(y, 1.0F, 0.0F, 0.0F);
-        // 围绕Z轴旋转
-        GL11.glRotatef(z, 0.0F, 0.0F, 1.0F);
-        // 设置颜色和透明度
-        GL11.glColor4f(1.0F, 1.0F, 1.0F, 1);
-        // 绑定图像资源
-        FMLClientHandler.instance().getClient().renderEngine.bindTexture(image);
-        // 开始绘制带纹理的四边形
-        worldRenderer.begin(7, DefaultVertexFormats.POSITION_TEX);
-        worldRenderer.pos(-size, -100.0, size).tex(0.0, 1.0).endVertex();
-        worldRenderer.pos(size, -100.0, size).tex(1.0, 1.0).endVertex();
-        worldRenderer.pos(size, -100.0, -size).tex(1.0, 0.0).endVertex();
-        worldRenderer.pos(-size, -100.0, -size).tex(0.0, 0.0).endVertex();
-        tessellator.draw();
-        // 恢复之前保存的GL状态
-        GL11.glPopMatrix();
-    }
     private void renderStars()
     {
         final Random var1 = new Random(10842L);

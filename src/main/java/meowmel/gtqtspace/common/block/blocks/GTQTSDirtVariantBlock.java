@@ -78,6 +78,7 @@ public class GTQTSDirtVariantBlock extends VariantBlock<GTQTSDirtVariantBlock.Di
         MARS_DIRT("mars", MapColor.RED_STAINED_HARDENED_CLAY),
         VENUS_DIRT("venus", MapColor.ORANGE_STAINED_HARDENED_CLAY),
         IO_DIRT("io", MapColor.PURPLE_STAINED_HARDENED_CLAY),
+        MERCURY_DIRT("mercury", MapColor.GRAY_STAINED_HARDENED_CLAY),
         ;
 
         public final MapColor mapColor;
@@ -99,6 +100,7 @@ public class GTQTSDirtVariantBlock extends VariantBlock<GTQTSDirtVariantBlock.Di
                 case MARS_DIRT:
                 case VENUS_DIRT:
                 case IO_DIRT:
+                case MERCURY_DIRT:
                     return OrePrefix.stone;
                 default:
                     throw new IllegalStateException("Unreachable");
@@ -115,6 +117,8 @@ public class GTQTSDirtVariantBlock extends VariantBlock<GTQTSDirtVariantBlock.Di
                     return GTQTSpaceMaterials.VenusStone;
                 case IO_DIRT:
                     return GTQTSpaceMaterials.IoStone;
+                case MERCURY_DIRT:
+                    return GTQTSpaceMaterials.MercuryStone;
                 default:
                     throw new IllegalStateException("Unreachable");
             }
