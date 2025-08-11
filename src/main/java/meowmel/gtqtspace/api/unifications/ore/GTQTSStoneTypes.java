@@ -20,22 +20,22 @@ public class GTQTSStoneTypes {
     public GTQTSStoneTypes(){
     }
     public static void init(){
-        MOON_STONE = new StoneType(21, "moon_stone", SoundType.STONE, GTQTSOrePrefix.oreMoon, GTQTSpaceMaterials.MoonStone,
+        MOON_STONE = new StoneType(21, "moon", SoundType.STONE, GTQTSOrePrefix.oreMoon, GTQTSpaceMaterials.MoonStone,
                 () -> gtStoneState(GTQTSStoneVariantBlock.StoneType.MOON_STONE),
                 state -> gtStonePredicate(state, GTQTSStoneVariantBlock.StoneType.MOON_STONE), false);
-        MARS_STONE = new StoneType(22, "mars_stone", SoundType.STONE, GTQTSOrePrefix.oreMars, GTQTSpaceMaterials.MarsStone,
+        MARS_STONE = new StoneType(22, "mars", SoundType.STONE, GTQTSOrePrefix.oreMars, GTQTSpaceMaterials.MarsStone,
                 () -> gtStoneState(GTQTSStoneVariantBlock.StoneType.MARS_STONE),
                 state -> gtStonePredicate(state, GTQTSStoneVariantBlock.StoneType.MARS_STONE), false);
-        VENUS_STONE = new StoneType(23, "venus_stone", SoundType.STONE, GTQTSOrePrefix.oreVenus, GTQTSpaceMaterials.VenusStone,
+        VENUS_STONE = new StoneType(23, "venus", SoundType.STONE, GTQTSOrePrefix.oreVenus, GTQTSpaceMaterials.VenusStone,
                 () -> gtStoneState(GTQTSStoneVariantBlock.StoneType.VENUS_STONE),
                 state -> gtStonePredicate(state, GTQTSStoneVariantBlock.StoneType.VENUS_STONE), false);
-        METHANE_STONE = new StoneType(24, "methane_stone", SoundType.GLASS, GTQTSOrePrefix.oreMethane, Materials.Ice,
+        METHANE_STONE = new StoneType(24, "methane", SoundType.GLASS, GTQTSOrePrefix.oreMethane, Materials.Ice,
                 () -> gtStoneState(GTQTSStoneVariantBlock.StoneType.METHANE_ICE),
                 state -> gtStonePredicate(state, GTQTSStoneVariantBlock.StoneType.METHANE_ICE), false);
-        IO_STONE = new StoneType(25, "io_stone", SoundType.STONE, GTQTSOrePrefix.oreIo, GTQTSpaceMaterials.IoStone,
+        IO_STONE = new StoneType(25, "io", SoundType.STONE, GTQTSOrePrefix.oreIo, GTQTSpaceMaterials.IoStone,
                 () -> gtStoneState(GTQTSStoneVariantBlock.StoneType.IO_STONE),
                 state -> gtStonePredicate(state, GTQTSStoneVariantBlock.StoneType.IO_STONE), false);
-        MERCURY_STONE = new StoneType(26, "mercury_stone", SoundType.STONE, GTQTSOrePrefix.oreMercury, Materials.Ice,
+        MERCURY_STONE = new StoneType(26, "mercury", SoundType.STONE, GTQTSOrePrefix.oreMercury, Materials.Ice,
                 () -> gtStoneState(GTQTSStoneVariantBlock.StoneType.MERCURY_STONE),
                 state -> gtStonePredicate(state, GTQTSStoneVariantBlock.StoneType.MERCURY_STONE), false);
     }
