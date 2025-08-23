@@ -8,8 +8,7 @@ import gregtech.common.metatileentities.MetaTileEntities;
 
 import static gregtech.api.GTValues.*;
 import static gregtech.api.unification.material.Materials.*;
-import static gregtech.api.unification.ore.OrePrefix.circuit;
-import static gregtech.api.unification.ore.OrePrefix.wireFine;
+import static gregtech.api.unification.ore.OrePrefix.*;
 import static gregtech.common.items.MetaItems.*;
 import static keqing.gtqtcore.common.items.GTQTMetaItems.SOLAR_PLATE_MKI;
 import static zmaster587.advancedRocketry.api.AdvancedRocketryBlocks.*;
@@ -43,14 +42,16 @@ public class satelliteRecipes {
                 .EUt(VA[EV])
                 .duration(400)
                 .buildAndRegister();
+
         //卫星仓
         RecipeMaps.ASSEMBLER_RECIPES.recipeBuilder()
                 .input(blockStructureBlock)
-                .input(MetaItems.COVER_SCREEN)
+                .input(plate,Lead,4)
+                .input(stick,StainlessSteel,8)
                 .input(MetaItems.SENSOR_EV, 4)
                 .input(OrePrefix.circuit, MarkerMaterials.Tier.EV, 4)
-                .circuitMeta(4)
-                .output(blockFuelingStation, 1, 1)
+                .circuitMeta(5)
+                .output(blockLoader, 1, 1)
                 .EUt(VA[EV])
                 .duration(400)
                 .buildAndRegister();
@@ -66,6 +67,7 @@ public class satelliteRecipes {
                 .EUt(VA[EV])
                 .duration(400)
                 .buildAndRegister();
+
         //火箭监测站
         RecipeMaps.ASSEMBLER_RECIPES.recipeBuilder()
                 .input(blockStructureBlock)
