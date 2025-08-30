@@ -65,7 +65,6 @@ metaitem.mining_drone.uxv.tooltip=§ePortable Cosmic Resonator III
 metaitem.mining_drone.opv.tooltip=§9-Create a universe, then destroy it-
 metaitem.mining_drone.max.tooltip=§c=《༺=☆Yours is mine, mine is still mine☆=༻》=
 
-metaitem.pos_binding_card.name=Data Card
 metaitem.telescope.name=Telescope
 metaitem.satellite_rocket.name=Satellite Launch Rocket
 metaitem.basic_satellite.name=Basic Satellite
@@ -91,8 +90,6 @@ metaitem.solar_plate_ii.name=Intermediate Satellite Solar Panel
 metaitem.solar_plate_iii.name=Advanced Satellite Solar Panel
 metaitem.solar_plate_iv.name=Elite Satellite Solar Panel
 metaitem.solar_plate_v.name=Ultimate Satellite Solar Panel
-
-item.pos_binding_card.name=Position Binding Card
 #方块
 tile.teleporter_spacestation.name=Space Station Transporter
 tile.gtqts_stone_smooth.moon.name=月球石头

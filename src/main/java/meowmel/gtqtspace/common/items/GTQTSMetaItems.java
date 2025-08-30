@@ -52,7 +52,6 @@ public class GTQTSMetaItems {
 	public static MetaItem<?>.MetaValueItem SOLAR_PLATE_MKIII;
 	public static MetaItem<?>.MetaValueItem SOLAR_PLATE_MKIV;
 	public static MetaItem<?>.MetaValueItem SOLAR_PLATE_MKV;
-	public static MetaItem<?>.MetaValueItem POS_BINDING_CARD;
 
 	public static MetaItem<?>.MetaValueItem DRILL_SHIP;
 	public static MetaItem<?>.MetaValueItem TRANS_SHIP;

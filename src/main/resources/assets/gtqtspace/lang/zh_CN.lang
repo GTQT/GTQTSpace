@@ -62,7 +62,6 @@ metaitem.mining_drone.uiv.tooltip=§2便携苍穹共振仪II
 metaitem.mining_drone.uxv.tooltip=§e便携苍穹共振仪III
 metaitem.mining_drone.opv.tooltip=§9-*创造一个宇宙，然后摧毁它*-
 metaitem.mining_drone.max.tooltip=§c=《༺=☆你的就是我的，我的还是我的☆=༻》=
-metaitem.pos_binding_card.name=数据卡
 metaitem.telescope.name=望远镜
 metaitem.satellite_rocket.name=卫星运载火箭
 metaitem.basic_satellite.name=基础卫星
@@ -88,8 +87,6 @@ metaitem.solar_plate_ii.name=进阶卫星太阳能板
 metaitem.solar_plate_iii.name=高级卫星太阳能板
 metaitem.solar_plate_iv.name=精英卫星太阳能板
 metaitem.solar_plate_v.name=终极卫星太阳能板
-
-item.pos_binding_card.name=坐标绑定卡
 #方块
 tile.teleporter_spacestation.name=空间站传送门
 

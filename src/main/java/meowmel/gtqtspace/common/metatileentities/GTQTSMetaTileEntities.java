@@ -89,6 +89,7 @@ public class GTQTSMetaTileEntities {
 
         WIND_GENERATOR = registerMetaTileEntity(11, new MetaTileEntityWindGenerator(gtqtspaceId("wind_generator")));
 
+        /*
         // ------------------ Initialized Multiblock Machines -------------------
         INDUSTRIAL_BENDER = registerMetaTileEntity(20, new MetaTileEntityIndustrialBender(gtqtspaceId("industrial_bender")));
         INDUSTRIAL_CUTTER = registerMetaTileEntity(21, new MetaTileEntityIndustrialCutter(gtqtspaceId("industrial_cutter")));
@@ -111,6 +112,9 @@ public class GTQTSMetaTileEntities {
         INDUSTRIAL_PACKER = registerMetaTileEntity(38, new MetaTileEntityIndustrialPacker(gtqtspaceId("industrial_packer")));
         INDUSTRIAL_GAS_COLLECTOR = registerMetaTileEntity(39, new MetaTileEntityIndustrialGasCollector(gtqtspaceId("industrial_gas_collector")));
         INDUSTRIAL_CHEMICAL_PLANT = registerMetaTileEntity(40, new MetaTileEntityIndustrialChemicalPlant(gtqtspaceId("industrial_chemical_plant")));
+
+         */
+
         //高级机器
         //电装 部装 合金
         SPACE_MAINTENANCE_HATCH = registerMetaTileEntity(90, new MetaTileEntitySpaceMaintenanceHatch(gtqtspaceId("space_maintenance_hatch")));

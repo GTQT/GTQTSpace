@@ -6,6 +6,7 @@ import meowmel.gtqtspace.loaders.recipes.chain.DilithiumChain;
 import meowmel.gtqtspace.loaders.recipes.hanlder.*;
 import meowmel.gtqtspace.loaders.recipes.machine.GTQTSSatelliteAssembler;
 import meowmel.gtqtspace.loaders.recipes.machine.StarSuvery;
+import net.minecraftforge.fml.common.Loader;
 
 public class GTQTSRecipesManager {
 	private GTQTSRecipesManager() {
@@ -21,7 +22,7 @@ public class GTQTSRecipesManager {
 		SpaceElevatorLoader.init();
 		StarSuvery.init();
 		HatchHandler.init();
-		WirelessEnergyHatches.init();
+        if (Loader.isModLoaded("betterquesting")) WirelessEnergyHatches.init();
 		GTQTSSatelliteAssembler.init();
 		SpaceElevatorrHanlder.init();
 		ComponentCasingsRecipes.init();

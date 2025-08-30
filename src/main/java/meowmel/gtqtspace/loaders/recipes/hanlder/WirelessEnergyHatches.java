@@ -24,7 +24,6 @@ import static meowmel.gtqtspace.api.utils.GTQTSUtil.tierList;
 public class WirelessEnergyHatches {
     public static void init() {
         for (int i = ULV; i < MAX; i++) {
-            int final_i = i;
             //  2A Energy Hatch
             ASSEMBLER_MODULE_RECIPES.recipeBuilder()
                     .circuitMeta(1)
