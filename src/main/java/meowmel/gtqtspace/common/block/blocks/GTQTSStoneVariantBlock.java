@@ -22,6 +22,7 @@ import javax.annotation.Nonnull;
 import java.util.Random;
 
 import static meowmel.gtqtspace.common.CommonProxy.Planet_TAB;
+import static meowmel.gtqtspace.common.block.GTQTSMetaBlocks.GTQTS_STONE_BLOCKS;
 
 public class GTQTSStoneVariantBlock extends VariantBlock<GTQTSStoneVariantBlock.StoneType> {
     private static final PropertyEnum<GTQTSStoneVariantBlock.StoneType> PROPERTY = PropertyEnum.create("variant", GTQTSStoneVariantBlock.StoneType.class);
@@ -53,11 +54,11 @@ public class GTQTSStoneVariantBlock extends VariantBlock<GTQTSStoneVariantBlock.
 
 
     protected boolean canSilkHarvest() {
-        return this.stoneVariant == GTQTSStoneVariantBlock.StoneVariant.SMOOTH;
+        return this.stoneVariant == StoneVariant.SMOOTH;
     }
 
     public Item getItemDropped(IBlockState state, Random rand, int fortune) {
-        return Item.getItemFromBlock(this.stoneVariant == StoneVariant.SMOOTH ? GTQTMetaBlocks.GTQT_STONE_BLOCKS.get(keqing.gtqtcore.common.block.blocks.GTQTStoneVariantBlock.StoneVariant.COBBLE) : this);
+        return Item.getItemFromBlock(this.stoneVariant == StoneVariant.SMOOTH ? GTQTS_STONE_BLOCKS.get(StoneVariant.COBBLE) : this);
     }
 
     public enum StoneVariant {
