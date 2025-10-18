@@ -365,7 +365,7 @@ public class EntityCustomVehicle extends Entity {
             WeaponConfig config = WeaponConfig.getConfig(weaponType);
             this.missileAmmo.put(weaponType, config.getMaxAmmo());
         }
-        System.out.println("All missiles reloaded!");
+        //System.out.println("All missiles reloaded!");
     }
 
     /**
@@ -374,7 +374,7 @@ public class EntityCustomVehicle extends Entity {
     public void reloadMissileType(WeaponType weaponType) {
         WeaponConfig config = WeaponConfig.getConfig(weaponType);
         this.missileAmmo.put(weaponType, config.getMaxAmmo());
-        System.out.println(weaponType.getDisplayName() + " reloaded! Ammo: " + this.missileAmmo.get(weaponType));
+        //System.out.println(weaponType.getDisplayName() + " reloaded! Ammo: " + this.missileAmmo.get(weaponType));
     }
 
     /**
@@ -384,8 +384,8 @@ public class EntityCustomVehicle extends Entity {
         WeaponConfig config = WeaponConfig.getConfig(weaponType);
         int currentAmmo = this.missileAmmo.get(weaponType);
         this.missileAmmo.put(weaponType, Math.min(currentAmmo + amount, config.getMaxAmmo()));
-        System.out.println("Added " + amount + " " + weaponType.getDisplayName() +
-                ". Total: " + this.missileAmmo.get(weaponType));
+        //System.out.println("Added " + amount + " " + weaponType.getDisplayName() +
+        //        ". Total: " + this.missileAmmo.get(weaponType));
     }
 
     /**

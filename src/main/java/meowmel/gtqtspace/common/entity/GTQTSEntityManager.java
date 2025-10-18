@@ -1,10 +1,7 @@
 package meowmel.gtqtspace.common.entity;
 
 import meowmel.gtqtspace.GTQTSpace;
-import meowmel.gtqtspace.common.entity.weapon.missile.EntityClusterMissile;
-import meowmel.gtqtspace.common.entity.weapon.missile.EntityExplosiveMissile;
-import meowmel.gtqtspace.common.entity.weapon.missile.EntityIncendiaryMissile;
-import meowmel.gtqtspace.common.entity.weapon.missile.EntityMachineGunBullet;
+import meowmel.gtqtspace.common.entity.weapon.missile.*;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.fml.common.registry.EntityRegistry;
 
@@ -35,5 +32,14 @@ public class GTQTSEntityManager {
 
         EntityRegistry.registerModEntity(new ResourceLocation(MODID, "clustermissile"),
                 EntityClusterMissile.class, "ClusterMissile", 13, MODID, 64, 1, true);
+
+        EntityRegistry.registerModEntity(new ResourceLocation(MODID, "guidedmissile"),
+                EntityGuidedMissile.class, "GuidedMissile", 14, MODID, 64, 1, true);
+
+        EntityRegistry.registerModEntity(new ResourceLocation(MODID, "armorpiercingmissile"),
+                EntityArmorPiercingMissile.class, "ArmorPiercingMissile", 16, MODID, 64, 1, true);
+
+        EntityRegistry.registerModEntity(new ResourceLocation(MODID, "tacticalnuke"),
+                EntityTacticalNuke.class, "TacticalNuke", 15, MODID, 64, 1, true);
     }
 }

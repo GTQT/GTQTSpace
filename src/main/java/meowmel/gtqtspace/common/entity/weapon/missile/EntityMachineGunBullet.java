@@ -1,13 +1,16 @@
 package meowmel.gtqtspace.common.entity.weapon.missile;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.math.*;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 import java.util.List;
+
 public class EntityMachineGunBullet extends EntityMissileBase {
 
     // 机炮弹参数 - 相比高爆弹威力更小
@@ -17,27 +20,15 @@ public class EntityMachineGunBullet extends EntityMissileBase {
     private final int penetrationLevel; // 新增：穿甲等级
 
     public EntityMachineGunBullet(World worldIn) {
-        super(worldIn, 8.0f, 3.0f, 0.05f, 200); // 速度更快，寿命更短
-        this.explosionPower = 1.5f; // 爆炸威力更小
-        this.damageRadius = 3.0f;   // 伤害范围更小
-        this.baseDamage = 2.0f;     // 基础伤害更低
-        this.penetrationLevel = 1;  // 基础穿甲等级
-    }
-
-    public EntityMachineGunBullet(World worldIn, double x, double y, double z) {
-        super(worldIn, x, y, z, 8.0f, 3.0f, 0.05f, 200);
-        this.explosionPower = 1.5f;
+        super(worldIn, 8.0f, 3.0f, 0.05f, 200);
+        this.explosionPower = 2f;
         this.damageRadius = 3.0f;
-        this.baseDamage = 2.0f;
+        this.baseDamage = 10.0f;
         this.penetrationLevel = 1;
     }
 
     public EntityMachineGunBullet(World worldIn, Entity launcher) {
-        super(worldIn, launcher, 8.0f, 3.0f, 0.05f, 200);
-        this.explosionPower = 1.5f;
-        this.damageRadius = 3.0f;
-        this.baseDamage = 2.0f;
-        this.penetrationLevel = 1;
+        this(worldIn, launcher, 2f, 3.0f, 10.0f, 1);
     }
 
     public EntityMachineGunBullet(World worldIn, Entity launcher, float explosionPower, float damageRadius, float baseDamage, int penetrationLevel) {
@@ -100,8 +91,7 @@ public class EntityMachineGunBullet extends EntityMissileBase {
         float damage = (float) ((damageRadius - distance) / damageRadius * baseDamage);
 
         // 对装甲实体有额外效果
-        if (target instanceof EntityLivingBase) {
-            EntityLivingBase living = (EntityLivingBase) target;
+        if (target instanceof EntityLivingBase living) {
             // 如果目标穿着装甲，根据穿甲等级调整伤害
             if (living.getTotalArmorValue() > 0) {
                 float armorPenetration = Math.min(penetrationLevel * 0.25f, 0.75f);
@@ -152,8 +142,19 @@ public class EntityMachineGunBullet extends EntityMissileBase {
     }
 
     // Getter 方法
-    public float getExplosionPower() { return explosionPower; }
-    public float getDamageRadius() { return damageRadius; }
-    public float getBaseDamage() { return baseDamage; }
-    public int getPenetrationLevel() { return penetrationLevel; }
+    public float getExplosionPower() {
+        return explosionPower;
+    }
+
+    public float getDamageRadius() {
+        return damageRadius;
+    }
+
+    public float getBaseDamage() {
+        return baseDamage;
+    }
+
+    public int getPenetrationLevel() {
+        return penetrationLevel;
+    }
 }

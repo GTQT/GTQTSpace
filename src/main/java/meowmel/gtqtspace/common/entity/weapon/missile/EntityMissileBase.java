@@ -1,6 +1,8 @@
 package meowmel.gtqtspace.common.entity.weapon.missile;
+import meowmel.gtqtspace.common.entity.EntityCustomVehicle;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.MoverType;
+import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.*;
@@ -272,4 +274,12 @@ public abstract class EntityMissileBase extends Entity {
     public void setSpeed(float speed) { this.speed = speed; }
     public int getLifeTime() { return this.lifeTime; }
     public Entity getLaunchingEntity() { return this.launchingEntity; }
+
+    public Entity getLaunchingPlayer(Entity launchingEntity) {
+        if (launchingEntity instanceof EntityCustomVehicle vehicle) {
+            if (vehicle.getControllingPassenger() instanceof EntityPlayer player)
+                return player;
+        }
+        return launchingEntity;
+    }
 }

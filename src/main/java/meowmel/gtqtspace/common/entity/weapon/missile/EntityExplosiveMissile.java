@@ -1,7 +1,8 @@
 package meowmel.gtqtspace.common.entity.weapon.missile;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.math.*;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -17,23 +18,13 @@ public class EntityExplosiveMissile extends EntityMissileBase {
 
     public EntityExplosiveMissile(World worldIn) {
         super(worldIn, 5.0f, 2.0f, 0.1f, 400);
-        this.explosionPower = 5.0f;
+        this.explosionPower = 10.0f;
         this.damageRadius = 8.0f;
-        this.baseDamage = 5.0f;
-    }
-
-    public EntityExplosiveMissile(World worldIn, double x, double y, double z) {
-        super(worldIn, x, y, z, 5.0f, 2.0f, 0.1f, 400);
-        this.explosionPower = 4.0f;
-        this.damageRadius = 8.0f;
-        this.baseDamage = 5.0f;
+        this.baseDamage = 20.0f;
     }
 
     public EntityExplosiveMissile(World worldIn, Entity launcher) {
-        super(worldIn, launcher, 5.0f, 2.0f, 0.1f, 400);
-        this.explosionPower = 4.0f;
-        this.damageRadius = 8.0f;
-        this.baseDamage = 5.0f;
+        this(worldIn, launcher, 10.0f, 8.0f, 20.0f);
     }
 
     public EntityExplosiveMissile(World worldIn, Entity launcher, float explosionPower, float damageRadius, float baseDamage) {
@@ -42,6 +33,7 @@ public class EntityExplosiveMissile extends EntityMissileBase {
         this.damageRadius = damageRadius;
         this.baseDamage = baseDamage;
     }
+
 
     @Override
     protected void explode() {
@@ -98,7 +90,15 @@ public class EntityExplosiveMissile extends EntityMissileBase {
     }
 
     // Getter 方法
-    public float getExplosionPower() { return explosionPower; }
-    public float getDamageRadius() { return damageRadius; }
-    public float getBaseDamage() { return baseDamage; }
+    public float getExplosionPower() {
+        return explosionPower;
+    }
+
+    public float getDamageRadius() {
+        return damageRadius;
+    }
+
+    public float getBaseDamage() {
+        return baseDamage;
+    }
 }

@@ -123,7 +123,7 @@ public class VehicleHUD extends Gui {
 
     private void renderWeaponInfo(EntityCustomVehicle vehicle, int screenWidth, int screenHeight) {
         int panelWidth = 120;
-        int panelHeight = 120; // 增加高度以容纳武器列表
+        int panelHeight = 160; // 增加高度以容纳武器列表
         int x = screenWidth - panelWidth - 5;
         int y = 15;
 

@@ -18,7 +18,16 @@ public enum WeaponType {
             EntityIncendiaryMissile::new),
     //集束导弹
     CLUSTER_MISSILE("cluster_missile", "集束导弹",
-            EntityClusterMissile::new);
+            EntityClusterMissile::new),
+    //制导导弹
+    GUIDED_MISSILE("guided_missile", "制导导弹",
+            EntityGuidedMissile::new),
+    //穿甲弹
+    ARMOR_PIERCING_MISSILE("armor_piercing_missile", "穿甲弹",
+            EntityArmorPiercingMissile::new),
+    //战术核弹
+    NUCLEAR_MISSILE("nuclear_missile", "战术核弹",
+            EntityTacticalNuke::new);
     /*
     ARMOR_PIERCING_MISSILE("armor_piercing_missile", "Armor Piercing Missile",
             (world, launcher) -> new EntityArmorPiercingMissile(world, launcher)),

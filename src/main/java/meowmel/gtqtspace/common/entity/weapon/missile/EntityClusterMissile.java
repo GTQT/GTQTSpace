@@ -44,12 +44,6 @@ public class EntityClusterMissile extends EntityMissileBase {
                 DEFAULT_UMBRELLA_ANGLE, DEFAULT_UMBRELLA_RADIUS);
     }
 
-    public EntityClusterMissile(World worldIn, double x, double y, double z) {
-        this(worldIn, x, y, z, DEFAULT_EXPLOSION_POWER, DEFAULT_DAMAGE_RADIUS,
-                DEFAULT_BASE_DAMAGE, DEFAULT_SUB_MISSILE_COUNT, DEFAULT_SPLIT_RANGE,
-                DEFAULT_UMBRELLA_ANGLE, DEFAULT_UMBRELLA_RADIUS);
-    }
-
     public EntityClusterMissile(World worldIn, Entity launcher) {
         this(worldIn, launcher, DEFAULT_EXPLOSION_POWER, DEFAULT_DAMAGE_RADIUS,
                 DEFAULT_BASE_DAMAGE, DEFAULT_SUB_MISSILE_COUNT, DEFAULT_SPLIT_RANGE,
@@ -269,11 +263,7 @@ public class EntityClusterMissile extends EntityMissileBase {
      */
     private EntityExplosiveMissile createSubMissileEntity(Vec3d position, Vec3d direction) {
         EntityExplosiveMissile subMissile = new EntityExplosiveMissile(
-                this.world, this.launchingEntity,
-                this.explosionPower,
-                this.damageRadius,
-                this.baseDamage
-        );
+                this.world, this.launchingEntity);
 
         // 设置子导弹位置和方向
         subMissile.setPositionAndRotation(

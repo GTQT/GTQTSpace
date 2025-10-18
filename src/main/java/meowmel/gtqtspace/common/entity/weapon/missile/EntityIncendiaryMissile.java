@@ -1,8 +1,10 @@
 package meowmel.gtqtspace.common.entity.weapon.missile;
+
 import net.minecraft.entity.Entity;
 import net.minecraft.init.Blocks;
 import net.minecraft.util.EnumParticleTypes;
-import net.minecraft.util.math.*;
+import net.minecraft.util.math.AxisAlignedBB;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
 import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
@@ -19,30 +21,21 @@ public class EntityIncendiaryMissile extends EntityMissileBase {
     public EntityIncendiaryMissile(World worldIn) {
         super(worldIn, 4.5f, 1.8f, 0.08f, 350);
         this.explosionPower = 2.0f;
-        this.fireRadius = 6.0f;
-        this.burnDuration = 100; // 5秒燃烧时间
-    }
-
-    public EntityIncendiaryMissile(World worldIn, double x, double y, double z) {
-        super(worldIn, x, y, z, 4.5f, 1.8f, 0.08f, 350);
-        this.explosionPower = 2.0f;
-        this.fireRadius = 6.0f;
-        this.burnDuration = 100;
+        this.fireRadius = 8.0f;
+        this.burnDuration = 600;
     }
 
     public EntityIncendiaryMissile(World worldIn, Entity launcher) {
-        super(worldIn, launcher, 4.5f, 1.8f, 0.08f, 350);
-        this.explosionPower = 2.0f;
-        this.fireRadius = 6.0f;
-        this.burnDuration = 100;
+        this(worldIn, launcher, 2.0f, 8.0f, 600);
     }
 
     public EntityIncendiaryMissile(World worldIn, Entity launcher, float explosionPower, float fireRadius, int burnDuration) {
-        super(worldIn, launcher, 4.5f, 1.8f, 0.08f, 350);
+        super(worldIn, launcher, 4.5f, 1.8f, 0.08f, 400);
         this.explosionPower = explosionPower;
         this.fireRadius = fireRadius;
         this.burnDuration = burnDuration;
     }
+
 
     @Override
     protected EnumParticleTypes getTrailParticleType() {
@@ -97,23 +90,21 @@ public class EntityIncendiaryMissile extends EntityMissileBase {
     }
 
     private void spawnFireBlocks() {
-        int fireBlocks = 15 + this.rand.nextInt(10); // 15-25个火焰方块
+        int fireBlocks = 75 + this.rand.nextInt(150); // 75-225个火焰方块
 
         for (int i = 0; i < fireBlocks; i++) {
-            double offsetX = (this.rand.nextDouble() - 0.5) * fireRadius * 1.5;
-            double offsetY = this.rand.nextDouble() * fireRadius * 0.8;
-            double offsetZ = (this.rand.nextDouble() - 0.5) * fireRadius * 1.5;
+            double offsetX = (this.rand.nextDouble() - 0.5) * fireRadius;
+            double offsetY = this.rand.nextDouble() * fireRadius;
+            double offsetZ = (this.rand.nextDouble() - 0.5) * fireRadius;
 
-            net.minecraft.util.math.BlockPos firePos = new net.minecraft.util.math.BlockPos(
+            BlockPos firePos = new BlockPos(
                     this.posX + offsetX,
                     this.posY + offsetY,
                     this.posZ + offsetZ
             );
 
             // 检查是否可以放置火焰
-            if (this.world.isAirBlock(firePos) && Blocks.FIRE.canPlaceBlockAt(this.world, firePos)) {
-                this.world.setBlockState(firePos, net.minecraft.init.Blocks.FIRE.getDefaultState());
-            }
+            this.world.setBlockState(firePos, net.minecraft.init.Blocks.FIRE.getDefaultState());
         }
     }
 
@@ -146,7 +137,15 @@ public class EntityIncendiaryMissile extends EntityMissileBase {
     }
 
     // Getter 方法
-    public float getExplosionPower() { return explosionPower; }
-    public float getFireRadius() { return fireRadius; }
-    public int getBurnDuration() { return burnDuration; }
+    public float getExplosionPower() {
+        return explosionPower;
+    }
+
+    public float getFireRadius() {
+        return fireRadius;
+    }
+
+    public int getBurnDuration() {
+        return burnDuration;
+    }
 }
