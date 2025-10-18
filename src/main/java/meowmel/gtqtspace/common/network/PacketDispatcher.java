@@ -48,6 +48,8 @@ public class PacketDispatcher
         registerMessage(SetTimerMessage.class);
         registerMessage(TeleportMessage.class);
         registerMessage(MessageVehicleInput.class); // 添加这一行
+        registerMessage(MessageLaunchMissile.class);
+        registerMessage(MessageVehicleDimensionJump.class);
     }
 
     /**

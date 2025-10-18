@@ -1,33 +1,70 @@
 package meowmel.gtqtspace.common.entity;
 
+import meowmel.gtqtspace.common.network.MessageVehicleDimensionJump;
 import meowmel.gtqtspace.common.network.MessageVehicleInput;
 import meowmel.gtqtspace.common.network.PacketDispatcher;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.MoverType;
 import net.minecraft.entity.player.EntityPlayer;
+import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.util.EnumHand;
+import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class EntityCustomVehicle extends Entity {
 
     // 数据监视器参数
     public static final DataParameter<Boolean> ACCELERATING = EntityDataManager.createKey(EntityCustomVehicle.class, DataSerializers.BOOLEAN);
-    private static final DataParameter<Float> PITCH_INPUT = EntityDataManager.createKey(EntityCustomVehicle.class, DataSerializers.FLOAT);
-    private static final DataParameter<Float> YAW_INPUT = EntityDataManager.createKey(EntityCustomVehicle.class, DataSerializers.FLOAT);
+    public static final DataParameter<Float> PITCH_INPUT = EntityDataManager.createKey(EntityCustomVehicle.class, DataSerializers.FLOAT);
+    public static final DataParameter<Float> YAW_INPUT = EntityDataManager.createKey(EntityCustomVehicle.class, DataSerializers.FLOAT);
     private static final DataParameter<Float> ROLL_INPUT = EntityDataManager.createKey(EntityCustomVehicle.class, DataSerializers.FLOAT);
+
+    // 在 EntityCustomVehicle 类中添加数据参数
+    private static final DataParameter<NBTTagCompound> WEAPON_AMMO_DATA = EntityDataManager.createKey(EntityCustomVehicle.class, DataSerializers.COMPOUND_TAG);
+    private static final DataParameter<NBTTagCompound> WEAPON_COOLDOWN_DATA = EntityDataManager.createKey(EntityCustomVehicle.class, DataSerializers.COMPOUND_TAG);
+
+    @Override
+    protected void entityInit() {
+        this.dataManager.register(ACCELERATING, false);
+        this.dataManager.register(PITCH_INPUT, 0F);
+        this.dataManager.register(YAW_INPUT, 0F);
+        this.dataManager.register(ROLL_INPUT, 0F);
+        // 添加武器数据同步
+        this.dataManager.register(WEAPON_AMMO_DATA, new NBTTagCompound());
+        this.dataManager.register(WEAPON_COOLDOWN_DATA, new NBTTagCompound());
+    }
+
+    // 添加同步武器数据的方法
+    private void syncWeaponData() {
+        if (!this.world.isRemote) {
+            NBTTagCompound ammoData = new NBTTagCompound();
+            NBTTagCompound cooldownData = new NBTTagCompound();
+
+            for (WeaponType weaponType : WeaponType.values()) {
+                ammoData.setInteger(weaponType.name(), this.missileAmmo.get(weaponType));
+                cooldownData.setInteger(weaponType.name(), this.missileCooldowns.get(weaponType));
+            }
+
+            this.dataManager.set(WEAPON_AMMO_DATA, ammoData);
+            this.dataManager.set(WEAPON_COOLDOWN_DATA, cooldownData);
+        }
+    }
+
 
     // 物理参数
     private final float acceleration = 0.1f;
     private final float rotationSpeed = 3.0f;
-    private final float maxSpeed = 3.0f;
+    private final float maxSpeed = 5.0f;
     private final float drag = 0.98f;
     private final float airResistance = 0.995f;
 
@@ -47,6 +84,15 @@ public class EntityCustomVehicle extends Entity {
     private long lastInputTime = 0;
     private static final long INPUT_TIMEOUT_MS = 500;
 
+    // 武器系统 - 使用枚举和配置管理武器
+    private final Map<WeaponType, Integer> missileCooldowns = new HashMap<>();
+    private final Map<WeaponType, Integer> missileAmmo = new HashMap<>();
+
+    // 维度传送相关
+    private boolean hasTriggeredDimensionJump = false;
+    private static final int DIMENSION_JUMP_HEIGHT = 300;
+    private static final int TARGET_DIMENSION = 50;
+
     // 调试计数
     private AtomicInteger debugCounter = new AtomicInteger(0);
 
@@ -57,6 +103,13 @@ public class EntityCustomVehicle extends Entity {
         this.preventEntitySpawning = true;
         this.ignoreFrustumCheck = true;
         this.setNoGravity(true); // 太空环境无重力
+
+        // 初始化所有武器的状态
+        for (WeaponType weaponType : WeaponType.values()) {
+            WeaponConfig config = WeaponConfig.getConfig(weaponType);
+            missileCooldowns.put(weaponType, 0);
+            missileAmmo.put(weaponType, config.getMaxAmmo());
+        }
     }
 
     public EntityCustomVehicle(World worldIn, double x, double y, double z) {
@@ -64,13 +117,6 @@ public class EntityCustomVehicle extends Entity {
         this.setPosition(x, y, z);
     }
 
-    @Override
-    protected void entityInit() {
-        this.dataManager.register(ACCELERATING, false);
-        this.dataManager.register(PITCH_INPUT, 0F);
-        this.dataManager.register(YAW_INPUT, 0F);
-        this.dataManager.register(ROLL_INPUT, 0F);
-    }
 
     public float prevRotationPitch;
     public float prevRotationYaw;
@@ -90,12 +136,69 @@ public class EntityCustomVehicle extends Entity {
         // 平滑输入处理
         smoothInputs();
 
+        // 更新武器系统
+        updateWeapons();
+
+        // 同步武器数据
+        syncWeaponData();
+
         // 处理运动
         updateMotion();
 
+        // 检查维度跳跃条件
+        checkDimensionJump();
+
         // 调试输出
-        if (debugCounter.incrementAndGet() % 20 == 0) { // 每秒钟输出一次
-            printDebugInfo();
+        if (debugCounter.incrementAndGet() % 400 == 0) {
+            // 调试代码可以在这里添加
+            reloadAllMissiles();
+        }
+    }
+
+    /**
+     * 检查维度跳跃条件
+     */
+    private void checkDimensionJump() {
+        if (this.world.isRemote || this.hasTriggeredDimensionJump) return;
+
+        // 检查高度是否超过阈值
+        if(this.dimension == 0) {
+            if (this.posY > 600) {
+                Entity controllingPassenger = this.getControllingPassenger();
+                if (controllingPassenger instanceof EntityPlayerMP) {
+                    // 计算目标位置 (x, 0, z)
+                    BlockPos targetPos = new BlockPos(this.posX, 0, this.posZ);
+
+                    // 发送维度跳跃网络包
+                    PacketDispatcher.sendToServer(new MessageVehicleDimensionJump(
+                            this.getEntityId(),
+                            50,
+                            targetPos
+                    ));
+
+                    this.hasTriggeredDimensionJump = true;
+                    System.out.println("Dimension jump triggered! Sending network packet.");
+                }
+            }
+        }
+        if(this.dimension == 50){
+            if (this.posY < -50) {
+                Entity controllingPassenger = this.getControllingPassenger();
+                if (controllingPassenger instanceof EntityPlayerMP) {
+                    // 计算目标位置 (x, 550, z)
+                    BlockPos targetPos = new BlockPos(this.posX, 550, this.posZ);
+
+                    // 发送维度跳跃网络包
+                    PacketDispatcher.sendToServer(new MessageVehicleDimensionJump(
+                            this.getEntityId(),
+                            0,
+                            targetPos
+                    ));
+
+                    this.hasTriggeredDimensionJump = true;
+                    System.out.println("Dimension jump triggered! Sending network packet.");
+                }
+            }
         }
     }
 
@@ -165,7 +268,6 @@ public class EntityCustomVehicle extends Entity {
         this.motionZ += forwardZ * acceleration;
     }
 
-    // 在 EntityCustomVehicle 类中修改 applyRotation 方法
     private void applyRotation() {
         // 应用平滑后的旋转输入
         this.rotationPitch += smoothedPitch * rotationSpeed;
@@ -174,10 +276,6 @@ public class EntityCustomVehicle extends Entity {
         this.rotationYaw += smoothedYaw * rotationSpeed;
         // 确保偏航角在合理范围内，但不限制持续旋转
         this.rotationYaw = this.rotationYaw % 360.0F;
-
-        // 可选：滚转控制（如果需要）
-        // this.rotationRoll += smoothedRoll * rotationSpeed;
-        // this.rotationRoll %= 360.0F;
     }
 
     private void applyResistance() {
@@ -201,6 +299,199 @@ public class EntityCustomVehicle extends Entity {
             this.motionZ *= ratio;
         }
     }
+
+    /**
+     * 武器系统方法
+     */
+
+    /**
+     * 发射导弹（服务端调用）- 使用枚举类型
+     */
+    public void launchMissile(WeaponType weaponType) {
+        WeaponConfig config = WeaponConfig.getConfig(weaponType);
+
+        if (this.missileCooldowns.get(weaponType) > 0) {
+            System.out.println(weaponType.getDisplayName() + " on cooldown: " + this.missileCooldowns.get(weaponType));
+            return;
+        }
+
+        if (this.missileAmmo.get(weaponType) <= 0) {
+            System.out.println("Out of ammo for: " + weaponType.getDisplayName());
+            return;
+        }
+
+        if (!this.world.isRemote) {
+            // 使用枚举的工厂方法创建导弹
+            EntityMissileBase missile = weaponType.createMissile(world, this);
+            if (missile != null) {
+                // 生成导弹并发射
+                world.spawnEntity(missile);
+                missile.launch();
+
+                // 更新武器状态
+                this.missileCooldowns.put(weaponType, config.getCooldownTicks());
+                this.missileAmmo.put(weaponType, this.missileAmmo.get(weaponType) - 1);
+
+                System.out.println("Launched " + weaponType.getDisplayName() +
+                        "! Ammo remaining: " + this.missileAmmo.get(weaponType));
+
+                // 播放发射音效
+                this.world.playSound(null, this.posX, this.posY, this.posZ,
+                        net.minecraft.init.SoundEvents.ENTITY_FIREWORK_LAUNCH,
+                        net.minecraft.util.SoundCategory.NEUTRAL, 1.0F, 0.8F);
+            }
+        }
+    }
+
+    /**
+     * 更新武器冷却
+     */
+    private void updateWeapons() {
+        for (WeaponType weaponType : WeaponType.values()) {
+            int cooldown = this.missileCooldowns.get(weaponType);
+            if (cooldown > 0) {
+                this.missileCooldowns.put(weaponType, cooldown - 1);
+            }
+        }
+    }
+
+    /**
+     * 重新装填所有导弹
+     */
+    public void reloadAllMissiles() {
+        for (WeaponType weaponType : WeaponType.values()) {
+            WeaponConfig config = WeaponConfig.getConfig(weaponType);
+            this.missileAmmo.put(weaponType, config.getMaxAmmo());
+        }
+        System.out.println("All missiles reloaded!");
+    }
+
+    /**
+     * 重新装填指定类型的导弹
+     */
+    public void reloadMissileType(WeaponType weaponType) {
+        WeaponConfig config = WeaponConfig.getConfig(weaponType);
+        this.missileAmmo.put(weaponType, config.getMaxAmmo());
+        System.out.println(weaponType.getDisplayName() + " reloaded! Ammo: " + this.missileAmmo.get(weaponType));
+    }
+
+    /**
+     * 添加指定类型的导弹弹药
+     */
+    public void addMissileAmmo(WeaponType weaponType, int amount) {
+        WeaponConfig config = WeaponConfig.getConfig(weaponType);
+        int currentAmmo = this.missileAmmo.get(weaponType);
+        this.missileAmmo.put(weaponType, Math.min(currentAmmo + amount, config.getMaxAmmo()));
+        System.out.println("Added " + amount + " " + weaponType.getDisplayName() +
+                ". Total: " + this.missileAmmo.get(weaponType));
+    }
+
+    /**
+     * 获取指定导弹的冷却状态
+     */
+    public int getMissileCooldown(WeaponType weaponType) {
+        if (this.world.isRemote) {
+            // 客户端从数据监视器获取
+            NBTTagCompound cooldownData = this.dataManager.get(WEAPON_COOLDOWN_DATA);
+            return cooldownData.getInteger(weaponType.name());
+        } else {
+            return this.missileCooldowns.getOrDefault(weaponType, 0);
+        }
+    }
+
+    /**
+     * 获取指定导弹的冷却进度
+     */
+    public float getMissileCooldownProgress(WeaponType weaponType) {
+        WeaponConfig config = WeaponConfig.getConfig(weaponType);
+        int cooldown = getMissileCooldown(weaponType);
+        return (float) cooldown / config.getCooldownTicks();
+    }
+
+    /**
+     * 获取剩余导弹数量
+     */
+    public int getMissileAmmo(WeaponType weaponType) {
+        if (this.world.isRemote) {
+            // 客户端从数据监视器获取
+            NBTTagCompound ammoData = this.dataManager.get(WEAPON_AMMO_DATA);
+            return ammoData.getInteger(weaponType.name());
+        } else {
+            return this.missileAmmo.getOrDefault(weaponType, 0);
+        }
+    }
+
+    /**
+     * 获取最大导弹数量
+     */
+    public int getMaxMissileAmmo(WeaponType weaponType) {
+        WeaponConfig config = WeaponConfig.getConfig(weaponType);
+        return config.getMaxAmmo();
+    }
+
+    /**
+     * 是否可以发射指定类型的导弹
+     */
+    public boolean canLaunchMissile(WeaponType weaponType) {
+        return getMissileCooldown(weaponType) <= 0 && getMissileAmmo(weaponType) > 0;
+    }
+
+    /**
+     * 设置指定武器的弹药数量 - 用于维度跳跃状态恢复
+     */
+    public void setWeaponAmmo(WeaponType weaponType, int ammo) {
+        if (weaponType != null) {
+            WeaponConfig config = WeaponConfig.getConfig(weaponType);
+            int clampedAmmo = Math.min(ammo, config.getMaxAmmo());
+            this.missileAmmo.put(weaponType, clampedAmmo);
+            syncWeaponData(); // 同步数据
+        }
+    }
+
+    /**
+     * 设置指定武器的冷却时间 - 用于维度跳跃状态恢复
+     */
+    public void setWeaponCooldown(WeaponType weaponType, int cooldown) {
+        if (weaponType != null) {
+            this.missileCooldowns.put(weaponType, Math.max(0, cooldown));
+            syncWeaponData(); // 同步数据
+        }
+    }
+
+    /**
+     * 获取所有武器状态（用于调试和状态保存）
+     */
+    public Map<WeaponType, Integer> getAllWeaponAmmo() {
+        return new HashMap<>(missileAmmo);
+    }
+
+    /**
+     * 获取所有武器冷却状态（用于调试和状态保存）
+     */
+    public Map<WeaponType, Integer> getAllWeaponCooldowns() {
+        return new HashMap<>(missileCooldowns);
+    }
+
+    /**
+     * 获取武器状态摘要（用于调试）
+     */
+    public String getWeaponStateSummary() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Weapon State:\n");
+        for (WeaponType weaponType : WeaponType.values()) {
+            sb.append(String.format("  %s: %d/%d (CD: %d)\n",
+                    weaponType.getDisplayName(),
+                    getMissileAmmo(weaponType),
+                    getMaxMissileAmmo(weaponType),
+                    getMissileCooldown(weaponType)
+            ));
+        }
+        return sb.toString();
+    }
+
+    /**
+     * 乘客和交互相关方法
+     */
 
     private void updatePassengerPositions() {
         for (Entity passenger : this.getPassengers()) {
@@ -265,6 +556,10 @@ public class EntityCustomVehicle extends Entity {
         return this.getPassengers().size() < 2;
     }
 
+    /**
+     * NBT 数据持久化
+     */
+
     @Override
     protected void readEntityFromNBT(NBTTagCompound compound) {
         if (compound.hasKey("MotionX")) {
@@ -276,6 +571,24 @@ public class EntityCustomVehicle extends Entity {
             this.rotationYaw = compound.getFloat("RotationYaw");
             this.rotationPitch = compound.getFloat("RotationPitch");
         }
+
+        // 读取武器状态 - 使用新的武器系统
+        for (WeaponType weaponType : WeaponType.values()) {
+            String ammoKey = "MissileAmmo_" + weaponType.getId();
+            String cooldownKey = "MissileCooldown_" + weaponType.getId();
+
+            if (compound.hasKey(ammoKey)) {
+                this.missileAmmo.put(weaponType, compound.getInteger(ammoKey));
+            }
+            if (compound.hasKey(cooldownKey)) {
+                this.missileCooldowns.put(weaponType, compound.getInteger(cooldownKey));
+            }
+        }
+
+        // 读取维度跳跃状态
+        if (compound.hasKey("HasTriggeredDimensionJump")) {
+            this.hasTriggeredDimensionJump = compound.getBoolean("HasTriggeredDimensionJump");
+        }
     }
 
     @Override
@@ -285,7 +598,20 @@ public class EntityCustomVehicle extends Entity {
         compound.setDouble("MotionZ", this.motionZ);
         compound.setFloat("RotationYaw", this.rotationYaw);
         compound.setFloat("RotationPitch", this.rotationPitch);
+
+        // 保存武器状态 - 使用新的武器系统
+        for (WeaponType weaponType : WeaponType.values()) {
+            compound.setInteger("MissileAmmo_" + weaponType.getId(), this.missileAmmo.get(weaponType));
+            compound.setInteger("MissileCooldown_" + weaponType.getId(), this.missileCooldowns.get(weaponType));
+        }
+
+        // 保存维度跳跃状态
+        compound.setBoolean("HasTriggeredDimensionJump", this.hasTriggeredDimensionJump);
     }
+
+    /**
+     * 输入处理相关方法
+     */
 
     // 客户端输入处理方法
     public void updateInputs(boolean accelerating, float pitch, float yaw) {
@@ -305,9 +631,6 @@ public class EntityCustomVehicle extends Entity {
             PacketDispatcher.sendToServer(new MessageVehicleInput(
                     this.getEntityId(), accelerating, pitch, yaw
             ));
-
-            // 调试输出
-            System.out.println("Client input sent - Accel: " + accelerating + ", Pitch: " + pitch + ", Yaw: " + yaw);
         }
     }
 
@@ -328,15 +651,11 @@ public class EntityCustomVehicle extends Entity {
         if (!this.world.isRemote) {
             this.updateMotion();
         }
-
-        // 调试输出
-        System.out.println("Server received input - Accel: " + accelerating + ", Pitch: " + pitch + ", Yaw: " + yaw);
     }
 
-    private void printDebugInfo() {
-        String side = this.world.isRemote ? "Client" : "Server";
-        System.out.println("[" + side + "] " + getMotionState() + " | " + getInputState());
-    }
+    /**
+     * 调试和状态信息方法
+     */
 
     // 获取当前输入状态（用于调试）
     public String getInputState() {
@@ -351,6 +670,10 @@ public class EntityCustomVehicle extends Entity {
                 posX, posY, posZ,
                 Math.sqrt(motionX * motionX + motionZ * motionZ), speed);
     }
+
+    /**
+     * 实用方法
+     */
 
     // 强制停止飞船
     public void stopVehicle() {
@@ -371,5 +694,19 @@ public class EntityCustomVehicle extends Entity {
     // 是否在移动
     public boolean isMoving() {
         return getCurrentSpeed() > 0.01;
+    }
+
+    /**
+     * 获取维度跳跃高度阈值
+     */
+    public static int getDimensionJumpHeight() {
+        return DIMENSION_JUMP_HEIGHT;
+    }
+
+    /**
+     * 获取目标维度ID
+     */
+    public static int getTargetDimension() {
+        return TARGET_DIMENSION;
     }
 }

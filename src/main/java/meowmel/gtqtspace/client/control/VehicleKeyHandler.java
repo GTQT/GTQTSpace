@@ -67,7 +67,7 @@ public class VehicleKeyHandler {
 
             // 调试输出
             if (inputChanged) {
-                System.out.println("Input changed - Accel: " + accelerating + ", Pitch: " + pitch + ", Yaw: " + yaw);
+                //System.out.println("Input changed - Accel: " + accelerating + ", Pitch: " + pitch + ", Yaw: " + yaw);
             }
         }
     }

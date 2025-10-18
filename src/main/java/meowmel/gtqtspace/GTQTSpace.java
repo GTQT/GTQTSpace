@@ -4,9 +4,13 @@ import meowmel.gtqtspace.api.GTQTSAPI;
 import meowmel.gtqtspace.api.utils.GTQTSLog;
 import meowmel.gtqtspace.client.ClientProxy;
 import meowmel.gtqtspace.client.control.VehicleKeyHandler;
+import meowmel.gtqtspace.client.control.VehicleWeaponHandler;
 import meowmel.gtqtspace.common.CommonProxy;
 import meowmel.gtqtspace.common.block.GTQTSMetaBlocks;
 import meowmel.gtqtspace.common.entity.EntityCustomVehicle;
+import meowmel.gtqtspace.common.entity.EntityExplosiveMissile;
+import meowmel.gtqtspace.common.entity.EntityIncendiaryMissile;
+
 import meowmel.gtqtspace.common.items.GTQTSMetaItems;
 import meowmel.gtqtspace.common.metatileentities.GTQTSMetaTileEntities;
 import meowmel.gtqtspace.common.network.PacketDispatcher;
@@ -51,6 +55,7 @@ public class GTQTSpace {
     public void init(FMLInitializationEvent event) throws IOException {
         proxy.init();
         MinecraftForge.EVENT_BUS.register(new VehicleKeyHandler());
+        MinecraftForge.EVENT_BUS.register(new VehicleWeaponHandler());
     }
 
     @Mod.EventHandler
@@ -82,5 +87,11 @@ public class GTQTSpace {
                 1,   // 更新频率
                 true // 发送速度更新
         );
+
+        EntityRegistry.registerModEntity(new ResourceLocation(MODID, "explosivemissile"),
+                EntityExplosiveMissile.class, "ExplosiveMissile", 10, MODID, 64, 1, true);
+
+        EntityRegistry.registerModEntity(new ResourceLocation(MODID, "incendiarymissile"),
+                EntityIncendiaryMissile.class, "IncendiaryMissile", 11, MODID, 64, 1, true);
     }
 }
