@@ -1,7 +1,10 @@
 package meowmel.gtqtspace.common.entity;
 
-import meowmel.gtqtspace.common.network.MessageVehicleDimensionJump;
-import meowmel.gtqtspace.common.network.MessageVehicleInput;
+import meowmel.gtqtspace.common.entity.weapon.missile.EntityMissileBase;
+import meowmel.gtqtspace.common.entity.weapon.WeaponConfig;
+import meowmel.gtqtspace.common.entity.weapon.WeaponType;
+import meowmel.gtqtspace.common.network.message.MessageVehicleDimensionJump;
+import meowmel.gtqtspace.common.network.message.MessageVehicleInput;
 import meowmel.gtqtspace.common.network.PacketDispatcher;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.MoverType;
@@ -311,12 +314,12 @@ public class EntityCustomVehicle extends Entity {
         WeaponConfig config = WeaponConfig.getConfig(weaponType);
 
         if (this.missileCooldowns.get(weaponType) > 0) {
-            System.out.println(weaponType.getDisplayName() + " on cooldown: " + this.missileCooldowns.get(weaponType));
+            //System.out.println(weaponType.getDisplayName() + " on cooldown: " + this.missileCooldowns.get(weaponType));
             return;
         }
 
         if (this.missileAmmo.get(weaponType) <= 0) {
-            System.out.println("Out of ammo for: " + weaponType.getDisplayName());
+            //System.out.println("Out of ammo for: " + weaponType.getDisplayName());
             return;
         }
 
@@ -332,8 +335,7 @@ public class EntityCustomVehicle extends Entity {
                 this.missileCooldowns.put(weaponType, config.getCooldownTicks());
                 this.missileAmmo.put(weaponType, this.missileAmmo.get(weaponType) - 1);
 
-                System.out.println("Launched " + weaponType.getDisplayName() +
-                        "! Ammo remaining: " + this.missileAmmo.get(weaponType));
+                //System.out.println("Launched " + weaponType.getDisplayName() +"! Ammo remaining: " + this.missileAmmo.get(weaponType));
 
                 // 播放发射音效
                 this.world.playSound(null, this.posX, this.posY, this.posZ,

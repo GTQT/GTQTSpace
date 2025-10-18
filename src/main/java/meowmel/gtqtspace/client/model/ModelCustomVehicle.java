@@ -1,4 +1,4 @@
-package meowmel.gtqtspace.client.render;
+package meowmel.gtqtspace.client.model;
 
 import meowmel.gtqtspace.common.entity.EntityCustomVehicle;
 import net.minecraft.client.model.ModelBase;
@@ -54,11 +54,11 @@ public class ModelCustomVehicle extends ModelBase {
         EntityCustomVehicle vehicle = (EntityCustomVehicle) entity;
 
         // 应用偏航旋转（左右转）- 反向
-        this.body.rotateAngleY = -vehicle.rotationYaw * (float)Math.PI / 180F;
-        this.nose.rotateAngleY = -vehicle.rotationYaw * (float)Math.PI / 180F;
-        this.wingLeft.rotateAngleY = -vehicle.rotationYaw * (float)Math.PI / 180F;
-        this.wingRight.rotateAngleY = -vehicle.rotationYaw * (float)Math.PI / 180F;
-        this.tail.rotateAngleY = -vehicle.rotationYaw * (float)Math.PI / 180F;
+        this.body.rotateAngleY = +vehicle.rotationYaw * (float)Math.PI / 180F;
+        this.nose.rotateAngleY = +vehicle.rotationYaw * (float)Math.PI / 180F;
+        this.wingLeft.rotateAngleY = +vehicle.rotationYaw * (float)Math.PI / 180F;
+        this.wingRight.rotateAngleY = +vehicle.rotationYaw * (float)Math.PI / 180F;
+        this.tail.rotateAngleY =+vehicle.rotationYaw * (float)Math.PI / 180F;
 
         // 应用俯仰旋转（上下转）- 反向
         this.body.rotateAngleX = -vehicle.rotationPitch * (float)Math.PI / 180F;

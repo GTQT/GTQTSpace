@@ -1,17 +1,24 @@
-package meowmel.gtqtspace.common.entity;
+package meowmel.gtqtspace.common.entity.weapon;
 
+import meowmel.gtqtspace.common.entity.weapon.missile.*;
 import net.minecraft.entity.Entity;
 import net.minecraft.world.World;
 
 import java.util.function.BiFunction;
 
 public enum WeaponType {
-    EXPLOSIVE_MISSILE("explosive_missile", "Explosive Missile",
+    //机炮
+    MACHINE_GUN("machine_gun", "机炮",
+            EntityMachineGunBullet::new),
+    //高爆弹
+    EXPLOSIVE_MISSILE("explosive_missile", "高爆弹",
             EntityExplosiveMissile::new),
-
-    INCENDIARY_MISSILE("incendiary_missile", "Incendiary Missile",
-            EntityIncendiaryMissile::new);
-
+    //火箭弹
+    INCENDIARY_MISSILE("incendiary_missile", "火箭弹",
+            EntityIncendiaryMissile::new),
+    //集束导弹
+    CLUSTER_MISSILE("cluster_missile", "集束导弹",
+            EntityClusterMissile::new);
     /*
     ARMOR_PIERCING_MISSILE("armor_piercing_missile", "Armor Piercing Missile",
             (world, launcher) -> new EntityArmorPiercingMissile(world, launcher)),
@@ -19,8 +26,7 @@ public enum WeaponType {
     EMP_MISSILE("emp_missile", "EMP Missile",
             (world, launcher) -> new EntityEMPMissile(world, launcher)),
 
-    CLUSTER_MISSILE("cluster_missile", "Cluster Missile",
-            (world, launcher) -> new EntityClusterMissile(world, launcher));
+
 
      */
 
@@ -52,7 +58,7 @@ public enum WeaponType {
                 return type;
             }
         }
-        return EXPLOSIVE_MISSILE; // 默认返回爆炸导弹
+        return MACHINE_GUN;
     }
 
     public static WeaponType[] getWeapons() {

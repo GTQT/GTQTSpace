@@ -1,12 +1,11 @@
-package meowmel.gtqtspace.common.network;
+package meowmel.gtqtspace.common.network.message;
 
 import meowmel.gtqtspace.common.entity.EntityCustomVehicle;
-import meowmel.gtqtspace.common.entity.WeaponType;
+import meowmel.gtqtspace.common.entity.weapon.WeaponType;
 import meowmel.gtqtspace.common.world.SimpleVehicleTeleporter;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.PacketBuffer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.WorldServer;

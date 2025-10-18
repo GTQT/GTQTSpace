@@ -1,6 +1,7 @@
 package meowmel.gtqtspace.common.network;
 
 import meowmel.gtqtspace.GTQTSpace;
+import meowmel.gtqtspace.common.network.message.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.entity.player.EntityPlayerMP;
 import net.minecraftforge.fml.common.network.NetworkRegistry;

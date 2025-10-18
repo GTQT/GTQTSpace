@@ -1,6 +1,6 @@
 package meowmel.gtqtspace.client.render;
 
-import meowmel.gtqtspace.common.entity.EntityMissileBase;
+import meowmel.gtqtspace.common.entity.weapon.missile.EntityMissileBase;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.client.renderer.entity.Render;
 import net.minecraft.client.renderer.entity.RenderManager;

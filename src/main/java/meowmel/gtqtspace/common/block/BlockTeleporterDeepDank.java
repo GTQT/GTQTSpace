@@ -2,7 +2,7 @@ package meowmel.gtqtspace.common.block;
 
 
 import meowmel.gtqtspace.common.network.PacketDispatcher;
-import meowmel.gtqtspace.common.network.TeleportMessage;
+import meowmel.gtqtspace.common.network.message.TeleportMessage;
 import net.minecraft.block.Block;
 import net.minecraft.block.ITileEntityProvider;
 import net.minecraft.block.material.Material;

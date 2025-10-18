@@ -1,7 +1,5 @@
-package meowmel.gtqtspace.common.entity;
+package meowmel.gtqtspace.common.entity.weapon.missile;
 import net.minecraft.entity.Entity;
-import net.minecraft.entity.MoverType;
-import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.util.EnumParticleTypes;
 import net.minecraft.util.math.*;
 import net.minecraft.world.World;
@@ -19,7 +17,7 @@ public class EntityExplosiveMissile extends EntityMissileBase {
 
     public EntityExplosiveMissile(World worldIn) {
         super(worldIn, 5.0f, 2.0f, 0.1f, 400);
-        this.explosionPower = 4.0f;
+        this.explosionPower = 5.0f;
         this.damageRadius = 8.0f;
         this.baseDamage = 5.0f;
     }

@@ -2,14 +2,12 @@ package meowmel.gtqtspace.client.gui;
 
 import meowmel.gtqtspace.client.control.VehicleWeaponHandler;
 import meowmel.gtqtspace.common.entity.EntityCustomVehicle;
-import meowmel.gtqtspace.common.entity.WeaponType;
+import meowmel.gtqtspace.common.entity.weapon.WeaponType;
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.Gui;
 import net.minecraft.client.gui.ScaledResolution;
 import net.minecraft.client.renderer.GlStateManager;
 import net.minecraft.entity.Entity;
-import net.minecraft.util.math.MathHelper;
-import net.minecraft.util.text.TextFormatting;
 import net.minecraftforge.client.event.RenderGameOverlayEvent;
 import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 import net.minecraftforge.fml.relauncher.Side;
@@ -280,7 +278,7 @@ public class VehicleHUD extends Gui {
         drawString(mc.fontRenderer, "姿态", x, y, COLOR_CYAN);
 
         // 姿态信息
-        float pitch = vehicle.rotationPitch;
+        float pitch = -vehicle.rotationPitch;
         float yaw = vehicle.rotationYaw % 360;
         if (yaw < 0) yaw += 360;
 
@@ -442,7 +440,7 @@ public class VehicleHUD extends Gui {
     }
 
     private void drawAttitudeLines(EntityCustomVehicle vehicle, int centerX, int centerY, int radius) {
-        float pitch = vehicle.rotationPitch;
+        float pitch = -vehicle.rotationPitch;
         float yaw = vehicle.rotationYaw;
 
         // 地平线（根据俯仰倾斜）

@@ -1,5 +1,6 @@
 package meowmel.gtqtspace.client.render;
 
+import meowmel.gtqtspace.client.model.ModelCustomVehicle;
 import meowmel.gtqtspace.common.entity.EntityCustomVehicle;
 import net.minecraft.client.model.ModelBase;
 import net.minecraft.client.renderer.GlStateManager;
@@ -28,12 +29,12 @@ public class RenderCustomVehicle extends Render<EntityCustomVehicle> {
         GlStateManager.translate(x, y + 0.5, z); // 稍微向上偏移，让飞船看起来在空中
 
         // 应用偏航旋转（左右转）
-        GlStateManager.rotate(180.0F - entityYaw, 0.0F, 1.0F, 0.0F);
+        GlStateManager.rotate(180.0F + entityYaw, 0.0F, 1.0F, 0.0F);
 
         // 应用俯仰旋转（上下转）- 这是关键！
         // 使用插值让旋转更平滑
         float interpolatedPitch = entity.prevRotationPitch + (entity.rotationPitch - entity.prevRotationPitch) * partialTicks;
-        GlStateManager.rotate(interpolatedPitch, 1.0F, 0.0F, 0.0F);
+        GlStateManager.rotate(-interpolatedPitch, 1.0F, 0.0F, 0.0F);
 
         // 可选：根据运动状态添加一些视觉效果
         if (entity.isMoving()) {

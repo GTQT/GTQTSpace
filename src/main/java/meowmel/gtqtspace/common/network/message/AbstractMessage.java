@@ -1,4 +1,4 @@
-package meowmel.gtqtspace.common.network;
+package meowmel.gtqtspace.common.network.message;
 
 import java.io.IOException;
 import meowmel.gtqtspace.common.CommonProxy;

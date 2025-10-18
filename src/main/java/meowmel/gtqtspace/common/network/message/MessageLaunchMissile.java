@@ -1,7 +1,7 @@
-package meowmel.gtqtspace.common.network;
+package meowmel.gtqtspace.common.network.message;
 
 import meowmel.gtqtspace.common.entity.EntityCustomVehicle;
-import meowmel.gtqtspace.common.entity.WeaponType;
+import meowmel.gtqtspace.common.entity.weapon.WeaponType;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.network.PacketBuffer;

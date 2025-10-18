@@ -1,9 +1,9 @@
 package meowmel.gtqtspace.client.control;
 
 import meowmel.gtqtspace.common.entity.EntityCustomVehicle;
-import meowmel.gtqtspace.common.entity.WeaponConfig;
-import meowmel.gtqtspace.common.entity.WeaponType;
-import meowmel.gtqtspace.common.network.MessageLaunchMissile;
+import meowmel.gtqtspace.common.entity.weapon.WeaponConfig;
+import meowmel.gtqtspace.common.entity.weapon.WeaponType;
+import meowmel.gtqtspace.common.network.message.MessageLaunchMissile;
 import meowmel.gtqtspace.common.network.PacketDispatcher;
 import net.minecraft.client.Minecraft;
 import net.minecraft.entity.player.EntityPlayer;
@@ -56,7 +56,7 @@ public class VehicleWeaponHandler {
             burstMode = !burstMode;
             burstCount = 0; // 重置连发计数
             inBurstSequence = false; // 重置连发序列状态
-            System.out.println("Burst mode: " + (burstMode ? "ON" : "OFF"));
+            //System.out.println("Burst mode: " + (burstMode ? "ON" : "OFF"));
         }
         lastRightClick = rightClick;
 
@@ -118,9 +118,9 @@ public class VehicleWeaponHandler {
         // 发送发射导弹的网络包，包含武器类型ID
         PacketDispatcher.sendToServer(new MessageLaunchMissile(vehicle.getEntityId(), weaponType.getId()));
 
-        System.out.println("Launching " + weaponType.getDisplayName() + " from vehicle ID: " + vehicle.getEntityId() +
-                ", Burst mode: " + burstMode + ", Remaining burst: " + burstCount +
-                ", In burst sequence: " + inBurstSequence);
+        //System.out.println("Launching " + weaponType.getDisplayName() + " from vehicle ID: " + vehicle.getEntityId() +
+        //        ", Burst mode: " + burstMode + ", Remaining burst: " + burstCount +
+        //        ", In burst sequence: " + inBurstSequence);
     }
 
     /**
@@ -141,7 +141,7 @@ public class VehicleWeaponHandler {
             }
 
             selectedWeapon = weapons[currentIndex];
-            System.out.println("Weapon switched to: " + selectedWeapon.getDisplayName());
+            //System.out.println("Weapon switched to: " + selectedWeapon.getDisplayName());
         }
     }
 
@@ -154,7 +154,7 @@ public class VehicleWeaponHandler {
             if (Keyboard.isKeyDown(Keyboard.KEY_1 + i)) {
                 if (selectedWeapon != weapons[i]) {
                     selectedWeapon = weapons[i];
-                    System.out.println("Quick switch to: " + selectedWeapon.getDisplayName());
+                    //System.out.println("Quick switch to: " + selectedWeapon.getDisplayName());
                 }
                 break;
             }
@@ -264,7 +264,7 @@ public class VehicleWeaponHandler {
         for (WeaponType weapon : WeaponType.values()) {
             lastFireTimes.put(weapon, 0L);
         }
-        selectedWeapon = WeaponType.EXPLOSIVE_MISSILE;
+        selectedWeapon = WeaponType.MACHINE_GUN;
         weaponEnabled = true;
         burstMode = false;
         burstCount = 0;

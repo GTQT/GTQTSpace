@@ -1,4 +1,4 @@
-package meowmel.gtqtspace.common.network;
+package meowmel.gtqtspace.common.network.message;
 
 import meowmel.gtqtspace.common.block.TileEntityTeleporterDeepDank;
 import meowmel.gtqtspace.common.world.TeleporterSpaceStation;

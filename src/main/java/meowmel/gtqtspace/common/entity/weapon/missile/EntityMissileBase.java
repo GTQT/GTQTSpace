@@ -1,4 +1,4 @@
-package meowmel.gtqtspace.common.entity;
+package meowmel.gtqtspace.common.entity.weapon.missile;
 import net.minecraft.entity.Entity;
 import net.minecraft.entity.MoverType;
 import net.minecraft.nbt.NBTTagCompound;

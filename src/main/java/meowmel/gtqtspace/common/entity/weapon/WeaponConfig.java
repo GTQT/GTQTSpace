@@ -1,4 +1,4 @@
-package meowmel.gtqtspace.common.entity;
+package meowmel.gtqtspace.common.entity.weapon;
 
 
 public class WeaponConfig {
@@ -23,10 +23,15 @@ public class WeaponConfig {
     // 预设配置
     public static WeaponConfig getConfig(WeaponType weaponType) {
         switch (weaponType) {
+            case MACHINE_GUN:
+                return new WeaponConfig(200, 1, 0.5f, 1f);
             case EXPLOSIVE_MISSILE:
                 return new WeaponConfig(10, 20, 5.0f, 2.0f);
             case INCENDIARY_MISSILE:
                 return new WeaponConfig(8, 25, 3.0f, 1.8f);
+            case CLUSTER_MISSILE:
+                return new WeaponConfig(2, 100, 5.0f, 2.0f);
+
             /*
                 case ARMOR_PIERCING_MISSILE:
                 return new WeaponConfig(6, 30, 8.0f, 2.5f);

@@ -38,7 +38,7 @@ import meowmel.gtqtspace.common.block.GTQTSMetaBlocks;
 import meowmel.gtqtspace.common.block.blocks.GTQTSpaceElevatorCasing;
 import meowmel.gtqtspace.common.metatileentities.GTQTSMetaTileEntities;
 import meowmel.gtqtspace.common.network.PacketDispatcher;
-import meowmel.gtqtspace.common.network.TeleportMessage;
+import meowmel.gtqtspace.common.network.message.TeleportMessage;
 import net.minecraft.client.resources.I18n;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemStack;
