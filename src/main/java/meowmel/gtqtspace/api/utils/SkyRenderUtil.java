@@ -29,7 +29,7 @@ public class SkyRenderUtil {
     public static void GalaxyRender() {
 
         ///////////////////////////////银河系背景生成///////////////////////////////
-        if (GTQTSConfig.Render.BackgroundRender) {
+        if (GTQTSConfig.render.BackgroundRender) {
             float x = 50.0F;
             float y = -90.0F;
             renderImage(galaxyTextures[0], (-4.0F + x) % 360.0F, y, 0.0F, 60.0F);
@@ -92,7 +92,7 @@ public class SkyRenderUtil {
         final Tessellator var2 = Tessellator.getInstance();
         var2.getBuffer().begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION);
 
-        for (int var3 = 0; var3 < (GTQTSConfig.Render.moreStars ? 8000 : 2000); ++var3)
+        for (int var3 = 0; var3 < (GTQTSConfig.render.moreStars ? 8000 : 2000); ++var3)
         {
             double var4 = var1.nextFloat() * 2.0F - 1.0F;
             double var6 = var1.nextFloat() * 2.0F - 1.0F;
@@ -106,9 +106,9 @@ public class SkyRenderUtil {
                 var4 *= var12;
                 var6 *= var12;
                 var8 *= var12;
-                final double var14 = var4 * (GTQTSConfig.Render.moreStars ? var1.nextDouble() * 50D + 75D : 50.0D);
-                final double var16 = var6 * (GTQTSConfig.Render.moreStars ? var1.nextDouble() * 50D + 75D : 50.0D);
-                final double var18 = var8 * (GTQTSConfig.Render.moreStars ? var1.nextDouble() * 50D + 75D : 50.0D);
+                final double var14 = var4 * (GTQTSConfig.render.moreStars ? var1.nextDouble() * 50D + 75D : 50.0D);
+                final double var16 = var6 * (GTQTSConfig.render.moreStars ? var1.nextDouble() * 50D + 75D : 50.0D);
+                final double var18 = var8 * (GTQTSConfig.render.moreStars ? var1.nextDouble() * 50D + 75D : 50.0D);
                 final double var20 = Math.atan2(var4, var8);
                 final double var22 = Math.sin(var20);
                 final double var24 = Math.cos(var20);

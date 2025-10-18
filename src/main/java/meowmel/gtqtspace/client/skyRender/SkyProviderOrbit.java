@@ -51,7 +51,7 @@ public class SkyProviderOrbit extends IRenderHandler
     boolean displayGalaxyImg;
     private void initializeDisplayLists()
     {
-        if (GTQTSConfig.Render.StarsRender) {
+        if (GTQTSConfig.render.StarsRender) {
             starGLCallList = GLAllocation.generateDisplayLists(3);
 
             GL11.glPushMatrix();
@@ -349,7 +349,7 @@ public class SkyProviderOrbit extends IRenderHandler
         final Tessellator var2 = Tessellator.getInstance();
         var2.getBuffer().begin(GL11.GL_QUADS, DefaultVertexFormats.POSITION);
 
-        for (int var3 = 0; var3 < (GTQTSConfig.Render.moreStars ? 8000 : 2000); ++var3)
+        for (int var3 = 0; var3 < (GTQTSConfig.render.moreStars ? 8000 : 2000); ++var3)
         {
             double var4 = var1.nextFloat() * 2.0F - 1.0F;
             double var6 = var1.nextFloat() * 2.0F - 1.0F;
@@ -363,9 +363,9 @@ public class SkyProviderOrbit extends IRenderHandler
                 var4 *= var12;
                 var6 *= var12;
                 var8 *= var12;
-                final double var14 = var4 * (GTQTSConfig.Render.moreStars ? var1.nextDouble() * 50D + 75D : 50.0D);
-                final double var16 = var6 * (GTQTSConfig.Render.moreStars ? var1.nextDouble() * 50D + 75D : 50.0D);
-                final double var18 = var8 * (GTQTSConfig.Render.moreStars ? var1.nextDouble() * 50D + 75D : 50.0D);
+                final double var14 = var4 * (GTQTSConfig.render.moreStars ? var1.nextDouble() * 50D + 75D : 50.0D);
+                final double var16 = var6 * (GTQTSConfig.render.moreStars ? var1.nextDouble() * 50D + 75D : 50.0D);
+                final double var18 = var8 * (GTQTSConfig.render.moreStars ? var1.nextDouble() * 50D + 75D : 50.0D);
                 final double var20 = Math.atan2(var4, var8);
                 final double var22 = Math.sin(var20);
                 final double var24 = Math.cos(var20);

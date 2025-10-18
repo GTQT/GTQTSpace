@@ -3,10 +3,10 @@ package meowmel.gtqtspace;
 import meowmel.gtqtspace.api.GTQTSAPI;
 import meowmel.gtqtspace.api.utils.GTQTSLog;
 import meowmel.gtqtspace.client.ClientProxy;
+import meowmel.gtqtspace.client.control.VehicleKeyHandler;
 import meowmel.gtqtspace.common.CommonProxy;
-import meowmel.gtqtspace.common.block.BlockTeleporterDeepDank;
 import meowmel.gtqtspace.common.block.GTQTSMetaBlocks;
-import meowmel.gtqtspace.common.block.TileEntityTeleporterDeepDank;
+import meowmel.gtqtspace.common.entity.EntityCustomVehicle;
 import meowmel.gtqtspace.common.items.GTQTSMetaItems;
 import meowmel.gtqtspace.common.metatileentities.GTQTSMetaTileEntities;
 import meowmel.gtqtspace.common.network.PacketDispatcher;
@@ -14,11 +14,13 @@ import meowmel.gtqtspace.integration.GTQTSIntegration;
 import meowmel.gtqtspace.world.worldgen.GTQTSDimensionManager;
 import meowmel.gtqtspace.world.worldgen.GTQTSDimensionType;
 import net.minecraft.block.Block;
+import net.minecraft.util.ResourceLocation;
+import net.minecraftforge.common.MinecraftForge;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.registry.GameRegistry;
+import net.minecraftforge.fml.common.registry.EntityRegistry;
 
 import java.io.IOException;
 
@@ -45,12 +47,10 @@ public class GTQTSpace {
     public static CommonProxy proxy;
     public static ClientProxy cproxy;
 
-
-    public static Block portal;
-
     @Mod.EventHandler
     public void init(FMLInitializationEvent event) throws IOException {
         proxy.init();
+        MinecraftForge.EVENT_BUS.register(new VehicleKeyHandler());
     }
 
     @Mod.EventHandler
@@ -70,8 +70,17 @@ public class GTQTSpace {
         GTQTSDimensionManager.init();
 
         PacketDispatcher.registerPackets();
+
+        // 注册实体
+        EntityRegistry.registerModEntity(
+                new ResourceLocation(MODID, "custom_vehicle"),
+                EntityCustomVehicle.class,
+                "CustomVehicle",
+                1,  // 实体ID
+                GTQTSpace.instance,
+                64,  // 追踪范围
+                1,   // 更新频率
+                true // 发送速度更新
+        );
     }
-
-
-
 }
