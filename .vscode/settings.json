@@ -1,0 +1,25 @@
+{
+    "java.compile.nullAnalysis.mode": "automatic",
+    "java.configuration.updateBuildConfiguration": "interactive",
+    "java.import.gradle.jvmArguments": "-Xmx3G",
+    "java.import.gradle.java.home": "",
+    "java.import.gradle.enabled": true,
+    "java.import.gradle.wrapper.enabled": true,
+    "java.import.exclusions": [],
+    "java.home": "",
+    "java.project.referencedLibraries": [],
+    "java.project.sourcePaths": [
+        "src/main/java"
+    ],
+    "java.project.outputPath": "build/classes/java/main",
+    "java.project.resourcePaths": [
+        "src/main/resources"
+    ]
+},
+    "java.configuration.updateBuildConfiguration": "interactive",
+    "java.import.gradle.jvmArguments": "-Duser.home=C:\\Users\\Administrator",
+    "java.project.referencedLibraries": [
+        "**/*.jar"
+    ],
+    "java.import.gradle.wrapper.enabled": true
+}
